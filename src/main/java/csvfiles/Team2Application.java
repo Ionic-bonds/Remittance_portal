@@ -1,10 +1,10 @@
-package Team2.Team2;
+package csvfiles;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Team2Application {
+public class Team2Application{
 
 	public static void main(String[] args) {
 		SpringApplication.run(Team2Application.class, args);
