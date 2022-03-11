@@ -23,6 +23,11 @@ public class Api {
         this.apiName = apiName;
     }
 
+    public Api(long apiId, String apiName) {
+        this.apiId = apiId;
+        this.apiName = apiName;
+    }
+
     public long getApiId() {
         return apiId;
     }

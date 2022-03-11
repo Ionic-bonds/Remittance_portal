@@ -1,5 +1,9 @@
 package com.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -37,17 +42,25 @@ public class ApiField {
     @Column(name = "mandatory")
     private boolean mandatory;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "apiFields")
+    @JsonIgnore
+    private Set<CorporateField> corporateFields = new HashSet<>();
+
 
     public long getApiFieldId() {
         return apiFieldId;
     }
 
     public Api getApi() {
-        return api;
+        return new Api(api.getApiId(), api.getApiName());
     }
 
     public void setApi(Api apiId) {
         this.api = apiId;
+    }
+
+    public Api getApiData() {
+        return new Api(api.getApiId(), api.getApiName());
     }
 
     public String getApiFieldName() {
@@ -73,4 +86,15 @@ public class ApiField {
     public void setMandatory(boolean mandatory) {
         this.mandatory = mandatory;
     }
+
+    public Set<CorporateField> getCorporateFields() {
+        return corporateFields;
+    }
+
+    public void setCorporateFields(Set<CorporateField> corporateFields) {
+        this.corporateFields = corporateFields;
+    }
+
+
+
 }

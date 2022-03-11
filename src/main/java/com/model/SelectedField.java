@@ -35,7 +35,6 @@ public class SelectedField {
     @Column(name = "selected_field_value")
     private String selectedFieldValue;
 
-
     public long getSelectedFieldId() {
         return selectedFieldId;
     }

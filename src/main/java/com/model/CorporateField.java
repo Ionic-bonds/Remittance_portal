@@ -1,5 +1,9 @@
 package com.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -31,6 +37,12 @@ public class CorporateField {
     @Column(name = "corporate_field_name")
     private String corporateFieldName;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "field_mapping", joinColumns = { 
+        @JoinColumn(name = "corporate_field_id") }, 
+        inverseJoinColumns = { @JoinColumn(name = "api_field_id") })
+    private Set<ApiField> apiFields = new HashSet<>();
+
     public long getCorporateFieldId() {
         return corporateFieldId;
     }
@@ -49,5 +61,13 @@ public class CorporateField {
 
     public void setCorporateFieldName(String corporateFieldName) {
         this.corporateFieldName = corporateFieldName;
+    }
+
+    public Set<ApiField> getApiFields() {
+        return apiFields;
+    }
+
+    public void setApiFields(Set<ApiField> apiFields) {
+        this.apiFields = apiFields;
     }
 }
