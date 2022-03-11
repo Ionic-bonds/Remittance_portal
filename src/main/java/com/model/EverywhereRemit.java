@@ -1,62 +1,30 @@
 package com.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "EverywhereRemit")
 public class EverywhereRemit {
-    @Id
-    @Column(name = "source_type")
-        private String source_type;
-    @Column(name = "sender_country")
-        private String sender_country;
-    @Column(name = "segment" )
-        private String segment;
-    @Column(name = "sender_legal_name_first")
-        private String sender_legal_name_first;
-    @Column(name = "sender_legal_name_last")
-        private String sender_legal_name_last;
-    @Column(name = "sender_date_of_birth" )
-        private String sender_date_of_birth;
-    @Column(name = "sender_nationality")
-        private String sender_nationality;
-    @Column(name = "sender_id_type")
-        private String sender_id_type;
-    @Column(name = "sender_id_country" )
-        private String sender_id_country;
-    @Column(name = "sender_id_number")
-        private String sender_id_number;
-    @Column(name = "sender_currency")
-        private String sender_currency;
-    @Column(name = "sender_address_line" )
-        private String sender_address_line;   
-    @Column(name = "sender_address_city" )
-        private String sender_address_city;
-    @Column(name = "sender_address_country")
-        private String sender_address_country;
-    @Column(name = "recipient_type")
-        private String recipient_type;
-    @Column(name = "recipient_country" )
-        private String recipient_country;
-    @Column(name = "recipient_legal_name_first")
-        private String recipient_legal_name_first;
-    @Column(name = "recipient_legal_name_last")
-        private String recipient_legal_name_last;
-    @Column(name = "recipient_mobile_number" )
-        private String recipient_mobile_number;
-    @Column(name = "recipient_account_number")
-        private String recipient_account_number;
-    @Column(name = "recipient_currency")
-        private String recipient_currency;
-    @Column(name = "units" )
-        private String units;
-    @Column(name = "source_of_funds")
-        private String source_of_funds;
-    @Column(name = "remittance_purpose" )
-        private String remittance_purpose;
+    private String source_type;
+    private String sender_country;
+    private String segment;
+    private String sender_legal_name_first;
+    private String sender_legal_name_last;
+    private String sender_date_of_birth;
+    private String sender_nationality;
+    private String sender_id_type;
+    private String sender_id_country;
+    private String sender_id_number;
+    private String sender_currency;
+    private String sender_address_line;   
+    private String sender_address_city;
+    private String sender_address_country;
+    private String recipient_type;
+    private String recipient_country;
+    private String recipient_legal_name_first;
+    private String recipient_legal_name_last;
+    private String recipient_mobile_number;
+    private String recipient_account_number;
+    private String recipient_currency;
+    private String units;
+    private String source_of_funds;
+    private String remittance_purpose;
     
     public EverywhereRemit(){
 

@@ -1,54 +1,26 @@
 package com.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name= "PaymentGo")
 public class PaymentGo {
-    @Id
-    @Column(name = "remitGivenName")
-        private String remitGivenName;
-    @Column(name = "remitSurname")
-        private String remitSurname;
-    @Column(name = "remitCaType" )
-        private String remitCaType;
-    @Column(name = "remitCaNo")
-        private String remitCaNo;
-    @Column(name = "remitCountryCode")
-        private String remitCountryCode;
-    @Column(name = "remitAddress" )
-        private String remitAddress;
-    @Column(name = "nationality")
-        private String nationality;
-    @Column(name = "remitPurpose")
-        private String remitPurpose;
-    @Column(name = "settleCurrency" )
-        private String settleCurrency;
-    @Column(name = "transCurrency")
-        private String transCurrency;
-    @Column(name = "payeeGivenName")
-        private String payeeGivenName;
-    @Column(name = "payeeSurname" )
-        private String payeeSurname;   
-    @Column(name = "payeeBirthDate" )
-        private String payeeBirthDate;
-    @Column(name = "payeeAccountNo")
-        private String payeeAccountNo;
-    @Column(name = "payeePhone")
-        private String payeePhone;
-    @Column(name = "payeeBankName" )
-        private String payeeBankName;
-    @Column(name = "payeeBranchName")
-        private String payeeBranchName;
-    @Column(name = "payeeCaNo")
-        private String payeeCaNo;
-    @Column(name = "remitAccountNo" )
-        private String remitAccountNo;
-    @Column(name = "sourceOfFunds")
-        private String sourceOfFunds;
+    private String remitGivenName;
+    private String remitSurname;
+    private String remitCaType;
+    private String remitCaNo;
+    private String remitCountryCode;
+    private String remitAddress;
+    private String nationality;
+    private String remitPurpose;
+    private String settleCurrency;
+    private String transCurrency;
+    private String payeeGivenName;
+    private String payeeSurname;   
+    private String payeeBirthDate;
+    private String payeeAccountNo;
+    private String payeePhone;
+    private String payeeBankName;
+    private String payeeBranchName;
+    private String payeeCaNo;
+    private String remitAccountNo;
+    private String sourceOfFunds;
 
     public PaymentGo(){
 

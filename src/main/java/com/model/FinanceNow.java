@@ -1,58 +1,29 @@
 package com.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "FinanceNow")
 public class FinanceNow {
-    @Id
-    @Column(name= "BankAccountNumber")
-        private String BankAccountNumber;
-    @Column(name = "PaymentMode")
-        private String PaymentMode;
-    @Column(name = "PayoutCurrency")
-        private String PayoutCurrency;
-    @Column(name = "PurposeOfRemittance" )
-        private String PurposeOfRemittance;
-    @Column(name = "ReceiverAddress")
-        private String ReceiverAddress;
-    @Column(name = "ReceiverCity")
-        private String ReceiverCity;
-    @Column(name = "ReceiverCountry" )
-        private String ReceiverCountry;
-    @Column(name = "ReceiverFirstName")
-        private String ReceiverFirstName;
-    @Column(name = "ReceiverIdNumber")
-        private String ReceiverIdNumber;
-    @Column(name = "ReceiverIdType" )
-        private String ReceiverIdType;
-    @Column(name = "ReceiverLastName")
-        private String ReceiverLastName;
-    @Column(name = "SenderAddress")
-        private String SenderAddress;
-    @Column(name = "SenderCity" )
-        private String SenderCity;   
-    @Column(name = "SenderDateOfBirth" )
-        private String SenderDateOfBirth;
-    @Column(name = "SenderFirstName")
-        private String SenderFirstName;
-    @Column(name = "SenderIdNumber" )
-        private String SenderIdNumber;
-    @Column(name = "SenderIdType")
-        private String SenderIdType;
-    @Column(name = "SenderLastName")
-        private String SenderLastName;
-    @Column(name = "SenderNationality" )
-        private String SenderNationality;   
-    @Column(name = "SenderSourceOfFund" )
-        private String SenderSourceOfFund;
-    @Column(name = "SenderState")
-        private String SenderState;
-    @Column(name = "ReceiverNationality")
-        private String ReceiverNationality;
+    private String BankAccountNumber;
+    private String PaymentMode;
+    private String PayoutCurrency;
+    private String PurposeOfRemittance;
+    private String ReceiverAddress;
+    private String ReceiverCity;
+    private String ReceiverCountry;
+    private String ReceiverFirstName;
+    private String ReceiverIdNumber;
+    private String ReceiverIdType;
+    private String ReceiverLastName;
+    private String SenderAddress;
+    private String SenderCity;   
+    private String SenderDateOfBirth;
+    private String SenderFirstName;
+    private String SenderIdNumber;
+    private String SenderIdType;
+    private String SenderLastName;
+    private String SenderNationality;   
+    private String SenderSourceOfFund;
+    private String SenderState;
+    private String ReceiverNationality;
+
     public String getBankAccountNumber() {
         return BankAccountNumber;
     }
