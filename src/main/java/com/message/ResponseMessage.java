@@ -1,4 +1,4 @@
-package csvfiles.message;
+package com.message;
 
 public class ResponseMessage {
     private String message;

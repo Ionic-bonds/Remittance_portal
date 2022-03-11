@@ -1,4 +1,4 @@
-package csvfiles.controller;
+package com.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 
-import csvfiles.service.CSVService;
-import csvfiles.helper.CSVHelper;
-import csvfiles.message.ResponseMessage;
-import csvfiles.model.Tutorial;
+import com.service.CSVService;
+import com.helper.CSVHelper;
+import com.message.ResponseMessage;
+import com.model.Tutorial;
 
 @CrossOrigin("http://localhost:8081")
 @Controller

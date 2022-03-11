@@ -1,4 +1,4 @@
-package csvfiles.helper;
+package com.helper;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -18,7 +18,7 @@ import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.csv.QuoteMode;
 import org.springframework.web.multipart.MultipartFile;
 
-import csvfiles.model.Tutorial;
+import com.model.Tutorial;
 
 public class CSVHelper {
   public static String TYPE = "text/csv";

@@ -1,4 +1,4 @@
-package csvfiles.service;
+package com.service;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import csvfiles.helper.CSVHelper;
-import csvfiles.model.Tutorial;
-import csvfiles.repository.TutorialRepository;
+import com.helper.CSVHelper;
+import com.model.Tutorial;
+import com.repository.TutorialRepository;
 
 @Service
 public class CSVService {
