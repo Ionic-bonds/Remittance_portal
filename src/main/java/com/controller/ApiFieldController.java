@@ -7,6 +7,7 @@ import com.model.Api;
 import com.model.ApiField;
 import com.repository.ApiFieldRepository;
 import com.repository.ApiRepository;
+import com.repository.ApiSelectedFieldRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,9 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class ApiFieldController {
     @Autowired
     private ApiRepository apiRepository;
-
     @Autowired
     private ApiFieldRepository apiFieldRepository;
+    @Autowired
+    private ApiSelectedFieldRepository apiSelectedFieldRepository;
 
     @GetMapping("/getAllApi")
     public ResponseEntity<List<Api>> getAllApis() {
@@ -54,7 +56,7 @@ public class ApiFieldController {
     // @PutMapping("/updateApi/{id}")
     // public ResponseEntity<Api> updateApi(@PathVariable("id") long id, @RequestBody Api api) {
     //     Api _api = apiRepository.findById(id)
-    //             .orElseThrow(() -> new ResourceNotFoundException("Not found Api with id = " + id));
+    //             .orElseThrow(() -> new ResourceNotFoundException("No Api found with api_id = " + id));
     //     _api.setApiName(api.getApiName());
     //     return new ResponseEntity<>(apiRepository.save(_api), HttpStatus.OK);
     // }
@@ -106,9 +108,4 @@ public class ApiFieldController {
         }).orElseThrow(() -> new ResourceNotFoundException("No Api found with api_id = " + apiId));
         return new ResponseEntity<>(apiField, HttpStatus.CREATED);
     }
-
-
-
-
-    
 }
