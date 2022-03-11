@@ -13,6 +13,7 @@ public class Api {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long apiId;
+    
     @Column(name = "api_name")
     private String apiName;
 
