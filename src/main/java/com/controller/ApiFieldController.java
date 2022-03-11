@@ -144,7 +144,6 @@ public class ApiFieldController {
         return new ResponseEntity<>(selectedField, HttpStatus.CREATED);
     }
 
-
     // @DeleteMapping("/deleteApi/{id}")
     // public ResponseEntity<HttpStatus> deleteApi(@PathVariable("id") long id) {
     //     apiRepository.deleteById(id);

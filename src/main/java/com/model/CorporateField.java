@@ -70,4 +70,15 @@ public class CorporateField {
     public void setApiFields(Set<ApiField> apiFields) {
         this.apiFields = apiFields;
     }
+
+    public void addApiField(ApiField apiField) {
+        this.apiFields.add(apiField);
+        apiField.getCorporateFields().add(this);
+    }
+    
+    public void removeApiField(long apiFieldId) {
+        ApiField apiField = this.apiFields.stream().filter(t -> t.getApiFieldId() == apiFieldId).findFirst().orElse(null);
+        if (apiField != null) this.apiFields.remove(apiField);
+        apiField.getCorporateFields().remove(this);
+    }
 }
