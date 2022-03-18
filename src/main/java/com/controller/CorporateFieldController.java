@@ -1,5 +1,6 @@
 package com.controller;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,9 +17,12 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin(origins = "http://localhost:8081")
@@ -125,9 +130,28 @@ public class CorporateFieldController {
     }
 
     // Delete Corporate Field
+    @DeleteMapping("/deleteCorpField/{corporateId}")
+    public ResponseEntity<HttpStatus> deleteCorpField(@PathVariable("corporateId") long corporateId) {
+        CorporateUser searchCorporate = corporateUserRepository.findById(corporateId).orElseThrow(() 
+            -> new ResourceNotFoundException("No Corporate found with corporate_id = " + corporateId));
+        corporateFieldRepository.deleteAllCorpFieldsByUserId(searchCorporate);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
-
-
+    // // SAMPLE
+    // @GetMapping("/getAllCorpFieldByCorpUserId/{corporateId}")
+    // public ResponseEntity<List<CorporateField>> getAllCorpFieldByCorpUserId(@PathVariable(value = "corporateId") Long corporateId) {
+    //     CorporateUser searchCorporate = corporateUserRepository.findById(corporateId).orElseThrow(() 
+    //         -> new ResourceNotFoundException("No Corporate found with corporate_id = " + corporateId));
+    //     if (searchCorporate == null) {
+    //         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    //     }
+    //     List<CorporateField> corporateFields = corporateFieldRepository.findAllCorpFieldByUserId(searchCorporate);
+    //     if (corporateFields.isEmpty()) {
+    //         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    //     }
+    //     return new ResponseEntity<>(corporateFields, HttpStatus.OK);
+    // }
 
 
     @PostMapping("/uploadExcelHeader/{corporateUserId}")
@@ -142,6 +166,12 @@ public class CorporateFieldController {
             // Searching for a user by {corporateUserId}
             CorporateUser corporateUser = corporateUserRepository.findById(corporateUserId).orElseThrow(() 
                 -> new ResourceNotFoundException("No Corporate User found with corporate_user_id = " + corporateUserId));
+
+            // // Check if headers exist --> if it already does, return Error 400 Bad Request
+            // if (!(checkIfHeadersExist(iterHeader, corporateUserId))) {
+            //     message += "You have already submitted these corporate field headers. You cannot submit the same ones twice";
+            //     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+            // }
 
             // Iterate through the columns within a row
             while (iterHeader.hasNext()) {
@@ -160,4 +190,23 @@ public class CorporateFieldController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
     }
-}
+
+    // public static boolean checkIfHeadersExist(Iterator<Cell> iterHeader, long corporateUserId){
+    //     ArrayList<String> itemList = new ArrayList<>();
+    //     while (iterHeader.hasNext()) {
+    //         String currentCell = iterHeader.next().toString();
+    //         itemList.add(currentCell);
+    //     }
+    //     CorporateFieldController newCon = new CorporateFieldController();
+    //     ResponseEntity<List<CorporateField>> newCU = newCon.getAllCorpFieldByCorpUserId(corporateUserId);
+    //     List<CorporateField> cfList = newCU.getBody();
+    //     for (CorporateField cf : cfList) {
+    //         String cfName = cf.getCorporateFieldName();
+    //         if (itemList.contains(cfName) == false) {
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+        
+    // }
+    }
