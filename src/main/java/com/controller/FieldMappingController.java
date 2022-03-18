@@ -10,9 +10,12 @@ import java.util.Set;
 import com.exception.ResourceNotFoundException;
 import com.model.Api;
 import com.model.ApiField;
+import com.model.CommonApi;
 import com.model.CorporateField;
 import com.model.CorporateUser;
-import com.model.MappedField;
+import com.model.EverywhereRemit;
+import com.model.FinanceNow;
+import com.model.PaymentGo;
 import com.model.SelectedField;
 import com.repository.ApiFieldRepository;
 import com.repository.ApiRepository;
@@ -53,19 +56,19 @@ public class FieldMappingController {
     private SelectedFieldRepository selectedFieldRepository;
 
     @PostMapping("/uploadFieldMapping/{corporateUserId}/{amountHeader}")
-    public ResponseEntity<List<List<MappedField>>> addFieldMapping(
+    public ResponseEntity<List<CommonApi>> addFieldMapping(
         @PathVariable("corporateUserId") long corporateUserId, 
         @PathVariable("amountHeader") String amountHeader, 
         @RequestParam("file") MultipartFile file) {
-        List<List<MappedField>> transactionList = new ArrayList<>();
 
+        List<CommonApi> transactionList = new ArrayList<>();
         CorporateUser corporateUser = corporateUserRepository.findById(corporateUserId).orElseThrow(() 
             -> new ResourceNotFoundException("No Corporate found with corporate_id = " + corporateUserId));
         List<CorporateField> corporateFields = corporateFieldRepository.findAllCorpFieldByUserId(corporateUser);
 
+        // Generate CorporateField HashMap
         Iterator<CorporateField> iterCorpField = corporateFields.iterator();
         HashMap<String, Set<ApiField>> fieldMapping = new HashMap<>();
-
         while (iterCorpField.hasNext()) {
             CorporateField currentCorpField = iterCorpField.next();
             Set<ApiField> currentApiFields = currentCorpField.getApiFields();
@@ -93,10 +96,14 @@ public class FieldMappingController {
 
             List<Api> apiList = apiRepository.findAll();
             Iterator<Row> iterApiRow = sh.iterator();
+            iterApiRow.next();
             while (iterApiRow.hasNext()) {
-                Row currentRow = iterApiRow.next();
-                List<MappedField> transaction = new ArrayList<>();
                 try {
+                    Row currentRow = iterApiRow.next();
+                    FinanceNow financeNow = new FinanceNow();
+                    EverywhereRemit everywhereRemit = new EverywhereRemit();
+                    PaymentGo paymentGo = new PaymentGo();
+
                     Double amount = Double.parseDouble(currentRow.getCell(amountColumnIndex).toString());
                     Api searchApi = determineApi(apiList, amount);
                     Iterator<Cell> iterApiCol = currentRow.iterator();
@@ -107,23 +114,25 @@ public class FieldMappingController {
                         Set<ApiField> apiFields = fieldMapping.get(currentHeader.toString());
                         for (ApiField apiField : apiFields) {
                             if (apiField.getApi().getApiId() == searchApi.getApiId()) {
-                                String apiFieldDataType = apiField.getDatatype();
-                                // SelectedField apiSelectedField = selectedFieldRepository.getById(apiField.getApiFieldId());
-                                List<SelectedField> apiSelectedFields = selectedFieldRepository.findAllSelectedByApiFieldId(apiField);
-                                // Data Validation
-                                if (checkDataType(currentCol, apiFieldDataType, apiSelectedFields) == true) {
-
-
-                                } else {
-
+                                String apiFieldName = apiField.getApiFieldName();
+                                if (apiField.getApi().getApiName().equals("FinanceNow")) {
+                                    financeNow.apiSetter(currentCol.toString(), apiFieldName);
+                                } else if (apiField.getApi().getApiName().equals("EverywhereRemit")) {
+                                    everywhereRemit.apiSetter(currentCol.toString(), apiFieldName);
+                                } else if (apiField.getApi().getApiName().equals("PaymentGo")) {
+                                    paymentGo.apiSetter(currentCol.toString(), apiFieldName);
                                 }
-                                MappedField mappedField = new MappedField(apiField.getApiFieldName(), currentCol.toString());
-                                transaction.add(mappedField);
                             }
                         }
                     }
-                    transactionList.add(transaction);
-                // amount column has a non-number value
+                    if (searchApi.getApiName().equals("FinanceNow")) {
+                        transactionList.add(financeNow);
+                    } else if (searchApi.getApiName().equals("EverywhereRemit")) {
+                        transactionList.add(everywhereRemit);
+                    } else if (searchApi.getApiName().equals("PaymentGo")) {
+                        transactionList.add(paymentGo);
+                    }
+            //     // amount column has a non-number value
                 } catch (NumberFormatException e) {
                     
                 }
@@ -163,16 +172,6 @@ public class FieldMappingController {
         }
         return true;
     }
-
-    public boolean addFieldMap(ApiField apiField, CorporateField corporateField) {
-        corporateField.addApiField(apiField);
-        corporateFieldRepository.save(corporateField);
-
-        corporateField.addApiField(apiField);
-        apiFieldRepository.save(apiField);
-        return true;
-    }
-
 
     @PostMapping("/addFieldMapping/{corporateFieldId}")
     public ResponseEntity<ApiField> addFieldMapping(
