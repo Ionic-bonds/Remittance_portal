@@ -6,17 +6,19 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.model.User;
-import com.repository.UserRepository;
+
+import com.model.CorporateUser;
+import com.repository.CorporateUserRepository;
+
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
   @Autowired
-  UserRepository userRepository;
+  CorporateUserRepository userRepository;
   @Override
   @Transactional
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    User user = userRepository.findByUsername(username)
+    CorporateUser CorporateUser = userRepository.findByUsername(username)
         .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-    return UserDetailsImpl.build(user);
+    return UserDetailsImpl.build(CorporateUser);
   }
 }
