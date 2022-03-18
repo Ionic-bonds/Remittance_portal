@@ -17,15 +17,25 @@ public class Api {
     @Column(name = "api_name")
     private String apiName;
 
+    @Column(name = "min_amount")
+    private double minAmount;
+
+    @Column(name = "max_amount")
+    private double maxAmount;
+
     public Api() {}
 
-    public Api(String apiName) {
+    public Api(String apiName, double minAmount, double maxAmount) {
         this.apiName = apiName;
+        this.minAmount = minAmount;
+        this.maxAmount = maxAmount;
     }
 
-    public Api(long apiId, String apiName) {
+    public Api(long apiId, String apiName, double minAmount, double maxAmount) {
         this.apiId = apiId;
         this.apiName = apiName;
+        this.minAmount = minAmount;
+        this.maxAmount = maxAmount;
     }
 
     public long getApiId() {
@@ -38,5 +48,23 @@ public class Api {
 
     public void setApiName(String apiName) {
         this.apiName = apiName;
+    }
+
+
+
+    public double getMinAmount() {
+        return minAmount;
+    }
+
+    public void setMinAmount(double minAmount) {
+        this.minAmount = minAmount;
+    }
+
+    public double getMaxAmount() {
+        return maxAmount;
+    }
+
+    public void setMaxAmount(double maxAmount) {
+        this.maxAmount = maxAmount;
     }
 }
