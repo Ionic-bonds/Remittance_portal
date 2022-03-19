@@ -27,7 +27,7 @@ import com.model.Role;
 import com.model.CorporateUser;
 import com.payload.request.LoginRequest;
 import com.payload.request.SignupRequest;
-import com.payload.response.JwtResponse;
+import com.payload.response.UserInfoResponse;
 import com.payload.response.MessageResponse;
 import com.repository.RoleRepository;
 import com.repository.CorporateUserRepository;
