@@ -72,6 +72,19 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
+-- Table `remittance`.`roles`
+-- -----------------------------------------------------
+
+CREATE TABLE `roles` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `name` varchar(20) DEFAULT NULL,
+ PRIMARY KEY (`id`)
+) 
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
 -- Table `remittance`.`corporate_field`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `remittance`.`corporate_field` ;
@@ -267,6 +280,14 @@ INSERT INTO `remittance`.`corporate_user` (`corporate_user_id`, `email`, `passwo
 
 COMMIT;
 
+-- -----------------------------------------------------
+-- Data for table `remittance`.`roles`
+-- -----------------------------------------------------
+INSERT INTO roles(name) VALUES('ROLE_USER');
+INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
+INSERT INTO roles(name) VALUES('ROLE_ADMIN');
+
+COMMIT;
 
 -- -----------------------------------------------------
 -- Data for table `remittance`.`corporate_field`
