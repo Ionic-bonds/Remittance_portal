@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -58,18 +60,20 @@ public class AuthController {
         new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
-    String jwt = jwtUtils.generateJwtToken(authentication);
     
-    UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();    
+    UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+    ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
+
     List<String> roles = userDetails.getAuthorities().stream()
         .map(item -> item.getAuthority())
         .collect(Collectors.toList());
 
-    return ResponseEntity.ok(new JwtResponse(jwt, 
-                         userDetails.getId(), 
-                         userDetails.getUsername(), 
-                         userDetails.getEmail(), 
-                         roles));
+    return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+        .body(new UserInfoResponse(userDetails.getId(),
+                                   userDetails.getUsername(),
+                                   userDetails.getEmail(),
+                                   roles));
   }
 
   @PostMapping("/signup")
