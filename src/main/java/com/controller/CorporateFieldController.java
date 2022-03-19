@@ -150,30 +150,9 @@ public class CorporateFieldController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    // // SAMPLE
-    // @GetMapping("/getAllCorpFieldByCorpUserId/{corporateId}")
-    // public ResponseEntity<List<CorporateField>>
-    // getAllCorpFieldByCorpUserId(@PathVariable(value = "corporateId") Long
-    // corporateId) {
-    // CorporateUser searchCorporate =
-    // corporateUserRepository.findById(corporateId).orElseThrow(()
-    // -> new ResourceNotFoundException("No Corporate found with corporate_id = " +
-    // corporateId));
-    // if (searchCorporate == null) {
-    // return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    // }
-    // List<CorporateField> corporateFields =
-    // corporateFieldRepository.findAllCorpFieldByUserId(searchCorporate);
-    // if (corporateFields.isEmpty()) {
-    // return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    // }
-    // return new ResponseEntity<>(corporateFields, HttpStatus.OK);
-    // }
-
     @PostMapping("/uploadExcelHeader/{corporateUserId}")
-    public ResponseEntity<ResponseMessage> addFieldMapping(@PathVariable("corporateUserId") long corporateUserId,
+    public ResponseEntity<Object> addFieldMapping(@PathVariable("corporateUserId") long corporateUserId,
             @RequestParam("file") MultipartFile file) {
-        String message = "";
 
         try {
             // Retrieve List of Corporate Fields
@@ -215,13 +194,15 @@ public class CorporateFieldController {
                 newCorpField.setCorporateUser(corporateUser);
                 corporateFieldRepository.save(newCorpField);
 
-                message += currentCell + " ";
             }
 
         } catch (IOException e) {
             throw new RuntimeException("fail to store csv data: " + e.getMessage());
         }
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+        CorporateUser searchCorporate = corporateUserRepository.findById(corporateUserId).orElseThrow(
+                () -> new ResourceNotFoundException("No Corporate found with corporate_id = " + corporateUserId));
+        List<CorporateField> corpFields = corporateFieldRepository.findAllCorpFieldByUserId(searchCorporate);
+        return new ResponseEntity<>(corpFields, HttpStatus.OK);
     }
 
     // public static boolean checkIfHeadersExist(Iterator<Cell> iterHeader, long
