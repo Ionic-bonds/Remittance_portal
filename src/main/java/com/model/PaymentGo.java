@@ -1,6 +1,6 @@
 package com.model;
 
-public class PaymentGo {
+public class PaymentGo extends CommonApi {
     private String remitGivenName;
     private String remitSurname;
     private String remitCaType;
@@ -22,36 +22,7 @@ public class PaymentGo {
     private String remitAccountNo;
     private String sourceOfFunds;
 
-    public PaymentGo(){
-
-    }
-
-    public PaymentGo(String remitGivenName, String remitSurname, String remitCaType, String remitCaNo,
-            String remitCountryCode, String remitAddress, String nationality, String remitPurpose,
-            String settleCurrency, String transCurrency, String payeeGivenName, String payeeSurname,
-            String payeeBirthDate, String payeeAccountNo, String payeePhone, String payeeBankName,
-            String payeeBranchName, String payeeCaNo, String remitAccountNo, String sourceOfFunds) {
-        this.remitGivenName = remitGivenName;
-        this.remitSurname = remitSurname;
-        this.remitCaType = remitCaType;
-        this.remitCaNo = remitCaNo;
-        this.remitCountryCode = remitCountryCode;
-        this.remitAddress = remitAddress;
-        this.nationality = nationality;
-        this.remitPurpose = remitPurpose;
-        this.settleCurrency = settleCurrency;
-        this.transCurrency = transCurrency;
-        this.payeeGivenName = payeeGivenName;
-        this.payeeSurname = payeeSurname;
-        this.payeeBirthDate = payeeBirthDate;
-        this.payeeAccountNo = payeeAccountNo;
-        this.payeePhone = payeePhone;
-        this.payeeBankName = payeeBankName;
-        this.payeeBranchName = payeeBranchName;
-        this.payeeCaNo = payeeCaNo;
-        this.remitAccountNo = remitAccountNo;
-        this.sourceOfFunds = sourceOfFunds;
-    }
+    public PaymentGo() {}
 
     public String getRemitGivenName() {
         return remitGivenName;
@@ -211,6 +182,51 @@ public class PaymentGo {
 
     public void setSourceOfFunds(String sourceOfFunds) {
         this.sourceOfFunds = sourceOfFunds;
+    }
+
+    @Override
+    public void apiSetter(Object o, String field) {
+        if (field.equals("remitGivenName")) {
+            setRemitGivenName(o.toString());
+        } else if (field.equals("remitSurname")) {
+            setRemitSurname(o.toString());
+        } else if (field.equals("remitCaType")) {
+            setRemitCaType(o.toString());
+        } else if (field.equals("remitCaNo")) {
+            setRemitCaNo(o.toString());
+        } else if (field.equals("remitCountryCode")) {
+            setRemitCountryCode(o.toString());
+        } else if (field.equals("remitAddress")) {
+            setRemitAddress(o.toString());
+        } else if (field.equals("nationality")) {
+            setNationality(o.toString());
+        } else if (field.equals("remitPurpose")) {
+            setRemitPurpose(o.toString());
+        } else if (field.equals("settleCurrency")) {
+            setSettleCurrency(o.toString());
+        } else if (field.equals("transCurrency")) {
+            setTransCurrency(o.toString());
+        } else if (field.equals("payeeGivenName")) {
+            setPayeeGivenName(o.toString());
+        } else if (field.equals("payeeSurname")) { 
+            setPayeeSurname(o.toString());
+        } else if (field.equals("payeeBirthDate")) {
+            setPayeeBirthDate(o.toString());
+        } else if (field.equals("payeeAccountNo")) {
+            setPayeeAccountNo(o.toString());
+        } else if (field.equals("payeePhone")) {
+            setPayeePhone(o.toString());
+        } else if (field.equals("payeeBankName")) {
+            setPayeeBankName(o.toString());
+        } else if (field.equals("payeeBranchName")) {
+            setPayeeBranchName(o.toString());
+        } else if (field.equals("payeeCaNo")) {
+            setPayeeCaNo(o.toString());
+        } else if (field.equals("remitAccountNo")) {
+            setRemitAccountNo(o.toString());
+        } else if (field.equals("sourceOfFunds")) {
+            setSourceOfFunds(o.toString());
+        }
     }
 
     @Override

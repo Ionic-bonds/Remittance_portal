@@ -52,7 +52,7 @@ public class ApiField {
     }
 
     public Api getApi() {
-        return new Api(api.getApiId(), api.getApiName());
+        return new Api(api.getApiId(), api.getApiName(), api.getMinAmount(), api.getMaxAmount());
     }
 
     public void setApi(Api apiId) {
@@ -60,7 +60,7 @@ public class ApiField {
     }
 
     public Api getApiData() {
-        return new Api(api.getApiId(), api.getApiName());
+        return new Api(api.getApiId(), api.getApiName(), api.getMinAmount(), api.getMaxAmount());
     }
 
     public String getApiFieldName() {

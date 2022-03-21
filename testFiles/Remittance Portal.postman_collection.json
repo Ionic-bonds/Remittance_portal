@@ -1,0 +1,595 @@
+{
+	"info": {
+		"_postman_id": "087d0c44-f6d9-46fe-9ee9-8fdaf6b669cd",
+		"name": "Remittance Portal",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all Api",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getAllApi",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllApi"
+					]
+				},
+				"description": "Retrieves all value from api table"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Api by api_id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getApiById/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getApiById",
+						"1"
+					]
+				},
+				"description": "Retrieves single value from api table"
+			},
+			"response": []
+		},
+		{
+			"name": "Add new Api",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"apiName\" : \"SMUPay\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/addApi",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"addApi"
+					]
+				},
+				"description": "Inserts a new entry into api table\r\n(1 Param)"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Api Fields",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getAllApiField",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllApiField"
+					]
+				},
+				"description": "Retrieves all value from api_field table"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Api Field by api_field_id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getApiFieldById/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getApiFieldById",
+						"1"
+					]
+				},
+				"description": "Retrieves all fields associated to an API"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Api Fields by api_id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getAllApiFieldByApiId/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllApiFieldByApiId",
+						"1"
+					]
+				},
+				"description": "Retrieves all fields associated to an API"
+			},
+			"response": []
+		},
+		{
+			"name": "Add new Api Field",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"apiFieldName\" : \"Hello\",\r\n    \"dataType\" : \"String\", \r\n    \"mandatory\" : false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/addApiField/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"addApiField",
+						"1"
+					]
+				},
+				"description": "Inserts a new entry in api_field table (4 Param)"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Selected Fields",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/getAllSelectedField",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllSelectedField"
+					]
+				},
+				"description": "Retrieves all value from selected_field table"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Selected Field by selected_field_id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getSelectedFieldById/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getSelectedFieldById",
+						"1"
+					]
+				},
+				"description": "Retrieves single value from selected_field table"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Selected Field by api_field_id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getAllSelectedByApiFieldId/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllSelectedByApiFieldId",
+						"4"
+					]
+				},
+				"description": "Retrieves field code and value associated to an API field"
+			},
+			"response": []
+		},
+		{
+			"name": "Add new Api Field",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"selectedFieldCode\" : \"TST\",\r\n    \"selectedFieldValue\" : \"Testing\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/addSelectedField/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"addSelectedField",
+						"4"
+					]
+				},
+				"description": "Inserts a new entry in api_field table (4 Param)"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Corporate Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getAllCorpUsers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllCorpUsers"
+					]
+				},
+				"description": "Retrieves all value from corporate_user table"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Corporate User by corporate_user_id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getCorpUserById/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getCorpUserById",
+						"1"
+					]
+				},
+				"description": "Retrieves single value from corporate_user table"
+			},
+			"response": []
+		},
+		{
+			"name": "Add new Corporate User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"hello@world.com\",\r\n    \"password\" : \"12345678\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/addCorpUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"addCorpUser"
+					]
+				},
+				"description": "Inserts a new entry into corporate_user table\r\n(2 Param)"
+			},
+			"response": []
+		},
+		{
+			"name": "Update a Corporate User",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"bye@world.com\",\r\n    \"password\" : \"12345678\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/updateCorpUser/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"updateCorpUser",
+						"4"
+					]
+				},
+				"description": "Update a single Corporate User\r\n(3 Param)"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Corporate Fields",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getAllCorpField",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllCorpField"
+					]
+				},
+				"description": "Retrieves all value from corporate_field table"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Corporate Field by corporate_field_id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getCorpFieldById/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getCorpFieldById",
+						"1"
+					]
+				},
+				"description": "Retrieves single value from corporate_field table"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Corporate Fields by corporate_user_id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/getAllCorpFieldByCorpUserId/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"getAllCorpFieldByCorpUserId",
+						"1"
+					]
+				},
+				"description": "Retrieves all fields associated to a Corporate User"
+			},
+			"response": []
+		},
+		{
+			"name": "Add new Corporate Field",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"corporateFieldName\" : \"housing\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/addCorpField/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"addCorpField",
+						"1"
+					]
+				},
+				"description": "Inserts a new entry into corporate_field table (2 Param)"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Corporate Field",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"corporateFieldName\" : \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/updateCorpField/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"updateCorpField",
+						"1"
+					]
+				},
+				"description": "Update a single Corporate Field (2 Param)"
+			},
+			"response": []
+		},
+		{
+			"name": "Add new Field Mapping",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"apiFieldId\" : 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/addFieldMapping/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"addFieldMapping",
+						"1"
+					]
+				},
+				"description": "Insert a new entry into field_mapping table (2 Param)"
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Field Mapping",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/D:/Yu Quan/Desktop/transactions.xlsx"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/uploadFieldMapping/1/amount",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"uploadFieldMapping",
+						"1",
+						"amount"
+					],
+					"query": [
+						{
+							"key": null,
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,6 +1,6 @@
 package com.model;
 
-public class FinanceNow {
+public class FinanceNow extends CommonApi {
     private String BankAccountNumber;
     private String PaymentMode;
     private String PayoutCurrency;
@@ -23,6 +23,8 @@ public class FinanceNow {
     private String SenderSourceOfFund;
     private String SenderState;
     private String ReceiverNationality;
+
+    public FinanceNow() {}
 
     public String getBankAccountNumber() {
         return BankAccountNumber;
@@ -156,35 +158,56 @@ public class FinanceNow {
     public void setReceiverNationality(String receiverNationality) {
         ReceiverNationality = receiverNationality;
     }
-    public FinanceNow(String bankAccountNumber, String paymentMode, String payoutCurrency, String purposeOfRemittance,
-            String receiverAddress, String receiverCity, String receiverCountry, String receiverFirstName,
-            String receiverIdNumber, String receiverIdType, String receiverLastName, String senderAddress,
-            String senderCity, String senderDateOfBirth, String senderFirstName, String senderIdNumber,
-            String senderIdType, String senderLastName, String senderNationality, String senderSourceOfFund,
-            String senderState, String receiverNationality) {
-        this.BankAccountNumber = bankAccountNumber;
-        this.PaymentMode = paymentMode;
-        this.PayoutCurrency = payoutCurrency;
-        this.PurposeOfRemittance = purposeOfRemittance;
-        this.ReceiverAddress = receiverAddress;
-        this.ReceiverCity = receiverCity;
-        this.ReceiverCountry = receiverCountry;
-        this.ReceiverFirstName = receiverFirstName;
-        this.ReceiverIdNumber = receiverIdNumber;
-        this.ReceiverIdType = receiverIdType;
-        this.ReceiverLastName = receiverLastName;
-        this.SenderAddress = senderAddress;
-        this.SenderCity = senderCity;
-        this.SenderDateOfBirth = senderDateOfBirth;
-        this.SenderFirstName = senderFirstName;
-        this.SenderIdNumber = senderIdNumber;
-        this.SenderIdType = senderIdType;
-        this.SenderLastName = senderLastName;
-        this.SenderNationality = senderNationality;
-        this.SenderSourceOfFund = senderSourceOfFund;
-        this.SenderState = senderState;
-        this.ReceiverNationality = receiverNationality;
+
+    @Override
+    public void apiSetter(Object o, String field) {
+        if (field.equals("BankAccountNumber")) {
+            setBankAccountNumber(o.toString());
+        } else if (field.equals("PaymentMode")) {
+            setPaymentMode(o.toString());
+        } else if (field.equals("PayoutCurrency")) {
+            setPayoutCurrency(o.toString());
+        } else if (field.equals("PurposeOfRemittance")) {
+            setPurposeOfRemittance(o.toString());
+        } else if (field.equals("ReceiverAddress")) {
+            setReceiverAddress(o.toString());
+        } else if (field.equals("ReceiverCity")) {
+            setReceiverCity(o.toString());
+        } else if (field.equals("ReceiverCountry")) {
+            setReceiverCountry(o.toString());
+        } else if (field.equals("ReceiverFirstName")) {
+            setReceiverFirstName(o.toString());
+        } else if (field.equals("ReceiverIdNumber")) {
+            setReceiverIdNumber(o.toString());
+        } else if (field.equals("ReceiverIdType")) {
+            setReceiverIdType(o.toString());
+        } else if (field.equals("ReceiverLastName")) {
+            setReceiverLastName(o.toString());
+        } else if (field.equals("SenderAddress")) {
+            setSenderAddress(o.toString());
+        } else if (field.equals("SenderCity")) {   
+            setSenderCity(o.toString());  
+        } else if (field.equals("SenderDateOfBirth")) {
+            setSenderDateOfBirth(o.toString());
+        } else if (field.equals("SenderFirstName")) {
+            setSenderFirstName(o.toString());
+        } else if (field.equals("SenderIdNumber")) {
+            setSenderIdNumber(o.toString());
+        } else if (field.equals("SenderIdType")) {
+            setSenderIdType(o.toString());
+        } else if (field.equals("SenderLastName")) {
+            setSenderLastName(o.toString());
+        } else if (field.equals("SenderNationality")) {  
+            setSenderNationality(o.toString()); 
+        } else if (field.equals("SenderSourceOfFund")) {
+            setSenderSourceOfFund(o.toString());
+        } else if (field.equals("SenderState")) {
+            setSenderState(o.toString());
+        } else if (field.equals("ReceiverNationality")) {
+            setReceiverNationality(o.toString());
+        }
     }
+
     @Override
     public String toString() {
         return "FinanceNow [BankAccountNumber=" + BankAccountNumber + ", PaymentMode=" + PaymentMode
@@ -198,9 +221,4 @@ public class FinanceNow {
                 + SenderLastName + ", SenderNationality=" + SenderNationality + ", SenderSourceOfFund="
                 + SenderSourceOfFund + ", SenderState=" + SenderState + "]";
     }
-
-
-
-        
-
 }

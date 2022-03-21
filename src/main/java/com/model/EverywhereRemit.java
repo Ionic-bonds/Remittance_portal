@@ -1,6 +1,6 @@
 package com.model;
 
-public class EverywhereRemit {
+public class EverywhereRemit extends CommonApi {
     private String source_type;
     private String sender_country;
     private String segment;
@@ -26,43 +26,7 @@ public class EverywhereRemit {
     private String source_of_funds;
     private String remittance_purpose;
     
-    public EverywhereRemit(){
-
-    }
-
-    public EverywhereRemit(String source_type, String sender_country, String segment, String sender_legal_name_first,
-            String sender_legal_name_last, String sender_date_of_birth, String sender_nationality,
-            String sender_id_type, String sender_id_country, String sender_id_number, String sender_currency,
-            String sender_address_line, String sender_address_city, String sender_address_country,
-            String recipient_type, String recipient_country, String recipient_legal_name_first,
-            String recipient_legal_name_last, String recipient_mobile_number, String recipient_account_number,
-            String recipient_currency, String units, String source_of_funds, String remittance_purpose) {
-        this.source_type = source_type;
-        this.sender_country = sender_country;
-        this.segment = segment;
-        this.sender_legal_name_first = sender_legal_name_first;
-        this.sender_legal_name_last = sender_legal_name_last;
-        this.sender_date_of_birth = sender_date_of_birth;
-        this.sender_nationality = sender_nationality;
-        this.sender_id_type = sender_id_type;
-        this.sender_id_country = sender_id_country;
-        this.sender_id_number = sender_id_number;
-        this.sender_currency = sender_currency;
-        this.sender_address_line = sender_address_line;
-        this.sender_address_city = sender_address_city;
-        this.sender_address_country = sender_address_country;
-        this.recipient_type = recipient_type;
-        this.recipient_country = recipient_country;
-        this.recipient_legal_name_first = recipient_legal_name_first;
-        this.recipient_legal_name_last = recipient_legal_name_last;
-        this.recipient_mobile_number = recipient_mobile_number;
-        this.recipient_account_number = recipient_account_number;
-        this.recipient_currency = recipient_currency;
-        this.units = units;
-        this.source_of_funds = source_of_funds;
-        this.remittance_purpose = remittance_purpose;
-    }
-
+    public EverywhereRemit() {}
 
     public String getSource_type() {
         return source_type;
@@ -171,7 +135,109 @@ public class EverywhereRemit {
     }
     public void setRecipient_legal_name_last(String recipient_legal_name_last) {
         this.recipient_legal_name_last = recipient_legal_name_last;
-    }    
+    }
+
+    public String getRecipient_mobile_number() {
+        return recipient_mobile_number;
+    }
+
+    public void setRecipient_mobile_number(String recipient_mobile_number) {
+        this.recipient_mobile_number = recipient_mobile_number;
+    }
+
+    public String getRecipient_account_number() {
+        return recipient_account_number;
+    }
+
+    public void setRecipient_account_number(String recipient_account_number) {
+        this.recipient_account_number = recipient_account_number;
+    }
+
+    public String getRecipient_currency() {
+        return recipient_currency;
+    }
+
+    public void setRecipient_currency(String recipient_currency) {
+        this.recipient_currency = recipient_currency;
+    }
+
+    public String getUnits() {
+        return units;
+    }
+
+    public void setUnits(String units) {
+        this.units = units;
+    }
+
+    public String getSource_of_funds() {
+        return source_of_funds;
+    }
+
+    public void setSource_of_funds(String source_of_funds) {
+        this.source_of_funds = source_of_funds;
+    }
+
+    public String getRemittance_purpose() {
+        return remittance_purpose;
+    }
+
+    public void setRemittance_purpose(String remittance_purpose) {
+        this.remittance_purpose = remittance_purpose;
+    }
+
+    @Override
+    public void apiSetter(Object o, String field) {
+        if (field.equals("source_type")) {
+            setSource_type(o.toString());
+        } else if (field.equals("sender_country")) {
+            setSender_country(o.toString());
+        } else if (field.equals("segment")) {
+            setSegment(o.toString());
+        } else if (field.equals("sender_legal_name_first")) {
+            setSender_legal_name_first(o.toString());
+        } else if (field.equals("sender_legal_name_last")) {
+            setSender_legal_name_last(o.toString());
+        } else if (field.equals("sender_date_of_birth")) {
+            setSender_date_of_birth(o.toString());
+        } else if (field.equals("sender_nationality")) {
+            setSender_nationality(o.toString());
+        } else if (field.equals("sender_id_type")) {
+            setSender_id_type(o.toString());
+        } else if (field.equals("sender_id_country")) {
+            setSender_id_country(o.toString());
+        } else if (field.equals("sender_id_number")) {
+            setSender_id_number(o.toString());
+        } else if (field.equals("sender_currency")) {
+            setSender_currency(o.toString());
+        } else if (field.equals("sender_address_line")) {  
+            setSender_address_line(o.toString());
+        } else if (field.equals("sender_address_city")) {
+            setSender_address_city(o.toString());
+        } else if (field.equals("sender_address_country")) {
+            setSender_address_country(o.toString());
+        } else if (field.equals("recipient_type")) {
+            setRecipient_type(o.toString());
+        } else if (field.equals("recipient_country")) {
+            setRecipient_country(o.toString());
+        } else if (field.equals("recipient_legal_name_first")) {
+            setRecipient_legal_name_first(o.toString());
+        } else if (field.equals("recipient_legal_name_last")) {
+            setRecipient_legal_name_last(o.toString());
+        } else if (field.equals("recipient_mobile_number")) {
+            setRecipient_mobile_number(o.toString());
+        } else if (field.equals("recipient_account_number")) {
+            setRecipient_account_number(o.toString());
+        } else if (field.equals("recipient_currency")) {
+            setRecipient_currency(o.toString());
+        } else if (field.equals("units")) {
+            setUnits(o.toString());
+        } else if (field.equals("source_of_funds")) {
+            setSource_of_funds(o.toString());
+        } else if (field.equals("remittance_purpose")) {
+            setRemittance_purpose(o.toString());
+        }
+    }
+
     @Override
     public String toString() {
         return "EverywhereRemit [recipient_account_number=" + recipient_account_number + ", recipient_country="
@@ -187,4 +253,6 @@ public class EverywhereRemit {
                 + sender_legal_name_last + ", sender_nationality=" + sender_nationality + ", source_of_funds="
                 + source_of_funds + ", source_type=" + source_type + ", units=" + units + "]";
     }
+
+
 }
