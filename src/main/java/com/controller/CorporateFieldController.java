@@ -5,7 +5,7 @@ import com.exception.ResourceNotFoundException;
 import com.model.CorporateField;
 import com.model.CorporateUser;
 import com.repository.CorporateFieldRepository;
-import com.repository.CorporateUserRepository;
+import com.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class CorporateFieldController {
     @Autowired
-    private CorporateUserRepository corporateUserRepository;
+    private UserRepository corporateUserRepository;
     @Autowired
     private CorporateFieldRepository corporateFieldRepository;
 

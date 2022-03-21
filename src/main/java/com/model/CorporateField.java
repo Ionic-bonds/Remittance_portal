@@ -29,7 +29,7 @@ public class CorporateField {
     private long corporateFieldId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "corporate_user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private CorporateUser corporateUser;

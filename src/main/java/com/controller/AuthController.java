@@ -30,7 +30,7 @@ import com.payload.request.SignupRequest;
 import com.payload.response.UserInfoResponse;
 import com.payload.response.MessageResponse;
 import com.repository.RoleRepository;
-import com.repository.CorporateUserRepository;
+import com.repository.UserRepository;
 import com.security.jwt.JwtUtils;
 import com.security.services.UserDetailsImpl;
 
@@ -42,7 +42,7 @@ public class AuthController {
   AuthenticationManager authenticationManager;
 
   @Autowired
-  CorporateUserRepository userRepository;
+  UserRepository userRepository;
 
   @Autowired
   RoleRepository roleRepository;
@@ -56,11 +56,11 @@ public class AuthController {
   @PostMapping("/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-    Authentication authentication = authenticationManager.authenticate(
-        new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+    Authentication authentication = authenticationManager
+        .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
     SecurityContextHolder.getContext().setAuthentication(authentication);
-    
+
     UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
     ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
@@ -79,21 +79,17 @@ public class AuthController {
   @PostMapping("/signup")
   public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
     if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-      return ResponseEntity
-          .badRequest()
-          .body(new MessageResponse("Error: Username is already taken!"));
+      return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
     }
 
     if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-      return ResponseEntity
-          .badRequest()
-          .body(new MessageResponse("Error: Email is already in use!"));
+      return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
     }
 
     // Create new user's account
-    CorporateUser user = new CorporateUser(signUpRequest.getUsername(), 
-               signUpRequest.getEmail(),
-               encoder.encode(signUpRequest.getPassword()));
+    CorporateUser user = new CorporateUser(signUpRequest.getUsername(),
+                         signUpRequest.getEmail(),
+                         encoder.encode(signUpRequest.getPassword()));
 
     Set<String> strRoles = signUpRequest.getRole();
     Set<Role> roles = new HashSet<>();
@@ -129,5 +125,12 @@ public class AuthController {
     userRepository.save(user);
 
     return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+  }
+
+  @PostMapping("/signout")
+  public ResponseEntity<?> logoutUser() {
+    ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
+    return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
+        .body(new MessageResponse("You've been signed out!"));
   }
 }

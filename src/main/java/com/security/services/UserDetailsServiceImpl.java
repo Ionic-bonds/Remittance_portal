@@ -8,17 +8,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.model.CorporateUser;
-import com.repository.CorporateUserRepository;
+import com.repository.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
   @Autowired
-  CorporateUserRepository userRepository;
+  UserRepository userRepository;
+
   @Override
   @Transactional
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    CorporateUser CorporateUser = userRepository.findByUsername(username)
+    CorporateUser user = userRepository.findByUsername(username)
         .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
-    return UserDetailsImpl.build(CorporateUser);
+
+    return UserDetailsImpl.build(user);
   }
+
 }
