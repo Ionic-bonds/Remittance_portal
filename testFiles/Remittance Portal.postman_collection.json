@@ -6,6 +6,89 @@
 	},
 	"item": [
 		{
+			"name": "Sign In",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"test1\",\r\n    \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"signin"
+					]
+				},
+				"description": "Sign in to access other APIs"
+			},
+			"response": []
+		},
+		{
+			"name": "Add new Corporate User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"test4\",\r\n    \"email\": \"test4@smu.com\",\r\n    \"password\": \"123456\",\r\n    \"role\": [\"user\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"signup"
+					]
+				},
+				"description": "Insert a new entry into corporate_user table (4 Param)"
+			},
+			"response": []
+		},
+		{
+			"name": "Sign Out",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/auth/signout",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"signout"
+					]
+				},
+				"description": "Signs out user and remove associated cookie"
+			},
+			"response": []
+		},
+		{
 			"name": "Get all Api",
 			"request": {
 				"method": "GET",
@@ -58,7 +141,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"apiName\" : \"SMUPay\"\r\n}",
+					"raw": "{\r\n    \"apiName\" : \"SMUPay\",\r\n    \"minAmount\": 9001,\r\n    \"maxAmount\": 10000\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -329,36 +412,6 @@
 			"response": []
 		},
 		{
-			"name": "Add new Corporate User",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\" : \"hello@world.com\",\r\n    \"password\" : \"12345678\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/api/addCorpUser",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"api",
-						"addCorpUser"
-					]
-				},
-				"description": "Inserts a new entry into corporate_user table\r\n(2 Param)"
-			},
-			"response": []
-		},
-		{
 			"name": "Update a Corporate User",
 			"request": {
 				"method": "PUT",
@@ -438,7 +491,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/getAllCorpFieldByCorpUserId/1",
+					"raw": "http://localhost:8080/api/getAllCorpFieldByCorpUserId/4",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -447,7 +500,7 @@
 					"path": [
 						"api",
 						"getAllCorpFieldByCorpUserId",
-						"1"
+						"4"
 					]
 				},
 				"description": "Retrieves all fields associated to a Corporate User"
@@ -558,17 +611,12 @@
 						{
 							"key": "file",
 							"type": "file",
-							"src": "/D:/Yu Quan/Desktop/transactions.xlsx"
+							"src": "/D:/Yu Quan/Downloads/SMU DUMMY DATA.xlsx"
 						}
-					],
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					]
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/uploadFieldMapping/1/amount",
+					"raw": "http://localhost:8080/api/uploadFieldMapping/4/24",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -577,8 +625,8 @@
 					"path": [
 						"api",
 						"uploadFieldMapping",
-						"1",
-						"amount"
+						"4",
+						"24"
 					],
 					"query": [
 						{

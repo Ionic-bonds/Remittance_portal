@@ -6,11 +6,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import com.exception.ResourceNotFoundException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.model.Api;
 import com.model.ApiField;
-import com.model.CommonApi;
 import com.model.CorporateField;
 import com.model.CorporateUser;
 import com.model.EverywhereRemit;
@@ -22,6 +26,10 @@ import com.repository.ApiRepository;
 import com.repository.CorporateFieldRepository;
 import com.repository.CorporateUserRepository;
 import com.repository.SelectedFieldRepository;
+import com.transaction.request.SendTransaction;
+import com.transaction.request.TransactionAuth;
+import com.transaction.response.FieldMapListResponse;
+import com.transaction.response.TransactOutcome;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -29,6 +37,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -38,6 +47,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin(origins = "http://localhost:8081")
@@ -56,13 +66,15 @@ public class FieldMappingController {
     private SelectedFieldRepository selectedFieldRepository;
 
     @PostMapping("/uploadFieldMapping/{corporateUserId}/{amountCol}")
-    // public ResponseEntity<List<String>> addFieldMapping(
-    public ResponseEntity<List<CommonApi>> addFieldMapping(
+    public ResponseEntity<List<TransactOutcome>> addFieldMapping(
         @PathVariable("corporateUserId") long corporateUserId, 
         @PathVariable("amountCol") int amountCol, 
         @RequestParam("file") MultipartFile file) {
 
-        List<CommonApi> transactionList = new ArrayList<>();
+        List<FinanceNow> financeNowList = new ArrayList<>();
+        List<EverywhereRemit> everywhereRemitList = new ArrayList<>();
+        List<PaymentGo> paymentGoList = new ArrayList<>();
+
         CorporateUser corporateUser = corporateUserRepository.findById(corporateUserId).orElseThrow(() 
             -> new ResourceNotFoundException("No Corporate found with corporate_id = " + corporateUserId));
         List<CorporateField> corporateFields = corporateFieldRepository.findAllCorpFieldByUserId(corporateUser);
@@ -136,11 +148,11 @@ public class FieldMappingController {
                             }
                         }
                         if (searchApiName.equals("FinanceNow")) {
-                            transactionList.add(financeNow);
+                            financeNowList.add(financeNow);
                         } else if (searchApiName.equals("EverywhereRemit")) {
-                            transactionList.add(everywhereRemit);
+                            everywhereRemitList.add(everywhereRemit);
                         } else if (searchApiName.equals("PaymentGo")) {
-                            transactionList.add(paymentGo);
+                            paymentGoList.add(paymentGo);
                         }
                     } 
                     // Amount is not within the range
@@ -159,11 +171,13 @@ public class FieldMappingController {
         } catch (IOException e) {
             throw new RuntimeException("Fail upload transactions: " + e.getMessage());
         }
-        return new ResponseEntity<>(transactionList, HttpStatus.CREATED);
+        FieldMapListResponse fieldMapList = new FieldMapListResponse(financeNowList, everywhereRemitList, paymentGoList);
+        List<TransactOutcome> outcomeList = uploadAllTransactions(fieldMapList);
+        return new ResponseEntity<>(outcomeList, HttpStatus.CREATED);
     }
 
     public Api determineApi(List<Api> apiList, double amount) {
-        Api searchApi = new Api();
+        Api searchApi = null;
         Iterator<Api> iterApi = apiList.iterator();
         while (iterApi.hasNext()) {
             Api currentApi = iterApi.next();
@@ -216,6 +230,133 @@ public class FieldMappingController {
         }
         return false;
     }
+
+    public String authSandbox() {
+        String url = "https://prelive.paywho.com/api/smu_authenticate";
+        RestTemplate restTemplate = new RestTemplate();
+        TransactionAuth credentials = new TransactionAuth("xxx", "yyy");
+
+        HttpEntity<TransactionAuth> requestEntity = new HttpEntity<>(credentials);
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, requestEntity, String.class);
+        String responseString = responseEntity.getBody();
+        String returnMessage = "";
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode rootNode = mapper.readTree(responseString);
+            JsonNode innerNode = rootNode.get("access_token");
+            returnMessage = innerNode.asText();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return returnMessage;
+    }
+
+    public List<TransactOutcome> uploadAllTransactions(@RequestBody FieldMapListResponse fieldMapListResponse) {
+        String url = "https://prelive.paywho.com/api/smu_send_transaction";
+        RestTemplate restTemplate = new RestTemplate();
+        String transactionToken = authSandbox();
+
+        List<FinanceNow> financeNowList = fieldMapListResponse.getFinanceNowList();
+        List<EverywhereRemit> everywhereRemitList = fieldMapListResponse.getEverywhereRemitList();
+        List<PaymentGo> paymentGoList = fieldMapListResponse.getPaymentGoList();
+        List<TransactOutcome> transactOutcomeList = new ArrayList<>();
+        int apiDelay = 1;
+
+        for (FinanceNow financeNow : financeNowList) {
+            SendTransaction credentials = new SendTransaction(transactionToken, "financenow", financeNow);
+            HttpEntity<SendTransaction> requestEntity = new HttpEntity<>(credentials);
+            ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, requestEntity, String.class);
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode rootNode = mapper.readTree(responseEntity.getBody());
+                JsonNode innerNode = rootNode.get("message");
+                transactOutcomeList.add(new TransactOutcome(financeNow, innerNode.asText()));
+            } catch (JsonMappingException e) {
+                e.printStackTrace();
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            try {
+                TimeUnit.SECONDS.sleep(apiDelay);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        for (EverywhereRemit everywhereRemit : everywhereRemitList) {
+            SendTransaction credentials = new SendTransaction(transactionToken, "everywhereremit", everywhereRemit);
+            HttpEntity<SendTransaction> requestEntity = new HttpEntity<>(credentials);
+            ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, requestEntity, String.class);
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode rootNode = mapper.readTree(responseEntity.getBody());
+                JsonNode innerNode = rootNode.get("message");
+                transactOutcomeList.add(new TransactOutcome(everywhereRemit, innerNode.asText()));
+            } catch (JsonMappingException e) {
+                e.printStackTrace();
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            try {
+                TimeUnit.SECONDS.sleep(apiDelay);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        for (PaymentGo paymentGo : paymentGoList) {
+            SendTransaction credentials = new SendTransaction(transactionToken, "paymentgo", paymentGo);
+            HttpEntity<SendTransaction> requestEntity = new HttpEntity<>(credentials);
+            ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, requestEntity, String.class);
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode rootNode = mapper.readTree(responseEntity.getBody());
+                JsonNode innerNode = rootNode.get("message");
+                transactOutcomeList.add(new TransactOutcome(paymentGo, innerNode.asText()));
+            } catch (JsonMappingException e) {
+                e.printStackTrace();
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            try {
+                TimeUnit.SECONDS.sleep(apiDelay);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return transactOutcomeList;
+    }
+
+    @PostMapping("/uploadTransactions")
+    public ResponseEntity<List<String>> uploadTransactions(@RequestBody List<FinanceNow> transactionList) {
+        List<String> outcomeList = new ArrayList<>();
+        String url = "https://prelive.paywho.com/api/smu_send_transaction";
+        RestTemplate restTemplate = new RestTemplate();
+        String transactionToken = authSandbox();
+        for (FinanceNow transaction : transactionList) {
+            SendTransaction credentials = new SendTransaction(transactionToken, "financenow", transaction);
+            HttpEntity<SendTransaction> requestEntity = new HttpEntity<>(credentials);
+            ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, requestEntity, String.class);
+
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode messageNode = mapper.readTree(responseEntity.getBody()).get("message");
+                outcomeList.add(messageNode.asText());
+            } catch (JsonMappingException e) {
+                e.printStackTrace();
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            try {
+                TimeUnit.SECONDS.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return new ResponseEntity<>(outcomeList, HttpStatus.CREATED);
+    }
+
 
     @PostMapping("/addFieldMapping/{corporateFieldId}")
     public ResponseEntity<ApiField> addFieldMapping(

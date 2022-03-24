@@ -25,8 +25,6 @@ public class EverywhereRemit extends CommonApi {
     private String units;
     private String source_of_funds;
     private String remittance_purpose;
-    // private String reference_id;
-    // private double receiving_amount;
     
     public EverywhereRemit() {}
 
@@ -174,18 +172,6 @@ public class EverywhereRemit extends CommonApi {
     public void setRemittance_purpose(String remittance_purpose) {
         this.remittance_purpose = remittance_purpose;
     }
-    // public String getReference_id() {
-    //     return reference_id;
-    // }
-    // public void setReference_id(String reference_id) {
-    //     this.reference_id = reference_id;
-    // }
-    // public double getReceiving_amount() {
-    //     return receiving_amount;
-    // }
-    // public void setReceiving_amount(double receiving_amount) {
-    //     this.receiving_amount = receiving_amount;
-    // }
 
     public void apiSetter(String value, String dbField) {
         if (dbField.equals("source_type")) {
@@ -244,21 +230,19 @@ public class EverywhereRemit extends CommonApi {
         }
     }
 
-    // @Override
-    // public String toString() {
-    //     return "EverywhereRemit [recipient_account_number=" + recipient_account_number + ", recipient_country="
-    //             + recipient_country + ", recipient_currency=" + recipient_currency + ", recipient_legal_name_first="
-    //             + recipient_legal_name_first + ", recipient_legal_name_last=" + recipient_legal_name_last
-    //             + ", recipient_mobile_number=" + recipient_mobile_number + ", recipient_type=" + recipient_type
-    //             + ", remittance_purpose=" + remittance_purpose + ", segment=" + segment + ", sender_address_city="
-    //             + sender_address_city + ", sender_address_country=" + sender_address_country + ", sender_address_line="
-    //             + sender_address_line + ", sender_country=" + sender_country + ", sender_currency=" + sender_currency
-    //             + ", sender_date_of_birth=" + sender_date_of_birth + ", sender_id_country=" + sender_id_country
-    //             + ", sender_id_number=" + sender_id_number + ", sender_id_type=" + sender_id_type
-    //             + ", sender_legal_name_first=" + sender_legal_name_first + ", sender_legal_name_last="
-    //             + sender_legal_name_last + ", sender_nationality=" + sender_nationality + ", source_of_funds="
-    //             + source_of_funds + ", source_type=" + source_type + ", units=" + units + "]";
-    // }
-
-
+    @Override
+    public String toString() {
+        return "EverywhereRemit [recipient_account_number=" + recipient_account_number + ", recipient_country="
+                + recipient_country + ", recipient_currency=" + recipient_currency + ", recipient_legal_name_first="
+                + recipient_legal_name_first + ", recipient_legal_name_last=" + recipient_legal_name_last
+                + ", recipient_mobile_number=" + recipient_mobile_number + ", recipient_type=" + recipient_type
+                + ", remittance_purpose=" + remittance_purpose + ", segment=" + segment + ", sender_address_city="
+                + sender_address_city + ", sender_address_country=" + sender_address_country + ", sender_address_line="
+                + sender_address_line + ", sender_country=" + sender_country + ", sender_currency=" + sender_currency
+                + ", sender_date_of_birth=" + sender_date_of_birth + ", sender_id_country=" + sender_id_country
+                + ", sender_id_number=" + sender_id_number + ", sender_id_type=" + sender_id_type
+                + ", sender_legal_name_first=" + sender_legal_name_first + ", sender_legal_name_last="
+                + sender_legal_name_last + ", sender_nationality=" + sender_nationality + ", source_of_funds="
+                + source_of_funds + ", source_type=" + source_type + ", units=" + units + "]";
+    }
 }

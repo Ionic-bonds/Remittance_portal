@@ -33,8 +33,6 @@ public class FinanceNow extends CommonApi {
     private String senderState;
     private String receiverNationality;
 
-    public FinanceNow() {}
-
     @JsonProperty("BankAccountNumber")
     public String getBankAccountNumber() {
         return bankAccountNumber;
@@ -256,17 +254,18 @@ public class FinanceNow extends CommonApi {
         }
     }
 
-    // @Override
-    // public String toString() {
-    //     return "FinanceNow [BankAccountNumber=" + ankAccountNumber + ", PaymentMode=" + PaymentMode
-    //             + ", PayoutCurrency=" + PayoutCurrency + ", PurposeOfRemittance=" + PurposeOfRemittance
-    //             + ", ReceiverAddress=" + ReceiverAddress + ", ReceiverCity=" + ReceiverCity + ", ReceiverCountry="
-    //             + ReceiverCountry + ", ReceiverFirstName=" + ReceiverFirstName + ", ReceiverIdNumber="
-    //             + ReceiverIdNumber + ", ReceiverIdType=" + ReceiverIdType + ", ReceiverLastName=" + ReceiverLastName
-    //             + ", ReceiverNationality=" + ReceiverNationality + ", SenderAddress=" + SenderAddress + ", SenderCity="
-    //             + SenderCity + ", SenderDateOfBirth=" + SenderDateOfBirth + ", SenderFirstName=" + SenderFirstName
-    //             + ", SenderIdNumber=" + SenderIdNumber + ", SenderIdType=" + SenderIdType + ", SenderLastName="
-    //             + SenderLastName + ", SenderNationality=" + SenderNationality + ", SenderSourceOfFund="
-    //             + SenderSourceOfFund + ", SenderState=" + SenderState + "]";
-    // }
+    @Override
+    public String toString() {
+        return "FinanceNow [bankAccountNumber=" + bankAccountNumber + ", paymentMode=" + paymentMode
+                + ", payoutCurrency=" + payoutCurrency + ", purposeOfRemittance=" + purposeOfRemittance
+                + ", receiverAddress=" + receiverAddress + ", receiverCity=" + receiverCity + ", receiverCountry="
+                + receiverCountry + ", receiverFirstName=" + receiverFirstName + ", receiverIdNumber="
+                + receiverIdNumber + ", receiverIdType=" + receiverIdType + ", receiverLastName=" + receiverLastName
+                + ", receiverNationality=" + receiverNationality + ", senderAddress=" + senderAddress
+                + ", senderBeneficiaryRelationship=" + senderBeneficiaryRelationship + ", senderCity=" + senderCity
+                + ", senderCountry=" + senderCountry + ", senderDateOfBirth=" + senderDateOfBirth + ", senderFirstName="
+                + senderFirstName + ", senderIdNumber=" + senderIdNumber + ", senderIdType=" + senderIdType
+                + ", senderLastName=" + senderLastName + ", senderNationality=" + senderNationality
+                + ", senderSourceOfFund=" + senderSourceOfFund + ", senderState=" + senderState + "]";
+    }
 }

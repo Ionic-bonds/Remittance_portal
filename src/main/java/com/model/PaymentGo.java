@@ -255,18 +255,16 @@ public class PaymentGo extends CommonApi {
         }
     }
 
-    // @Override
-    // public String toString() {
-    //     return "PaymentGo [nationality=" + nationality + ", payeeAccountNo=" + payeeAccountNo + ", payeeBankName="
-    //             + payeeBankName + ", payeeBirthDate=" + payeeBirthDate + ", payeeBranchName=" + payeeBranchName
-    //             + ", payeeCaNo=" + payeeCaNo + ", payeeGivenName=" + payeeGivenName + ", payeePhone=" + payeePhone
-    //             + ", payeeSurname=" + payeeSurname + ", remitAccountNo=" + remitAccountNo + ", remitAddress="
-    //             + remitAddress + ", remitCaNo=" + remitCaNo + ", remitCaType=" + remitCaType + ", remitCountryCode="
-    //             + remitCountryCode + ", remitGivenName=" + remitGivenName + ", remitPurpose=" + remitPurpose
-    //             + ", remitSurname=" + remitSurname + ", settleCurrency=" + settleCurrency + ", sourceOfFunds="
-    //             + sourceOfFunds + ", transCurrency=" + transCurrency + "]";
-    // }
-    
-    
-    
+    @Override
+    public String toString() {
+        return "PaymentGo [merTransAmount=" + merTransAmount + ", nationality=" + nationality + ", payeeAccountNo="
+                + payeeAccountNo + ", payeeBankName=" + payeeBankName + ", payeeBirthDate=" + payeeBirthDate
+                + ", payeeBranchName=" + payeeBranchName + ", payeeCaNo=" + payeeCaNo + ", payeeCaType=" + payeeCaType
+                + ", payeeGivenName=" + payeeGivenName + ", payeePhone=" + payeePhone + ", payeeSurname=" + payeeSurname
+                + ", remitAccountNo=" + remitAccountNo + ", remitAddress=" + remitAddress + ", remitCaNo=" + remitCaNo
+                + ", remitCaType=" + remitCaType + ", remitCountryCode=" + remitCountryCode + ", remitGivenName="
+                + remitGivenName + ", remitPurpose=" + remitPurpose + ", remitSurname=" + remitSurname
+                + ", settleCurrency=" + settleCurrency + ", sourceOfFunds=" + sourceOfFunds + ", transCurrency="
+                + transCurrency + "]";
+    }
 }
