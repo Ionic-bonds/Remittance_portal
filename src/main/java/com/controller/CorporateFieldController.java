@@ -64,12 +64,11 @@ public class CorporateFieldController {
     }
 
     // Add new Corporate User
-    @PostMapping("/addCorpUser")
-    public ResponseEntity<CorporateUser> addCorpUser(@RequestBody CorporateUser corporateUser) {
-        CorporateUser _corporateUser = corporateUserRepository
-                .save(new CorporateUser(corporateUser.getEmail(), corporateUser.getPassword()));
-        return new ResponseEntity<>(_corporateUser, HttpStatus.CREATED);
-    }
+    // @PostMapping("/addCorpUser")
+    // public ResponseEntity<CorporateUser> addCorpUser(@RequestBody CorporateUser corporateUser) {
+    //     CorporateUser _corporateUser = corporateUserRepository.save(new CorporateUser(corporateUser.getEmail(), corporateUser.getPassword()));
+    //     return new ResponseEntity<>(_corporateUser, HttpStatus.CREATED);
+    // }
 
     // Update Corporate User
     @PutMapping("/updateCorpUser/{corporateUserId}")

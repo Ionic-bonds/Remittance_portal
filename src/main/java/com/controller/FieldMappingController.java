@@ -1,16 +1,24 @@
 package com.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import com.exception.ResourceNotFoundException;
-import com.message.ResponseMessage;
+import com.model.Api;
 import com.model.ApiField;
+import com.model.CommonApi;
 import com.model.CorporateField;
 import com.model.CorporateUser;
+import com.model.EverywhereRemit;
+import com.model.FinanceNow;
+import com.model.PaymentGo;
 import com.model.SelectedField;
 import com.repository.ApiFieldRepository;
+import com.repository.ApiRepository;
 import com.repository.CorporateFieldRepository;
 import com.repository.CorporateUserRepository;
 import com.repository.SelectedFieldRepository;
@@ -37,6 +45,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api")
 public class FieldMappingController {
     @Autowired
+    private ApiRepository apiRepository;
+    @Autowired
     private ApiFieldRepository apiFieldRepository;
     @Autowired
     private CorporateFieldRepository corporateFieldRepository;
@@ -45,97 +55,171 @@ public class FieldMappingController {
     @Autowired
     private SelectedFieldRepository selectedFieldRepository;
 
-    public boolean checkFieldValidity(ApiField selectedApi, List<String> columnList) {
-        boolean validField = false;
-        Iterator<String> iterColumn = columnList.iterator();
-        while (iterColumn.hasNext()) {
-            String column = iterColumn.next();
-            String dataType = selectedApi.getDatatype();
-            // Check if value matches the required datatype
-            if (checkDataType(column, dataType) == true) {
-                List<SelectedField> selectedFields = selectedFieldRepository.findAllSelectedByApiFieldId(selectedApi);
-                // field is not a selected field, passes data validation
-                if (selectedFields.isEmpty()) {
-                    return true;
-                } else {
-                    // *Change to less complexity*
-                    Iterator<SelectedField> iterSelected = selectedFields.iterator();
-                    while (iterSelected.hasNext()) {
-                        SelectedField selected = iterSelected.next();
-                        if (selected.getSelectedFieldValue().equals(column)) {
-                            validField = true;
-                        }
-                    }
+    @PostMapping("/uploadFieldMapping/{corporateUserId}/{amountHeader}")
+    public ResponseEntity<List<CommonApi>> addFieldMapping(
+        @PathVariable("corporateUserId") long corporateUserId, 
+        @PathVariable("amountHeader") String amountHeader, 
+        @RequestParam("file") MultipartFile file) {
+
+        List<CommonApi> transactionList = new ArrayList<>();
+        CorporateUser corporateUser = corporateUserRepository.findById(corporateUserId).orElseThrow(() 
+            -> new ResourceNotFoundException("No Corporate found with corporate_id = " + corporateUserId));
+        List<CorporateField> corporateFields = corporateFieldRepository.findAllCorpFieldByUserId(corporateUser);
+
+        // Generate CorporateField HashMap
+        Iterator<CorporateField> iterCorpField = corporateFields.iterator();
+        HashMap<String, Set<ApiField>> fieldMapping = new HashMap<>();
+        while (iterCorpField.hasNext()) {
+            CorporateField currentCorpField = iterCorpField.next();
+            Set<ApiField> currentApiFields = currentCorpField.getApiFields();
+            fieldMapping.put(currentCorpField.getCorporateFieldName(), currentApiFields);
+        }
+
+        try {
+            Workbook workbook = new XSSFWorkbook(file.getInputStream());
+            Sheet sh = workbook.getSheetAt(0);
+            Row header = sh.getRow(0);
+            int amountColumnIndex = 0;
+            boolean amountHeaderExists = false;
+            Iterator<Cell> iterHeader = header.iterator();
+            // Retrieve column index of amount
+            while (iterHeader.hasNext() || amountHeaderExists != true) {
+                Cell currentHeader = iterHeader.next();
+                if (currentHeader.toString().equals(amountHeader)) {
+                    amountColumnIndex = currentHeader.getColumnIndex();
+                    amountHeaderExists = true;
                 }
             }
+            if (amountHeaderExists == false) {
+                // Validation: Error No amount header
+
+
+            }
+
+            List<Api> apiList = apiRepository.findAll();
+            Iterator<Row> iterApiRow = sh.iterator();
+            // Skipping headers row
+            iterApiRow.next();
+            while (iterApiRow.hasNext()) {
+                try {
+                    Row currentRow = iterApiRow.next();
+                    FinanceNow financeNow = new FinanceNow();
+                    EverywhereRemit everywhereRemit = new EverywhereRemit();
+                    PaymentGo paymentGo = new PaymentGo();
+
+                    // Determine which API to instantiate based on the amount
+                    Double amount = Double.parseDouble(currentRow.getCell(amountColumnIndex).toString());
+                    Api searchApi = determineApi(apiList, amount);
+                    
+                    Iterator<Cell> iterApiCol = currentRow.iterator();
+                    Iterator<Cell> iterHeadGet = header.iterator();
+                    while (iterApiCol.hasNext()) {
+                        Cell currentCol = iterApiCol.next();
+                        Cell currentHeader = iterHeadGet.next();
+
+                        // Maps current cell to the fieldMapping
+                        Set<ApiField> apiFields = fieldMapping.get(currentHeader.toString());
+                        // apiFields will be null if it is a common field (e.g. amount field)
+                        if (apiFields == null) {
+                            financeNow.apiSetter(currentCol.toString(), currentHeader.toString());
+                            everywhereRemit.apiSetter(currentCol.toString(), currentHeader.toString());
+                            paymentGo.apiSetter(currentCol.toString(), currentHeader.toString());
+                        }
+                        else {
+                            for (ApiField apiField : apiFields) {
+                                if (apiField.getApi().getApiId() == searchApi.getApiId()) {
+                                    String apiFieldName = apiField.getApiFieldName();
+                                    // Call Validation Method
+                                    if (checkDataType(currentCol, apiField) == true) {
+                                        if (apiField.getApi().getApiName().equals("FinanceNow")) {
+                                            financeNow.apiSetter(currentCol.toString(), apiFieldName);
+                                        } else if (apiField.getApi().getApiName().equals("EverywhereRemit")) {
+                                            everywhereRemit.apiSetter(currentCol.toString(), apiFieldName);
+                                        } else if (apiField.getApi().getApiName().equals("PaymentGo")) {
+                                            paymentGo.apiSetter(currentCol.toString(), apiFieldName);
+                                        }
+                                    }
+                                }
+                                else {
+                                    // column has failed data validation
+
+                                }
+                            }
+                        }
+                    }
+                    if (searchApi.getApiName().equals("FinanceNow")) {
+                        transactionList.add(financeNow);
+                    } else if (searchApi.getApiName().equals("EverywhereRemit")) {
+                        transactionList.add(everywhereRemit);
+                    } else if (searchApi.getApiName().equals("PaymentGo")) {
+                        transactionList.add(paymentGo);
+                    }
+                // amount column has a non-number value
+                } catch (NumberFormatException e) {
+                    // Validation: 
+
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Fail upload transactions: " + e.getMessage());
         }
-        return validField;
+        return new ResponseEntity<>(transactionList, HttpStatus.CREATED);
     }
 
-    public boolean checkDataType(String column, String dataType) {
-        if (dataType == "String") {
+    public Api determineApi(List<Api> apiList, double amount) {
+        Api searchApi = new Api();
+        Iterator<Api> iterApi = apiList.iterator();
+        while (iterApi.hasNext()) {
+            Api currentApi = iterApi.next();
+            if (amount > currentApi.getMinAmount() && amount <= currentApi.getMaxAmount()) {
+                searchApi = apiRepository.findById(currentApi.getApiId()).orElseThrow(() 
+                    -> new ResourceNotFoundException("No Api found with api_id = " + currentApi.getApiId()));
+                return searchApi;
+            }
+        }
+        return searchApi;
+    }
+
+    public boolean checkDataType(Cell column, ApiField apiField) {
+        String dataType = apiField.getDatatype();
+        List<SelectedField> selectedFields = selectedFieldRepository.findAllSelectedByApiFieldId(apiField);
+
+        // Check if the field is a selected field
+        if (selectedFields.isEmpty()) {
+            if (dataType.equals("String")) {
+                // Validation: Return true if column.toString() is a String
+    
+                return true;
+            // code for checking number
+            } 
+            else if (dataType.equals("Number")) {
+                // Validation: Return true if column.toString() is a Number
+    
+    
+                return true;
+            // code for checking date
+            } 
+            else if (dataType.equals("Date")) {
+                // Validation: Return true if column.toString() is a Date
+    
+                
+                return true;
+            }
+        } else {
+            Iterator<SelectedField> iterSelectedField = selectedFields.iterator();
+            // Validation: Check if column.toString() is inside selectedFields
+
             return true;
+            // To be completed
+            // while (iterSelectedField.hasNext()) {
+            //     SelectedField currentIterSelected = iterSelectedField.next();
+            //     if (currentIterSelected.getSelectedFieldCode().equals(column.toString())) {
+            //         return true;
+            //     } 
+            // }
         }
-        // code for checking number
-
-
-        // code for checking date
-
-        return true;
+        return false;
     }
-
-    public boolean addFieldMap(ApiField apiField, CorporateField corporateField) {
-        corporateField.addApiField(apiField);
-        corporateFieldRepository.save(corporateField);
-
-        corporateField.addApiField(apiField);
-        apiFieldRepository.save(apiField);
-        return true;
-    }
-
-    // // Dummy Code, to be removed
-    // @PostMapping("/uploadExcel/{corporateUserId}")
-    // public ResponseEntity<ResponseMessage> addFieldMapping(@PathVariable("corporateUserId") long corporateUserId, @RequestParam("file") MultipartFile file) {
-    //     String message = "";
-    //     try {
-    //         Workbook workbook = new XSSFWorkbook(file.getInputStream());
-    //         // Reading the first sheet
-    //         Sheet sh = workbook.getSheetAt(0);
-    //         Row header = sh.getRow(0);
-    //         Iterator<Cell> iterHeader = header.iterator();
-    //         // Searching for a user by {corporateUserId}
-    //         CorporateUser corporateUser = corporateUserRepository.findById(corporateUserId).orElseThrow(() 
-    //             -> new ResourceNotFoundException("No Corporate User found with corporate_user_id = " + corporateUserId));
-
-    //         // Iterate through the columns within a row
-    //         while (iterHeader.hasNext()) {
-    //             String currentCell = iterHeader.next().toString();
-    //             // Declaring empty CorporateUser
-    //             CorporateField newCorpField = new CorporateField();
-    //             // Setting new CorporateUser
-    //             newCorpField.setCorporateFieldName(currentCell);
-    //             newCorpField.setCorporateUser(corporateUser);
-    //             corporateFieldRepository.save(newCorpField);
-
-    //             message += currentCell + " ";
-    //         }
-
-
-    //         // int totalCols = header.getPhysicalNumberOfCells();
-    //         // Iterator<Row> rows = sh.iterator();
-    //         // while (rows.hasNext()) {
-    //         //     Row currentRow = rows.next();
-    //         //     for (int i=0; i<totalCols; i++) {
-    //         //         message += currentRow.getCell(i) + " ";
-    //         //     }
-    //         //     message += "\n";
-    //         // }
-    //     } catch (IOException e) {
-    //         throw new RuntimeException("fail to store csv data: " + e.getMessage());
-    //     }
-    //     return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-    // }
-
 
     @PostMapping("/addFieldMapping/{corporateFieldId}")
     public ResponseEntity<ApiField> addFieldMapping(

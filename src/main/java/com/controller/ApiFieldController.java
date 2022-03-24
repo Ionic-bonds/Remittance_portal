@@ -53,7 +53,7 @@ public class ApiFieldController {
     // Add new Api
     @PostMapping("/addApi")
     public ResponseEntity<Api> addApi(@RequestBody Api api) {
-        Api _api = apiRepository.save(new Api(api.getApiName()));
+        Api _api = apiRepository.save(new Api(api.getApiName(), api.getMinAmount(), api.getMaxAmount()));
         return new ResponseEntity<>(_api, HttpStatus.CREATED);
     }
 
