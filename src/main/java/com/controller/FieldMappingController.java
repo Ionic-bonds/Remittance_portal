@@ -91,11 +91,14 @@ public class FieldMappingController {
                 }
             }
             if (amountHeaderExists == false) {
-                // Error No amount header
+                // Validation: Error No amount header
+
+
             }
 
             List<Api> apiList = apiRepository.findAll();
             Iterator<Row> iterApiRow = sh.iterator();
+            // Skipping headers row
             iterApiRow.next();
             while (iterApiRow.hasNext()) {
                 try {
@@ -104,23 +107,42 @@ public class FieldMappingController {
                     EverywhereRemit everywhereRemit = new EverywhereRemit();
                     PaymentGo paymentGo = new PaymentGo();
 
+                    // Determine which API to instantiate based on the amount
                     Double amount = Double.parseDouble(currentRow.getCell(amountColumnIndex).toString());
                     Api searchApi = determineApi(apiList, amount);
+                    
                     Iterator<Cell> iterApiCol = currentRow.iterator();
                     Iterator<Cell> iterHeadGet = header.iterator();
                     while (iterApiCol.hasNext()) {
                         Cell currentCol = iterApiCol.next();
                         Cell currentHeader = iterHeadGet.next();
+
+                        // Maps current cell to the fieldMapping
                         Set<ApiField> apiFields = fieldMapping.get(currentHeader.toString());
-                        for (ApiField apiField : apiFields) {
-                            if (apiField.getApi().getApiId() == searchApi.getApiId()) {
-                                String apiFieldName = apiField.getApiFieldName();
-                                if (apiField.getApi().getApiName().equals("FinanceNow")) {
-                                    financeNow.apiSetter(currentCol.toString(), apiFieldName);
-                                } else if (apiField.getApi().getApiName().equals("EverywhereRemit")) {
-                                    everywhereRemit.apiSetter(currentCol.toString(), apiFieldName);
-                                } else if (apiField.getApi().getApiName().equals("PaymentGo")) {
-                                    paymentGo.apiSetter(currentCol.toString(), apiFieldName);
+                        // apiFields will be null if it is a common field (e.g. amount field)
+                        if (apiFields == null) {
+                            financeNow.apiSetter(currentCol.toString(), currentHeader.toString());
+                            everywhereRemit.apiSetter(currentCol.toString(), currentHeader.toString());
+                            paymentGo.apiSetter(currentCol.toString(), currentHeader.toString());
+                        }
+                        else {
+                            for (ApiField apiField : apiFields) {
+                                if (apiField.getApi().getApiId() == searchApi.getApiId()) {
+                                    String apiFieldName = apiField.getApiFieldName();
+                                    // Call Validation Method
+                                    if (checkDataType(currentCol, apiField) == true) {
+                                        if (apiField.getApi().getApiName().equals("FinanceNow")) {
+                                            financeNow.apiSetter(currentCol.toString(), apiFieldName);
+                                        } else if (apiField.getApi().getApiName().equals("EverywhereRemit")) {
+                                            everywhereRemit.apiSetter(currentCol.toString(), apiFieldName);
+                                        } else if (apiField.getApi().getApiName().equals("PaymentGo")) {
+                                            paymentGo.apiSetter(currentCol.toString(), apiFieldName);
+                                        }
+                                    }
+                                }
+                                else {
+                                    // column has failed data validation
+
                                 }
                             }
                         }
@@ -132,9 +154,10 @@ public class FieldMappingController {
                     } else if (searchApi.getApiName().equals("PaymentGo")) {
                         transactionList.add(paymentGo);
                     }
-            //     // amount column has a non-number value
+                // amount column has a non-number value
                 } catch (NumberFormatException e) {
-                    
+                    // Validation: 
+
                 }
             }
         } catch (IOException e) {
@@ -157,20 +180,45 @@ public class FieldMappingController {
         return searchApi;
     }
 
-    public boolean checkDataType(Cell column, String dataType, List<SelectedField> selectedFields) {
-        if (selectedFields.size() > 0) {
-            
-        }
-        if (dataType == "String") {
+    public boolean checkDataType(Cell column, ApiField apiField) {
+        String dataType = apiField.getDatatype();
+        List<SelectedField> selectedFields = selectedFieldRepository.findAllSelectedByApiFieldId(apiField);
+
+        // Check if the field is a selected field
+        if (selectedFields.isEmpty()) {
+            if (dataType.equals("String")) {
+                // Validation: Return true if column.toString() is a String
+    
+                return true;
+            // code for checking number
+            } 
+            else if (dataType.equals("Number")) {
+                // Validation: Return true if column.toString() is a Number
+    
+    
+                return true;
+            // code for checking date
+            } 
+            else if (dataType.equals("Date")) {
+                // Validation: Return true if column.toString() is a Date
+    
+                
+                return true;
+            }
+        } else {
+            Iterator<SelectedField> iterSelectedField = selectedFields.iterator();
+            // Validation: Check if column.toString() is inside selectedFields
+
             return true;
-        // code for checking number
-        } else if (dataType == "Number") {
-            return true;
-        // code for checking date
-        } else if (dataType == "Date") {
-            
+            // To be completed
+            // while (iterSelectedField.hasNext()) {
+            //     SelectedField currentIterSelected = iterSelectedField.next();
+            //     if (currentIterSelected.getSelectedFieldCode().equals(column.toString())) {
+            //         return true;
+            //     } 
+            // }
         }
-        return true;
+        return false;
     }
 
     @PostMapping("/addFieldMapping/{corporateFieldId}")

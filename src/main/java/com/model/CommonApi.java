@@ -1,7 +1,13 @@
 package com.model;
 
-public abstract class CommonApi {
+public class CommonApi {
+    private double Amount;
 
-    public abstract void apiSetter(Object o, String field);
+    public double getAmount() {
+        return Amount;
+    }
 
+    public void setAmount(double Amount) {
+        this.Amount = Amount;
+    }
 }
