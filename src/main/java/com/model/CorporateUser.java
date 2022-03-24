@@ -9,15 +9,15 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "users",
-       uniqueConstraints = {
-           @UniqueConstraint(columnNames = "username"),
-           @UniqueConstraint(columnNames = "email")
-       })
+@Table(name = "corporate_user",
+        uniqueConstraints = {
+            @UniqueConstraint(columnNames = "username"),
+            @UniqueConstraint(columnNames = "email")
+        })
 public class CorporateUser {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long userId;
+  private Long corporateUserId;
 
   @NotBlank
   @Size(max = 20)
@@ -34,7 +34,7 @@ public class CorporateUser {
 
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(name = "user_roles", 
-             joinColumns = @JoinColumn(name = "user_id"),
+             joinColumns = @JoinColumn(name = "corporate_user_id"),
              inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new HashSet<>();
 
@@ -47,12 +47,12 @@ public class CorporateUser {
     this.password = password;
   }
 
-  public Long getId() {
-    return userId;
+  public Long getCorporateUserId() {
+    return corporateUserId;
   }
 
-  public void setId(Long userId) {
-    this.userId = userId;
+  public void setCorporateUserId(Long corporateUserId) {
+    this.corporateUserId = corporateUserId;
   }
 
   public String getUsername() {

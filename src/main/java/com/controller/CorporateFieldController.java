@@ -8,7 +8,7 @@ import com.message.ResponseMessage;
 import com.model.CorporateField;
 import com.model.CorporateUser;
 import com.repository.CorporateFieldRepository;
-import com.repository.UserRepository;
+import com.repository.CorporateUserRepository;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -34,7 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api")
 public class CorporateFieldController {
     @Autowired
-    private UserRepository corporateUserRepository;
+    private CorporateUserRepository corporateUserRepository;
     @Autowired
     private CorporateFieldRepository corporateFieldRepository;
 

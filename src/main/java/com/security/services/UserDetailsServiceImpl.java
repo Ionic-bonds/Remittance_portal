@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.model.CorporateUser;
-import com.repository.UserRepository;
+import com.repository.CorporateUserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
   @Autowired
-  UserRepository userRepository;
+  CorporateUserRepository userRepository;
 
   @Override
   @Transactional

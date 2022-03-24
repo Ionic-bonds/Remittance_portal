@@ -30,7 +30,7 @@ import com.payload.request.SignupRequest;
 import com.payload.response.UserInfoResponse;
 import com.payload.response.MessageResponse;
 import com.repository.RoleRepository;
-import com.repository.UserRepository;
+import com.repository.CorporateUserRepository;
 import com.security.jwt.JwtUtils;
 import com.security.services.UserDetailsImpl;
 
@@ -42,7 +42,7 @@ public class AuthController {
   AuthenticationManager authenticationManager;
 
   @Autowired
-  UserRepository userRepository;
+  CorporateUserRepository userRepository;
 
   @Autowired
   RoleRepository roleRepository;
