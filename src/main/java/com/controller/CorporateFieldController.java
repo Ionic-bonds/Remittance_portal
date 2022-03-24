@@ -1,12 +1,10 @@
 package com.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import com.exception.ResourceNotFoundException;
-import com.message.ResponseMessage;
 import com.model.CorporateField;
 import com.model.CorporateUser;
 import com.repository.CorporateFieldRepository;
@@ -18,8 +16,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin(origins = "http://localhost:8081")
@@ -167,7 +162,7 @@ public class CorporateFieldController {
             Workbook workbook = new XSSFWorkbook(file.getInputStream());
             // Reading the first sheet
             Sheet sh = workbook.getSheetAt(0);
-            Row header = sh.getRow(0);
+            Row header = sh.getRow(1);
             Iterator<Cell> iterHeader = header.iterator();
             // Searching for a user by {corporateUserId}
             CorporateUser corporateUser = corporateUserRepository.findById(corporateUserId)
@@ -182,17 +177,18 @@ public class CorporateFieldController {
             // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new
             // ResponseMessage(message));
             // }
-
+            
+            int colCounter = 1;
             // Iterate through the columns within a row
             while (iterHeader.hasNext()) {
                 String currentCell = iterHeader.next().toString();
                 // Declaring empty CorporateUser
                 CorporateField newCorpField = new CorporateField();
                 // Setting new CorporateUser
-                newCorpField.setCorporateFieldName(currentCell);
+                String newCorporateFieldName = currentCell + "_" + String.valueOf(colCounter++);
+                newCorpField.setCorporateFieldName(newCorporateFieldName);
                 newCorpField.setCorporateUser(corporateUser);
                 corporateFieldRepository.save(newCorpField);
-
             }
 
         } catch (IOException e) {

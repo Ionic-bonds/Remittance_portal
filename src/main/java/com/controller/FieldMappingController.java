@@ -55,10 +55,11 @@ public class FieldMappingController {
     @Autowired
     private SelectedFieldRepository selectedFieldRepository;
 
-    @PostMapping("/uploadFieldMapping/{corporateUserId}/{amountHeader}")
+    @PostMapping("/uploadFieldMapping/{corporateUserId}/{amountCol}")
+    // public ResponseEntity<List<String>> addFieldMapping(
     public ResponseEntity<List<CommonApi>> addFieldMapping(
         @PathVariable("corporateUserId") long corporateUserId, 
-        @PathVariable("amountHeader") String amountHeader, 
+        @PathVariable("amountCol") int amountCol, 
         @RequestParam("file") MultipartFile file) {
 
         List<CommonApi> transactionList = new ArrayList<>();
@@ -74,86 +75,81 @@ public class FieldMappingController {
             Set<ApiField> currentApiFields = currentCorpField.getApiFields();
             fieldMapping.put(currentCorpField.getCorporateFieldName(), currentApiFields);
         }
-
         try {
             Workbook workbook = new XSSFWorkbook(file.getInputStream());
+            int headerRow = 1;
             Sheet sh = workbook.getSheetAt(0);
-            Row header = sh.getRow(0);
-            int amountColumnIndex = 0;
-            boolean amountHeaderExists = false;
-            Iterator<Cell> iterHeader = header.iterator();
-            // Retrieve column index of amount
-            while (iterHeader.hasNext() || amountHeaderExists != true) {
-                Cell currentHeader = iterHeader.next();
-                if (currentHeader.toString().equals(amountHeader)) {
-                    amountColumnIndex = currentHeader.getColumnIndex();
-                    amountHeaderExists = true;
-                }
-            }
-            if (amountHeaderExists == false) {
-                // Validation: Error No amount header
-
-
-            }
-
+            Row header = sh.getRow(headerRow);
             List<Api> apiList = apiRepository.findAll();
             Iterator<Row> iterApiRow = sh.iterator();
             // Skipping headers row
-            iterApiRow.next();
+            for (int i=0; i<headerRow; i++) {
+                iterApiRow.next();
+            }
             while (iterApiRow.hasNext()) {
                 try {
+                    int colCounter = 1;
                     Row currentRow = iterApiRow.next();
                     FinanceNow financeNow = new FinanceNow();
                     EverywhereRemit everywhereRemit = new EverywhereRemit();
                     PaymentGo paymentGo = new PaymentGo();
 
                     // Determine which API to instantiate based on the amount
-                    Double amount = Double.parseDouble(currentRow.getCell(amountColumnIndex).toString());
+                    Double amount = Double.parseDouble(currentRow.getCell(amountCol - 1).toString());
                     Api searchApi = determineApi(apiList, amount);
-                    
-                    Iterator<Cell> iterApiCol = currentRow.iterator();
-                    Iterator<Cell> iterHeadGet = header.iterator();
-                    while (iterApiCol.hasNext()) {
-                        Cell currentCol = iterApiCol.next();
-                        Cell currentHeader = iterHeadGet.next();
+                    // Amount matches an API range 
+                    if (searchApi != null) {
+                        long searchApiId = searchApi.getApiId();
+                        String searchApiName = searchApi.getApiName();
+                        
+                        Iterator<Cell> iterApiCol = currentRow.iterator();
+                        Iterator<Cell> iterHeadGet = header.iterator();
+                        while (iterApiCol.hasNext()) {
+                            Cell currentCol = iterApiCol.next();
+                            Cell currentHeader = iterHeadGet.next();
+                            String searchApiField = currentHeader.toString() + "_" + String.valueOf(colCounter++);
 
-                        // Maps current cell to the fieldMapping
-                        Set<ApiField> apiFields = fieldMapping.get(currentHeader.toString());
-                        // apiFields will be null if it is a common field (e.g. amount field)
-                        if (apiFields == null) {
-                            financeNow.apiSetter(currentCol.toString(), currentHeader.toString());
-                            everywhereRemit.apiSetter(currentCol.toString(), currentHeader.toString());
-                            paymentGo.apiSetter(currentCol.toString(), currentHeader.toString());
-                        }
-                        else {
-                            for (ApiField apiField : apiFields) {
-                                if (apiField.getApi().getApiId() == searchApi.getApiId()) {
-                                    String apiFieldName = apiField.getApiFieldName();
-                                    // Call Validation Method
-                                    if (checkDataType(currentCol, apiField) == true) {
-                                        if (apiField.getApi().getApiName().equals("FinanceNow")) {
-                                            financeNow.apiSetter(currentCol.toString(), apiFieldName);
-                                        } else if (apiField.getApi().getApiName().equals("EverywhereRemit")) {
-                                            everywhereRemit.apiSetter(currentCol.toString(), apiFieldName);
-                                        } else if (apiField.getApi().getApiName().equals("PaymentGo")) {
-                                            paymentGo.apiSetter(currentCol.toString(), apiFieldName);
+                            // Maps current cell to the fieldMapping
+                            Set<ApiField> apiFields = fieldMapping.get(searchApiField);
+                            if (apiFields != null) {
+                                for (ApiField apiField : apiFields) {
+                                    // if (checkDataType(currentCol, apiField) == true) {
+                                        String apiFieldName = apiField.getApiFieldName();
+                                        String apiName = apiField.getApi().getApiName();
+                                        long apiFieldApiId = apiField.getApi().getApiId();
+                                        if (apiFieldApiId == searchApiId) {
+                                            if (apiName.equals("FinanceNow")) {
+                                                financeNow.apiSetter(currentCol.toString(), apiFieldName);
+                                            } else if (apiName.equals("EverywhereRemit")) {
+                                                everywhereRemit.apiSetter(currentCol.toString(), apiFieldName);
+                                            } else if (apiName.equals("PaymentGo")) {
+                                                paymentGo.apiSetter(currentCol.toString(), apiFieldName);
+                                            }
                                         }
-                                    }
-                                }
-                                else {
-                                    // column has failed data validation
+                                    // }
+                                    // // Column has failed data validation
+                                    // else {
+                                        
 
+                                    // }
                                 }
                             }
                         }
+                        if (searchApiName.equals("FinanceNow")) {
+                            transactionList.add(financeNow);
+                        } else if (searchApiName.equals("EverywhereRemit")) {
+                            transactionList.add(everywhereRemit);
+                        } else if (searchApiName.equals("PaymentGo")) {
+                            transactionList.add(paymentGo);
+                        }
+                    } 
+                    // Amount is not within the range
+                    else {
+                        // Validation: 
+
+
                     }
-                    if (searchApi.getApiName().equals("FinanceNow")) {
-                        transactionList.add(financeNow);
-                    } else if (searchApi.getApiName().equals("EverywhereRemit")) {
-                        transactionList.add(everywhereRemit);
-                    } else if (searchApi.getApiName().equals("PaymentGo")) {
-                        transactionList.add(paymentGo);
-                    }
+                
                 // amount column has a non-number value
                 } catch (NumberFormatException e) {
                     // Validation: 
@@ -206,7 +202,7 @@ public class FieldMappingController {
                 return true;
             }
         } else {
-            Iterator<SelectedField> iterSelectedField = selectedFields.iterator();
+            // Iterator<SelectedField> iterSelectedField = selectedFields.iterator();
             // Validation: Check if column.toString() is inside selectedFields
 
             return true;

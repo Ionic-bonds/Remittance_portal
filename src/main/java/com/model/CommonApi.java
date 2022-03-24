@@ -1,13 +1,22 @@
 package com.model;
 
 public class CommonApi {
-    private double Amount;
+    private double amount;
+    private String referenceId;
 
     public double getAmount() {
-        return Amount;
+        return amount;
     }
 
-    public void setAmount(double Amount) {
-        this.Amount = Amount;
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public String getReferenceId() {
+        return referenceId;
+    }
+
+    public void setReferenceId(String referenceId) {
+        this.referenceId = referenceId;
     }
 }

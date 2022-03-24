@@ -203,53 +203,56 @@ public class FinanceNow extends CommonApi {
         this.receiverNationality = receiverNationality;
     }
 
-    public void apiSetter(String o, String field) {
-        if (field.equals("amount")) {
-            super.setAmount(Double.parseDouble(o.toString()));
-        } else if (field.equals("BankAccountNumber")) {
-            setBankAccountNumber(o.toString());
-        } else if (field.equals("PaymentMode")) {
-            setPaymentMode(o.toString());
-        } else if (field.equals("PayoutCurrency")) {
-            setPayoutCurrency(o.toString());
-        } else if (field.equals("PurposeOfRemittance")) {
-            setPurposeOfRemittance(o.toString());
-        } else if (field.equals("ReceiverAddress")) {
-            setReceiverAddress(o.toString());
-        } else if (field.equals("ReceiverCity")) {
-            setReceiverCity(o.toString());
-        } else if (field.equals("ReceiverCountry")) {
-            setReceiverCountry(o.toString());
-        } else if (field.equals("ReceiverFirstName")) {
-            setReceiverFirstName(o.toString());
-        } else if (field.equals("ReceiverIdNumber")) {
-            setReceiverIdNumber(o.toString());
-        } else if (field.equals("ReceiverIdType")) {
-            setReceiverIdType(o.toString());
-        } else if (field.equals("ReceiverLastName")) {
-            setReceiverLastName(o.toString());
-        } else if (field.equals("SenderAddress")) {
-            setSenderAddress(o.toString());
-        } else if (field.equals("SenderCity")) {   
-            setSenderCity(o.toString());  
-        } else if (field.equals("SenderDateOfBirth")) {
-            setSenderDateOfBirth(o.toString());
-        } else if (field.equals("SenderFirstName")) {
-            setSenderFirstName(o.toString());
-        } else if (field.equals("SenderIdNumber")) {
-            setSenderIdNumber(o.toString());
-        } else if (field.equals("SenderIdType")) {
-            setSenderIdType(o.toString());
-        } else if (field.equals("SenderLastName")) {
-            setSenderLastName(o.toString());
-        } else if (field.equals("SenderNationality")) {  
-            setSenderNationality(o.toString()); 
-        } else if (field.equals("SenderSourceOfFund")) {
-            setSenderSourceOfFund(o.toString());
-        } else if (field.equals("SenderState")) {
-            setSenderState(o.toString());
-        } else if (field.equals("ReceiverNationality")) {
-            setReceiverNationality(o.toString());
+    public void apiSetter(String value, String dbField) {
+        if (dbField.equals("BankAccountNumber")) {
+            setBankAccountNumber(value);
+        } else if (dbField.equals("PaymentMode")) {
+            setPaymentMode(value);
+        } else if (dbField.equals("PayoutCurrency")) {
+            setPayoutCurrency(value);
+        } else if (dbField.equals("PurposeOfRemittance")) {
+            setPurposeOfRemittance(value);
+        } else if (dbField.equals("ReceiverAddress")) {
+            setReceiverAddress(value);
+        } else if (dbField.equals("ReceiverCity")) {
+            setReceiverCity(value);
+        } else if (dbField.equals("ReceiverCountry")) {
+            setReceiverCountry(value);
+        } else if (dbField.equals("ReceiverFirstName")) {
+            setReceiverFirstName(value);
+        } else if (dbField.equals("ReceiverIdNumber")) {
+            setReceiverIdNumber(value);
+        } else if (dbField.equals("ReceiverIdType")) {
+            setReceiverIdType(value);
+        } else if (dbField.equals("ReceiverLastName")) {
+            setReceiverLastName(value);
+        } else if (dbField.equals("SenderAddress")) {
+            setSenderAddress(value);
+        } else if (dbField.equals("SenderCity")) {   
+            setSenderCity(value);  
+        } else if (dbField.equals("SenderDateOfBirth")) {
+            setSenderDateOfBirth(value);
+        } else if (dbField.equals("SenderFirstName")) {
+            setSenderFirstName(value);
+        } else if (dbField.equals("SenderIdNumber")) {
+            setSenderIdNumber(value);
+        } else if (dbField.equals("SenderIdType")) {
+            setSenderIdType(value);
+        } else if (dbField.equals("SenderLastName")) {
+            setSenderLastName(value);
+        } else if (dbField.equals("SenderNationality")) {  
+            setSenderNationality(value); 
+        } else if (dbField.equals("SenderSourceOfFund")) {
+            setSenderSourceOfFund(value);
+        } else if (dbField.equals("SenderState")) {
+            setSenderState(value);
+        } else if (dbField.equals("ReceiverNationality")) {
+            setReceiverNationality(value);
+        // Common Fields
+        } else if (dbField.equals("ReferenceId")) {
+            super.setReferenceId(value);
+        } else if (dbField.equals("ReceivingAmount")) {
+            super.setAmount(Double.parseDouble(value));
         }
     }
 
