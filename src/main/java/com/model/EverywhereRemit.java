@@ -136,57 +136,44 @@ public class EverywhereRemit extends CommonApi {
     public void setRecipient_legal_name_last(String recipient_legal_name_last) {
         this.recipient_legal_name_last = recipient_legal_name_last;
     }
-
     public String getRecipient_mobile_number() {
         return recipient_mobile_number;
     }
-
     public void setRecipient_mobile_number(String recipient_mobile_number) {
         this.recipient_mobile_number = recipient_mobile_number;
     }
-
     public String getRecipient_account_number() {
         return recipient_account_number;
     }
-
     public void setRecipient_account_number(String recipient_account_number) {
         this.recipient_account_number = recipient_account_number;
     }
-
     public String getRecipient_currency() {
         return recipient_currency;
     }
-
     public void setRecipient_currency(String recipient_currency) {
         this.recipient_currency = recipient_currency;
     }
-
     public String getUnits() {
         return units;
     }
-
     public void setUnits(String units) {
         this.units = units;
     }
-
     public String getSource_of_funds() {
         return source_of_funds;
     }
-
     public void setSource_of_funds(String source_of_funds) {
         this.source_of_funds = source_of_funds;
     }
-
     public String getRemittance_purpose() {
         return remittance_purpose;
     }
-
     public void setRemittance_purpose(String remittance_purpose) {
         this.remittance_purpose = remittance_purpose;
     }
 
-    @Override
-    public void apiSetter(Object o, String field) {
+    public void apiSetter(String o, String field) {
         if (field.equals("source_type")) {
             setSource_type(o.toString());
         } else if (field.equals("sender_country")) {

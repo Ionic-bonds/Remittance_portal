@@ -5,10 +5,12 @@ public class PaymentGo extends CommonApi {
     private String remitSurname;
     private String remitCaType;
     private String remitCaNo;
+    private String merTransAmount;
     private String remitCountryCode;
     private String remitAddress;
     private String nationality;
     private String remitPurpose;
+    private String payeeCaType;
     private String settleCurrency;
     private String transCurrency;
     private String payeeGivenName;
@@ -56,6 +58,14 @@ public class PaymentGo extends CommonApi {
         this.remitCaNo = remitCaNo;
     }
 
+    public String getMerTransAmount() {
+        return merTransAmount;
+    }
+
+    public void setMerTransAmount(String merTransAmount) {
+        this.merTransAmount = merTransAmount;
+    }
+
     public String getRemitCountryCode() {
         return remitCountryCode;
     }
@@ -86,6 +96,14 @@ public class PaymentGo extends CommonApi {
 
     public void setRemitPurpose(String remitPurpose) {
         this.remitPurpose = remitPurpose;
+    }
+
+    public String getPayeeCaType() {
+        return payeeCaType;
+    }
+
+    public void setPayeeCaType(String payeeCaType) {
+        this.payeeCaType = payeeCaType;
     }
 
     public String getSettleCurrency() {
@@ -184,8 +202,7 @@ public class PaymentGo extends CommonApi {
         this.sourceOfFunds = sourceOfFunds;
     }
 
-    @Override
-    public void apiSetter(Object o, String field) {
+    public void apiSetter(String o, String field) {
         if (field.equals("remitGivenName")) {
             setRemitGivenName(o.toString());
         } else if (field.equals("remitSurname")) {
@@ -202,6 +219,8 @@ public class PaymentGo extends CommonApi {
             setNationality(o.toString());
         } else if (field.equals("remitPurpose")) {
             setRemitPurpose(o.toString());
+        } else if (field.equals("payeeCaType")) {
+            setPayeeCaType(o.toString());
         } else if (field.equals("settleCurrency")) {
             setSettleCurrency(o.toString());
         } else if (field.equals("transCurrency")) {
@@ -222,7 +241,9 @@ public class PaymentGo extends CommonApi {
             setPayeeBranchName(o.toString());
         } else if (field.equals("payeeCaNo")) {
             setPayeeCaNo(o.toString());
-        } else if (field.equals("remitAccountNo")) {
+        } else if (field.equals("merTransAmount")) {
+            setMerTransAmount(o.toString());
+        }else if (field.equals("remitAccountNo")) {
             setRemitAccountNo(o.toString());
         } else if (field.equals("sourceOfFunds")) {
             setSourceOfFunds(o.toString());
