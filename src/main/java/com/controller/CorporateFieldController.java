@@ -8,7 +8,7 @@ import com.message.ResponseMessage;
 import com.model.CorporateField;
 import com.model.CorporateUser;
 import com.repository.CorporateFieldRepository;
-import com.repository.CorporateUserRepository;
+import com.repository.UserRepository;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -34,7 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api")
 public class CorporateFieldController {
     @Autowired
-    private CorporateUserRepository corporateUserRepository;
+    private UserRepository corporateUserRepository;
     @Autowired
     private CorporateFieldRepository corporateFieldRepository;
 
@@ -57,11 +57,11 @@ public class CorporateFieldController {
     }
 
     // Add new Corporate User
-    @PostMapping("/addCorpUser")
-    public ResponseEntity<CorporateUser> addCorpUser(@RequestBody CorporateUser corporateUser) {
-        CorporateUser _corporateUser = corporateUserRepository.save(new CorporateUser(corporateUser.getEmail(), corporateUser.getPassword()));
-        return new ResponseEntity<>(_corporateUser, HttpStatus.CREATED);
-    }
+    // @PostMapping("/addCorpUser")
+    // public ResponseEntity<CorporateUser> addCorpUser(@RequestBody CorporateUser corporateUser) {
+    //     CorporateUser _corporateUser = corporateUserRepository.save(new CorporateUser(corporateUser.getEmail(), corporateUser.getPassword()));
+    //     return new ResponseEntity<>(_corporateUser, HttpStatus.CREATED);
+    // }
 
     // Update Corporate User
     @PutMapping("/updateCorpUser/{corporateUserId}")
