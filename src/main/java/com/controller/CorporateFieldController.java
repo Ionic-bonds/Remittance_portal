@@ -171,6 +171,7 @@ public class CorporateFieldController {
             // Reading the first sheet
             Sheet sh = workbook.getSheetAt(0);
             // If headers in row 1 of Excel sheet, parameter is 0; if headers in row 2, parameter is 1
+            headerRow -= 1;
             Row header = sh.getRow(headerRow);
             Iterator<Cell> iterHeader = header.iterator();
             // Searching for a user by {corporateUserId}
