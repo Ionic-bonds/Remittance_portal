@@ -60,9 +60,11 @@ public class CorporateFieldController {
 
     // Add new Corporate User
     // @PostMapping("/addCorpUser")
-    // public ResponseEntity<CorporateUser> addCorpUser(@RequestBody CorporateUser corporateUser) {
-    //     CorporateUser _corporateUser = corporateUserRepository.save(new CorporateUser(corporateUser.getEmail(), corporateUser.getPassword()));
-    //     return new ResponseEntity<>(_corporateUser, HttpStatus.CREATED);
+    // public ResponseEntity<CorporateUser> addCorpUser(@RequestBody CorporateUser
+    // corporateUser) {
+    // CorporateUser _corporateUser = corporateUserRepository.save(new
+    // CorporateUser(corporateUser.getEmail(), corporateUser.getPassword()));
+    // return new ResponseEntity<>(_corporateUser, HttpStatus.CREATED);
     // }
 
     // Update Corporate User
@@ -144,8 +146,9 @@ public class CorporateFieldController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/uploadExcelHeader/{corporateUserId}")
+    @PostMapping("/uploadExcelHeader/{corporateUserId}/{headerRow}")
     public ResponseEntity<Object> addFieldMapping(@PathVariable("corporateUserId") long corporateUserId,
+            @PathVariable("headerRow") int headerRow,
             @RequestParam("file") MultipartFile file) {
 
         try {
@@ -162,7 +165,8 @@ public class CorporateFieldController {
             Workbook workbook = new XSSFWorkbook(file.getInputStream());
             // Reading the first sheet
             Sheet sh = workbook.getSheetAt(0);
-            Row header = sh.getRow(1);
+            // If headers in row 1 of Excel sheet, parameter is 0; if headers in row 2, parameter is 1
+            Row header = sh.getRow(headerRow);
             Iterator<Cell> iterHeader = header.iterator();
             // Searching for a user by {corporateUserId}
             CorporateUser corporateUser = corporateUserRepository.findById(corporateUserId)
