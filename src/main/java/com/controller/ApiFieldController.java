@@ -60,11 +60,11 @@ public class ApiFieldController {
     // Get all Api Fields
     @GetMapping("/getAllApiField")
     public ResponseEntity<List<ApiField>> getAllApiField() {
-        List<ApiField> apis = apiFieldRepository.findAll();
-        if (apis.isEmpty()) {
+        List<ApiField> apiFields = apiFieldRepository.findAll();
+        if (apiFields.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(apis, HttpStatus.OK);
+        return new ResponseEntity<>(apiFields, HttpStatus.OK);
     }
 
     // Get Api Field by api_field_id

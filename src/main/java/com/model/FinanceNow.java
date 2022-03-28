@@ -1,224 +1,286 @@
 package com.model;
 
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@XmlRootElement
+@XmlAccessorType()
 public class FinanceNow extends CommonApi {
-    private String BankAccountNumber;
-    private String PaymentMode;
-    private String PayoutCurrency;
-    private String PurposeOfRemittance;
-    private String ReceiverAddress;
-    private String ReceiverCity;
-    private String ReceiverCountry;
-    private String ReceiverFirstName;
-    private String ReceiverIdNumber;
-    private String ReceiverIdType;
-    private String ReceiverLastName;
-    private String SenderAddress;
-    private String SenderCity;   
-    private String SenderDateOfBirth;
-    private String SenderFirstName;
-    private String SenderIdNumber;
-    private String SenderIdType;
-    private String SenderLastName;
-    private String SenderNationality;   
-    private String SenderSourceOfFund;
-    private String SenderState;
-    private String ReceiverNationality;
+    private String bankAccountNumber;
+    private String paymentMode;
+    private String payoutCurrency;
+    private String purposeOfRemittance;
+    private String receiverAddress;
+    private String senderBeneficiaryRelationship;
+    private String receiverCity;
+    private String senderCountry;
+    private String receiverCountry;
+    private String receiverFirstName;
+    private String receiverIdNumber;
+    private String receiverIdType;
+    private String receiverLastName;
+    private String senderAddress;
+    private String senderCity;   
+    private String senderDateOfBirth;
+    private String senderFirstName;
+    private String senderIdNumber;
+    private String senderIdType;
+    private String senderLastName;
+    private String senderNationality;   
+    private String senderSourceOfFund;
+    private String senderState;
+    private String receiverNationality;
 
-    public FinanceNow() {}
+    public FinanceNow() {};
 
-    public String getBankAccountNumber() {
-        return BankAccountNumber;
-    }
-    public void setBankAccountNumber(String bankAccountNumber) {
-        BankAccountNumber = bankAccountNumber;
-    }
-    public String getPaymentMode() {
-        return PaymentMode;
-    }
-    public void setPaymentMode(String paymentMode) {
-        PaymentMode = paymentMode;
-    }
-    public String getPayoutCurrency() {
-        return PayoutCurrency;
-    }
-    public void setPayoutCurrency(String payoutCurrency) {
-        PayoutCurrency = payoutCurrency;
-    }
-    public String getPurposeOfRemittance() {
-        return PurposeOfRemittance;
-    }
-    public void setPurposeOfRemittance(String purposeOfRemittance) {
-        PurposeOfRemittance = purposeOfRemittance;
-    }
-    public String getReceiverAddress() {
-        return ReceiverAddress;
-    }
-    public void setReceiverAddress(String receiverAddress) {
-        ReceiverAddress = receiverAddress;
-    }
-    public String getReceiverCity() {
-        return ReceiverCity;
-    }
-    public void setReceiverCity(String receiverCity) {
-        ReceiverCity = receiverCity;
-    }
-    public String getReceiverCountry() {
-        return ReceiverCountry;
-    }
-    public void setReceiverCountry(String receiverCountry) {
-        ReceiverCountry = receiverCountry;
-    }
-    public String getReceiverFirstName() {
-        return ReceiverFirstName;
-    }
-    public void setReceiverFirstName(String receiverFirstName) {
-        ReceiverFirstName = receiverFirstName;
-    }
-    public String getReceiverIdNumber() {
-        return ReceiverIdNumber;
-    }
-    public void setReceiverIdNumber(String receiverIdNumber) {
-        ReceiverIdNumber = receiverIdNumber;
-    }
-    public String getReceiverIdType() {
-        return ReceiverIdType;
-    }
-    public void setReceiverIdType(String receiverIdType) {
-        ReceiverIdType = receiverIdType;
-    }
-    public String getReceiverLastName() {
-        return ReceiverLastName;
-    }
-    public void setReceiverLastName(String receiverLastName) {
-        ReceiverLastName = receiverLastName;
-    }
-    public String getSenderAddress() {
-        return SenderAddress;
-    }
-    public void setSenderAddress(String senderAddress) {
-        SenderAddress = senderAddress;
-    }
-    public String getSenderCity() {
-        return SenderCity;
-    }
-    public void setSenderCity(String senderCity) {
-        SenderCity = senderCity;
-    }
-    public String getSenderDateOfBirth() {
-        return SenderDateOfBirth;
-    }
-    public void setSenderDateOfBirth(String senderDateOfBirth) {
-        SenderDateOfBirth = senderDateOfBirth;
-    }
-    public String getSenderFirstName() {
-        return SenderFirstName;
-    }
-    public void setSenderFirstName(String senderFirstName) {
-        SenderFirstName = senderFirstName;
-    }
-    public String getSenderIdNumber() {
-        return SenderIdNumber;
-    }
-    public void setSenderIdNumber(String senderIdNumber) {
-        SenderIdNumber = senderIdNumber;
-    }
-    public String getSenderIdType() {
-        return SenderIdType;
-    }
-    public void setSenderIdType(String senderIdType) {
-        SenderIdType = senderIdType;
-    }
-    public String getSenderLastName() {
-        return SenderLastName;
-    }
-    public void setSenderLastName(String senderLastName) {
-        SenderLastName = senderLastName;
-    }
-    public String getSenderNationality() {
-        return SenderNationality;
-    }
-    public void setSenderNationality(String senderNationality) {
-        SenderNationality = senderNationality;
-    }
-    public String getSenderSourceOfFund() {
-        return SenderSourceOfFund;
-    }
-    public void setSenderSourceOfFund(String senderSourceOfFund) {
-        SenderSourceOfFund = senderSourceOfFund;
-    }
-    public String getSenderState() {
-        return SenderState;
-    }
-    public void setSenderState(String senderState) {
-        SenderState = senderState;
-    }
-    public String getReceiverNationality() {
-        return ReceiverNationality;
-    }
-    public void setReceiverNationality(String receiverNationality) {
-        ReceiverNationality = receiverNationality;
+    @Override
+    @JsonProperty("Amount")
+    public double getAmount() {
+        return super.getAmount();
     }
 
     @Override
-    public void apiSetter(Object o, String field) {
-        if (field.equals("BankAccountNumber")) {
-            setBankAccountNumber(o.toString());
-        } else if (field.equals("PaymentMode")) {
-            setPaymentMode(o.toString());
-        } else if (field.equals("PayoutCurrency")) {
-            setPayoutCurrency(o.toString());
-        } else if (field.equals("PurposeOfRemittance")) {
-            setPurposeOfRemittance(o.toString());
-        } else if (field.equals("ReceiverAddress")) {
-            setReceiverAddress(o.toString());
-        } else if (field.equals("ReceiverCity")) {
-            setReceiverCity(o.toString());
-        } else if (field.equals("ReceiverCountry")) {
-            setReceiverCountry(o.toString());
-        } else if (field.equals("ReceiverFirstName")) {
-            setReceiverFirstName(o.toString());
-        } else if (field.equals("ReceiverIdNumber")) {
-            setReceiverIdNumber(o.toString());
-        } else if (field.equals("ReceiverIdType")) {
-            setReceiverIdType(o.toString());
-        } else if (field.equals("ReceiverLastName")) {
-            setReceiverLastName(o.toString());
-        } else if (field.equals("SenderAddress")) {
-            setSenderAddress(o.toString());
-        } else if (field.equals("SenderCity")) {   
-            setSenderCity(o.toString());  
-        } else if (field.equals("SenderDateOfBirth")) {
-            setSenderDateOfBirth(o.toString());
-        } else if (field.equals("SenderFirstName")) {
-            setSenderFirstName(o.toString());
-        } else if (field.equals("SenderIdNumber")) {
-            setSenderIdNumber(o.toString());
-        } else if (field.equals("SenderIdType")) {
-            setSenderIdType(o.toString());
-        } else if (field.equals("SenderLastName")) {
-            setSenderLastName(o.toString());
-        } else if (field.equals("SenderNationality")) {  
-            setSenderNationality(o.toString()); 
-        } else if (field.equals("SenderSourceOfFund")) {
-            setSenderSourceOfFund(o.toString());
-        } else if (field.equals("SenderState")) {
-            setSenderState(o.toString());
-        } else if (field.equals("ReceiverNationality")) {
-            setReceiverNationality(o.toString());
+    @JsonProperty("ReferenceId")
+    public String getReferenceId() {
+        return super.getReferenceId();
+    }
+
+    @JsonProperty("BankAccountNumber")
+    public String getBankAccountNumber() {
+        return bankAccountNumber;
+    }
+    public void setBankAccountNumber(String bankAccountNumber) {
+        this.bankAccountNumber = bankAccountNumber;
+    }
+    @JsonProperty("PaymentMode")
+    public String getPaymentMode() {
+        return paymentMode;
+    }
+    public void setPaymentMode(String paymentMode) {
+        this.paymentMode = paymentMode;
+    }
+    @JsonProperty("PayoutCurrency")
+    public String getPayoutCurrency() {
+        return payoutCurrency;
+    }
+    public void setPayoutCurrency(String payoutCurrency) {
+        this.payoutCurrency = payoutCurrency;
+    }
+    @JsonProperty("PurposeOfRemittance")
+    public String getPurposeOfRemittance() {
+        return purposeOfRemittance;
+    }
+    public void setPurposeOfRemittance(String purposeOfRemittance) {
+        this.purposeOfRemittance = purposeOfRemittance;
+    }
+    @JsonProperty("ReceiverAddress")
+    public String getReceiverAddress() {
+        return receiverAddress;
+    }
+    public void setReceiverAddress(String receiverAddress) {
+        this.receiverAddress = receiverAddress;
+    }
+    @JsonProperty("ReceiverCity")
+    public String getReceiverCity() {
+        return receiverCity;
+    }
+    public void setReceiverCity(String receiverCity) {
+        this.receiverCity = receiverCity;
+    }
+    @JsonProperty("ReceiverCountry")
+    public String getReceiverCountry() {
+        return receiverCountry;
+    }
+    public void setReceiverCountry(String receiverCountry) {
+        this.receiverCountry = receiverCountry;
+    }
+    @JsonProperty("ReceiverFirstName")
+    public String getReceiverFirstName() {
+        return receiverFirstName;
+    }
+    public void setReceiverFirstName(String receiverFirstName) {
+        this.receiverFirstName = receiverFirstName;
+    }
+    @JsonProperty("ReceiverIdNumber")
+    public String getReceiverIdNumber() {
+        return receiverIdNumber;
+    }
+    public void setReceiverIdNumber(String receiverIdNumber) {
+        this.receiverIdNumber = receiverIdNumber;
+    }
+    @JsonProperty("ReceiverIdType")
+    public String getReceiverIdType() {
+        return receiverIdType;
+    }
+    public void setReceiverIdType(String receiverIdType) {
+        this.receiverIdType = receiverIdType;
+    }
+    @JsonProperty("ReceiverLastName")
+    public String getReceiverLastName() {
+        return this.receiverLastName;
+    }
+    public void setReceiverLastName(String receiverLastName) {
+        this.receiverLastName = receiverLastName;
+    }
+    @JsonProperty("SenderAddress")
+    public String getSenderAddress() {
+        return senderAddress;
+    }
+    public void setSenderAddress(String senderAddress) {
+        this.senderAddress = senderAddress;
+    }
+    @JsonProperty("SenderCity")
+    public String getSenderCity() {
+        return senderCity;
+    }
+    public void setSenderCity(String senderCity) {
+        this.senderCity = senderCity;
+    }
+    @JsonProperty("SenderBeneficiaryRelationship")
+    public String getSenderBeneficiaryRelationship() {
+        return senderBeneficiaryRelationship;
+    }
+    public void setSenderBeneficiaryRelationship(String senderBeneficiaryRelationship) {
+        this.senderBeneficiaryRelationship = senderBeneficiaryRelationship;
+    }
+    @JsonProperty("SenderCountry")
+    public String getSenderCountry() {
+        return senderCountry;
+    }
+    public void setSenderCountry(String senderCountry) {
+        this.senderCountry = senderCountry;
+    }
+    @JsonProperty("SenderDateOfBirth")
+    public String getSenderDateOfBirth() {
+        return senderDateOfBirth;
+    }
+    public void setSenderDateOfBirth(String senderDateOfBirth) {
+        this.senderDateOfBirth = senderDateOfBirth;
+    }
+    @JsonProperty("SenderFirstName")
+    public String getSenderFirstName() {
+        return senderFirstName;
+    }
+    public void setSenderFirstName(String senderFirstName) {
+        this.senderFirstName = senderFirstName;
+    }
+    @JsonProperty("SenderIdNumber")
+    public String getSenderIdNumber() {
+        return senderIdNumber;
+    }
+    public void setSenderIdNumber(String senderIdNumber) {
+        this.senderIdNumber = senderIdNumber;
+    }@JsonProperty("SenderIdType")
+    public String getSenderIdType() {
+        return senderIdType;
+    }
+    public void setSenderIdType(String senderIdType) {
+        this.senderIdType = senderIdType;
+    }
+    @JsonProperty("SenderLastName")
+    public String getSenderLastName() {
+        return senderLastName;
+    }
+    public void setSenderLastName(String senderLastName) {
+        this.senderLastName = senderLastName;
+    }
+    @JsonProperty("SenderNationality")
+    public String getSenderNationality() {
+        return senderNationality;
+    }
+    public void setSenderNationality(String senderNationality) {
+        this.senderNationality = senderNationality;
+    }
+    @JsonProperty("SenderSourceOfFund")
+    public String getSenderSourceOfFund() {
+        return senderSourceOfFund;
+    }
+    public void setSenderSourceOfFund(String senderSourceOfFund) {
+        this.senderSourceOfFund = senderSourceOfFund;
+    }
+    @JsonProperty("SenderState")
+    public String getSenderState() {
+        return senderState;
+    }
+    public void setSenderState(String senderState) {
+        this.senderState = senderState;
+    }
+    @JsonProperty("ReceiverNationality")
+    public String getReceiverNationality() {
+        return receiverNationality;
+    }
+    public void setReceiverNationality(String receiverNationality) {
+        this.receiverNationality = receiverNationality;
+    }
+
+    @Override
+    public void apiSetter(String value, String dbField) {
+        if (dbField.equals("BankAccountNumber")) {
+            setBankAccountNumber(value);
+        } else if (dbField.equals("PaymentMode")) {
+            setPaymentMode(value);
+        } else if (dbField.equals("PayoutCurrency")) {
+            setPayoutCurrency(value);
+        } else if (dbField.equals("PurposeOfRemittance")) {
+            setPurposeOfRemittance(value);
+        } else if (dbField.equals("ReceiverAddress")) {
+            setReceiverAddress(value);
+        } else if (dbField.equals("ReceiverCity")) {
+            setReceiverCity(value);
+        } else if (dbField.equals("ReceiverCountry")) {
+            setReceiverCountry(value);
+        } else if (dbField.equals("ReceiverFirstName")) {
+            setReceiverFirstName(value);
+        } else if (dbField.equals("ReceiverIdNumber")) {
+            setReceiverIdNumber(value);
+        } else if (dbField.equals("ReceiverIdType")) {
+            setReceiverIdType(value);
+        } else if (dbField.equals("ReceiverLastName")) {
+            setReceiverLastName(value);
+        } else if (dbField.equals("SenderAddress")) {
+            setSenderAddress(value);
+        } else if (dbField.equals("SenderCity")) {   
+            setSenderCity(value);  
+        } else if (dbField.equals("SenderDateOfBirth")) {
+            setSenderDateOfBirth(value);
+        } else if (dbField.equals("SenderFirstName")) {
+            setSenderFirstName(value);
+        } else if (dbField.equals("SenderIdNumber")) {
+            setSenderIdNumber(value);
+        } else if (dbField.equals("SenderIdType")) {
+            setSenderIdType(value);
+        } else if (dbField.equals("SenderLastName")) {
+            setSenderLastName(value);
+        } else if (dbField.equals("SenderNationality")) {  
+            setSenderNationality(value); 
+        } else if (dbField.equals("SenderSourceOfFund")) {
+            setSenderSourceOfFund(value);
+        } else if (dbField.equals("SenderState")) {
+            setSenderState(value);
+        } else if (dbField.equals("ReceiverNationality")) {
+            setReceiverNationality(value);
+        // Common Fields
+        } else if (dbField.equals("ReferenceId")) {
+            super.setReferenceId(value);
+        } else if (dbField.equals("ReceivingAmount")) {
+            super.setAmount(Double.parseDouble(value));
         }
     }
 
     @Override
     public String toString() {
-        return "FinanceNow [BankAccountNumber=" + BankAccountNumber + ", PaymentMode=" + PaymentMode
-                + ", PayoutCurrency=" + PayoutCurrency + ", PurposeOfRemittance=" + PurposeOfRemittance
-                + ", ReceiverAddress=" + ReceiverAddress + ", ReceiverCity=" + ReceiverCity + ", ReceiverCountry="
-                + ReceiverCountry + ", ReceiverFirstName=" + ReceiverFirstName + ", ReceiverIdNumber="
-                + ReceiverIdNumber + ", ReceiverIdType=" + ReceiverIdType + ", ReceiverLastName=" + ReceiverLastName
-                + ", ReceiverNationality=" + ReceiverNationality + ", SenderAddress=" + SenderAddress + ", SenderCity="
-                + SenderCity + ", SenderDateOfBirth=" + SenderDateOfBirth + ", SenderFirstName=" + SenderFirstName
-                + ", SenderIdNumber=" + SenderIdNumber + ", SenderIdType=" + SenderIdType + ", SenderLastName="
-                + SenderLastName + ", SenderNationality=" + SenderNationality + ", SenderSourceOfFund="
-                + SenderSourceOfFund + ", SenderState=" + SenderState + "]";
+        return "FinanceNow [bankAccountNumber=" + bankAccountNumber + ", paymentMode=" + paymentMode
+                + ", payoutCurrency=" + payoutCurrency + ", purposeOfRemittance=" + purposeOfRemittance
+                + ", receiverAddress=" + receiverAddress + ", receiverCity=" + receiverCity + ", receiverCountry="
+                + receiverCountry + ", receiverFirstName=" + receiverFirstName + ", receiverIdNumber="
+                + receiverIdNumber + ", receiverIdType=" + receiverIdType + ", receiverLastName=" + receiverLastName
+                + ", receiverNationality=" + receiverNationality + ", senderAddress=" + senderAddress
+                + ", senderBeneficiaryRelationship=" + senderBeneficiaryRelationship + ", senderCity=" + senderCity
+                + ", senderCountry=" + senderCountry + ", senderDateOfBirth=" + senderDateOfBirth + ", senderFirstName="
+                + senderFirstName + ", senderIdNumber=" + senderIdNumber + ", senderIdType=" + senderIdType
+                + ", senderLastName=" + senderLastName + ", senderNationality=" + senderNationality
+                + ", senderSourceOfFund=" + senderSourceOfFund + ", senderState=" + senderState + "]";
     }
 }

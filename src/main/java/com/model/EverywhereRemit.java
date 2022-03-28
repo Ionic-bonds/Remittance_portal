@@ -25,8 +25,8 @@ public class EverywhereRemit extends CommonApi {
     private String units;
     private String source_of_funds;
     private String remittance_purpose;
-    
-    public EverywhereRemit() {}
+
+    public EverywhereRemit() {};
 
     public String getSource_type() {
         return source_type;
@@ -136,105 +136,97 @@ public class EverywhereRemit extends CommonApi {
     public void setRecipient_legal_name_last(String recipient_legal_name_last) {
         this.recipient_legal_name_last = recipient_legal_name_last;
     }
-
     public String getRecipient_mobile_number() {
         return recipient_mobile_number;
     }
-
     public void setRecipient_mobile_number(String recipient_mobile_number) {
         this.recipient_mobile_number = recipient_mobile_number;
     }
-
     public String getRecipient_account_number() {
         return recipient_account_number;
     }
-
     public void setRecipient_account_number(String recipient_account_number) {
         this.recipient_account_number = recipient_account_number;
     }
-
     public String getRecipient_currency() {
         return recipient_currency;
     }
-
     public void setRecipient_currency(String recipient_currency) {
         this.recipient_currency = recipient_currency;
     }
-
     public String getUnits() {
         return units;
     }
-
     public void setUnits(String units) {
         this.units = units;
     }
-
     public String getSource_of_funds() {
         return source_of_funds;
     }
-
     public void setSource_of_funds(String source_of_funds) {
         this.source_of_funds = source_of_funds;
     }
-
     public String getRemittance_purpose() {
         return remittance_purpose;
     }
-
     public void setRemittance_purpose(String remittance_purpose) {
         this.remittance_purpose = remittance_purpose;
     }
 
-    @Override
-    public void apiSetter(Object o, String field) {
-        if (field.equals("source_type")) {
-            setSource_type(o.toString());
-        } else if (field.equals("sender_country")) {
-            setSender_country(o.toString());
-        } else if (field.equals("segment")) {
-            setSegment(o.toString());
-        } else if (field.equals("sender_legal_name_first")) {
-            setSender_legal_name_first(o.toString());
-        } else if (field.equals("sender_legal_name_last")) {
-            setSender_legal_name_last(o.toString());
-        } else if (field.equals("sender_date_of_birth")) {
-            setSender_date_of_birth(o.toString());
-        } else if (field.equals("sender_nationality")) {
-            setSender_nationality(o.toString());
-        } else if (field.equals("sender_id_type")) {
-            setSender_id_type(o.toString());
-        } else if (field.equals("sender_id_country")) {
-            setSender_id_country(o.toString());
-        } else if (field.equals("sender_id_number")) {
-            setSender_id_number(o.toString());
-        } else if (field.equals("sender_currency")) {
-            setSender_currency(o.toString());
-        } else if (field.equals("sender_address_line")) {  
-            setSender_address_line(o.toString());
-        } else if (field.equals("sender_address_city")) {
-            setSender_address_city(o.toString());
-        } else if (field.equals("sender_address_country")) {
-            setSender_address_country(o.toString());
-        } else if (field.equals("recipient_type")) {
-            setRecipient_type(o.toString());
-        } else if (field.equals("recipient_country")) {
-            setRecipient_country(o.toString());
-        } else if (field.equals("recipient_legal_name_first")) {
-            setRecipient_legal_name_first(o.toString());
-        } else if (field.equals("recipient_legal_name_last")) {
-            setRecipient_legal_name_last(o.toString());
-        } else if (field.equals("recipient_mobile_number")) {
-            setRecipient_mobile_number(o.toString());
-        } else if (field.equals("recipient_account_number")) {
-            setRecipient_account_number(o.toString());
-        } else if (field.equals("recipient_currency")) {
-            setRecipient_currency(o.toString());
-        } else if (field.equals("units")) {
-            setUnits(o.toString());
-        } else if (field.equals("source_of_funds")) {
-            setSource_of_funds(o.toString());
-        } else if (field.equals("remittance_purpose")) {
-            setRemittance_purpose(o.toString());
+    public void apiSetter(String value, String dbField) {
+        if (dbField.equals("source_type")) {
+            setSource_type(value);
+        } else if (dbField.equals("sender_country")) {
+            setSender_country(value);
+        } else if (dbField.equals("segment")) {
+            setSegment(value);
+        } else if (dbField.equals("sender_legal_name_first")) {
+            setSender_legal_name_first(value);
+        } else if (dbField.equals("sender_legal_name_last")) {
+            setSender_legal_name_last(value);
+        } else if (dbField.equals("sender_date_of_birth")) {
+            setSender_date_of_birth(value);
+        } else if (dbField.equals("sender_nationality")) {
+            setSender_nationality(value);
+        } else if (dbField.equals("sender_id_type")) {
+            setSender_id_type(value);
+        } else if (dbField.equals("sender_id_country")) {
+            setSender_id_country(value);
+        } else if (dbField.equals("sender_id_number")) {
+            setSender_id_number(value);
+        } else if (dbField.equals("sender_currency")) {
+            setSender_currency(value);
+        } else if (dbField.equals("sender_address_line")) {  
+            setSender_address_line(value);
+        } else if (dbField.equals("sender_address_city")) {
+            setSender_address_city(value);
+        } else if (dbField.equals("sender_address_country")) {
+            setSender_address_country(value);
+        } else if (dbField.equals("recipient_type")) {
+            setRecipient_type(value);
+        } else if (dbField.equals("recipient_country")) {
+            setRecipient_country(value);
+        } else if (dbField.equals("recipient_legal_name_first")) {
+            setRecipient_legal_name_first(value);
+        } else if (dbField.equals("recipient_legal_name_last")) {
+            setRecipient_legal_name_last(value);
+        } else if (dbField.equals("recipient_mobile_number")) {
+            setRecipient_mobile_number(value);
+        } else if (dbField.equals("recipient_account_number")) {
+            setRecipient_account_number(value);
+        } else if (dbField.equals("recipient_currency")) {
+            setRecipient_currency(value);
+        } else if (dbField.equals("units")) {
+            setUnits(value);
+        } else if (dbField.equals("source_of_funds")) {
+            setSource_of_funds(value);
+        } else if (dbField.equals("remittance_purpose")) {
+            setRemittance_purpose(value);
+        // Common dbFields
+        } else if (dbField.equals("reference_id")) {
+            super.setReferenceId(dbField);
+        } else if (dbField.equals("receiving_amount")) {
+            super.setAmount(Double.parseDouble(dbField));
         }
     }
 
@@ -253,6 +245,4 @@ public class EverywhereRemit extends CommonApi {
                 + sender_legal_name_last + ", sender_nationality=" + sender_nationality + ", source_of_funds="
                 + source_of_funds + ", source_type=" + source_type + ", units=" + units + "]";
     }
-
-
 }

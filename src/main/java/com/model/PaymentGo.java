@@ -5,10 +5,12 @@ public class PaymentGo extends CommonApi {
     private String remitSurname;
     private String remitCaType;
     private String remitCaNo;
+    private String merTransAmount;
     private String remitCountryCode;
     private String remitAddress;
     private String nationality;
     private String remitPurpose;
+    private String payeeCaType;
     private String settleCurrency;
     private String transCurrency;
     private String payeeGivenName;
@@ -22,7 +24,7 @@ public class PaymentGo extends CommonApi {
     private String remitAccountNo;
     private String sourceOfFunds;
 
-    public PaymentGo() {}
+    public PaymentGo() {};
 
     public String getRemitGivenName() {
         return remitGivenName;
@@ -56,6 +58,14 @@ public class PaymentGo extends CommonApi {
         this.remitCaNo = remitCaNo;
     }
 
+    public String getMerTransAmount() {
+        return merTransAmount;
+    }
+
+    public void setMerTransAmount(String merTransAmount) {
+        this.merTransAmount = merTransAmount;
+    }
+
     public String getRemitCountryCode() {
         return remitCountryCode;
     }
@@ -86,6 +96,14 @@ public class PaymentGo extends CommonApi {
 
     public void setRemitPurpose(String remitPurpose) {
         this.remitPurpose = remitPurpose;
+    }
+
+    public String getPayeeCaType() {
+        return payeeCaType;
+    }
+
+    public void setPayeeCaType(String payeeCaType) {
+        this.payeeCaType = payeeCaType;
     }
 
     public String getSettleCurrency() {
@@ -184,63 +202,69 @@ public class PaymentGo extends CommonApi {
         this.sourceOfFunds = sourceOfFunds;
     }
 
-    @Override
-    public void apiSetter(Object o, String field) {
-        if (field.equals("remitGivenName")) {
-            setRemitGivenName(o.toString());
-        } else if (field.equals("remitSurname")) {
-            setRemitSurname(o.toString());
-        } else if (field.equals("remitCaType")) {
-            setRemitCaType(o.toString());
-        } else if (field.equals("remitCaNo")) {
-            setRemitCaNo(o.toString());
-        } else if (field.equals("remitCountryCode")) {
-            setRemitCountryCode(o.toString());
-        } else if (field.equals("remitAddress")) {
-            setRemitAddress(o.toString());
-        } else if (field.equals("nationality")) {
-            setNationality(o.toString());
-        } else if (field.equals("remitPurpose")) {
-            setRemitPurpose(o.toString());
-        } else if (field.equals("settleCurrency")) {
-            setSettleCurrency(o.toString());
-        } else if (field.equals("transCurrency")) {
-            setTransCurrency(o.toString());
-        } else if (field.equals("payeeGivenName")) {
-            setPayeeGivenName(o.toString());
-        } else if (field.equals("payeeSurname")) { 
-            setPayeeSurname(o.toString());
-        } else if (field.equals("payeeBirthDate")) {
-            setPayeeBirthDate(o.toString());
-        } else if (field.equals("payeeAccountNo")) {
-            setPayeeAccountNo(o.toString());
-        } else if (field.equals("payeePhone")) {
-            setPayeePhone(o.toString());
-        } else if (field.equals("payeeBankName")) {
-            setPayeeBankName(o.toString());
-        } else if (field.equals("payeeBranchName")) {
-            setPayeeBranchName(o.toString());
-        } else if (field.equals("payeeCaNo")) {
-            setPayeeCaNo(o.toString());
-        } else if (field.equals("remitAccountNo")) {
-            setRemitAccountNo(o.toString());
-        } else if (field.equals("sourceOfFunds")) {
-            setSourceOfFunds(o.toString());
+    public void apiSetter(String value, String dbField) {
+        if (dbField.equals("remitGivenName")) {
+            setRemitGivenName(value);
+        } else if (dbField.equals("remitSurname")) {
+            setRemitSurname(value);
+        } else if (dbField.equals("remitCaType")) {
+            setRemitCaType(value);
+        } else if (dbField.equals("remitCaNo")) {
+            setRemitCaNo(value);
+        } else if (dbField.equals("remitCountryCode")) {
+            setRemitCountryCode(value);
+        } else if (dbField.equals("remitAddress")) {
+            setRemitAddress(value);
+        } else if (dbField.equals("nationality")) {
+            setNationality(value);
+        } else if (dbField.equals("remitPurpose")) {
+            setRemitPurpose(value);
+        } else if (dbField.equals("payeeCaType")) {
+            setPayeeCaType(value);
+        } else if (dbField.equals("settleCurrency")) {
+            setSettleCurrency(value);
+        } else if (dbField.equals("transCurrency")) {
+            setTransCurrency(value);
+        } else if (dbField.equals("payeeGivenName")) {
+            setPayeeGivenName(value);
+        } else if (dbField.equals("payeeSurname")) { 
+            setPayeeSurname(value);
+        } else if (dbField.equals("payeeBirthDate")) {
+            setPayeeBirthDate(value);
+        } else if (dbField.equals("payeeAccountNo")) {
+            setPayeeAccountNo(value);
+        } else if (dbField.equals("payeePhone")) {
+            setPayeePhone(value);
+        } else if (dbField.equals("payeeBankName")) {
+            setPayeeBankName(value);
+        } else if (dbField.equals("payeeBranchName")) {
+            setPayeeBranchName(value);
+        } else if (dbField.equals("payeeCaNo")) {
+            setPayeeCaNo(value);
+        } else if (dbField.equals("merTransAmount")) {
+            setMerTransAmount(value);
+        } else if (dbField.equals("remitAccountNo")) {
+            setRemitAccountNo(value);
+        } else if (dbField.equals("sourceOfFunds")) {
+            setSourceOfFunds(value);
+        // Common Fields
+        } else if (dbField.equals("referenceId")) {
+            super.setReferenceId(value);
+        } else if (dbField.equals("receivingAmount")) {
+            super.setAmount(Double.parseDouble(value));
         }
     }
 
     @Override
     public String toString() {
-        return "PaymentGo [nationality=" + nationality + ", payeeAccountNo=" + payeeAccountNo + ", payeeBankName="
-                + payeeBankName + ", payeeBirthDate=" + payeeBirthDate + ", payeeBranchName=" + payeeBranchName
-                + ", payeeCaNo=" + payeeCaNo + ", payeeGivenName=" + payeeGivenName + ", payeePhone=" + payeePhone
-                + ", payeeSurname=" + payeeSurname + ", remitAccountNo=" + remitAccountNo + ", remitAddress="
-                + remitAddress + ", remitCaNo=" + remitCaNo + ", remitCaType=" + remitCaType + ", remitCountryCode="
-                + remitCountryCode + ", remitGivenName=" + remitGivenName + ", remitPurpose=" + remitPurpose
-                + ", remitSurname=" + remitSurname + ", settleCurrency=" + settleCurrency + ", sourceOfFunds="
-                + sourceOfFunds + ", transCurrency=" + transCurrency + "]";
+        return "PaymentGo [merTransAmount=" + merTransAmount + ", nationality=" + nationality + ", payeeAccountNo="
+                + payeeAccountNo + ", payeeBankName=" + payeeBankName + ", payeeBirthDate=" + payeeBirthDate
+                + ", payeeBranchName=" + payeeBranchName + ", payeeCaNo=" + payeeCaNo + ", payeeCaType=" + payeeCaType
+                + ", payeeGivenName=" + payeeGivenName + ", payeePhone=" + payeePhone + ", payeeSurname=" + payeeSurname
+                + ", remitAccountNo=" + remitAccountNo + ", remitAddress=" + remitAddress + ", remitCaNo=" + remitCaNo
+                + ", remitCaType=" + remitCaType + ", remitCountryCode=" + remitCountryCode + ", remitGivenName="
+                + remitGivenName + ", remitPurpose=" + remitPurpose + ", remitSurname=" + remitSurname
+                + ", settleCurrency=" + settleCurrency + ", sourceOfFunds=" + sourceOfFunds + ", transCurrency="
+                + transCurrency + "]";
     }
-    
-    
-    
 }
