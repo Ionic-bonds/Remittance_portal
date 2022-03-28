@@ -5,10 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.exception.ResourceNotFoundException;
+import com.model.ApiField;
 import com.model.CorporateField;
 import com.model.CorporateUser;
+import com.repository.ApiFieldRepository;
 import com.repository.CorporateFieldRepository;
 import com.repository.CorporateUserRepository;
+import com.response.UserMappedFieldResponse;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -38,6 +41,8 @@ public class CorporateFieldController {
     private CorporateUserRepository corporateUserRepository;
     @Autowired
     private CorporateFieldRepository corporateFieldRepository;
+    @Autowired
+    private ApiFieldRepository apiFieldRepository;
 
     // Get all Corporate Users
     @GetMapping("/getAllCorpUsers")
@@ -57,15 +62,6 @@ public class CorporateFieldController {
                         "No Corporate User found with corporate_user_id = " + corporateUserId));
         return new ResponseEntity<>(corporateUser, HttpStatus.OK);
     }
-
-    // Add new Corporate User
-    // @PostMapping("/addCorpUser")
-    // public ResponseEntity<CorporateUser> addCorpUser(@RequestBody CorporateUser
-    // corporateUser) {
-    // CorporateUser _corporateUser = corporateUserRepository.save(new
-    // CorporateUser(corporateUser.getEmail(), corporateUser.getPassword()));
-    // return new ResponseEntity<>(_corporateUser, HttpStatus.CREATED);
-    // }
 
     // Update Corporate User
     @PutMapping("/updateCorpUser/{corporateUserId}")
@@ -98,9 +94,30 @@ public class CorporateFieldController {
         return new ResponseEntity<>(corporateField, HttpStatus.OK);
     }
 
-    // Get all Corporate Fields by corporate_user_id
     @GetMapping("/getAllCorpFieldByCorpUserId/{corporateId}")
-    public ResponseEntity<List<CorporateField>> getAllCorpFieldByCorpUserId(
+    public ResponseEntity<UserMappedFieldResponse> getAllCorpFieldByCorpUserId(
+            @PathVariable(value = "corporateId") Long corporateId) {
+        CorporateUser searchCorporate = corporateUserRepository.findById(corporateId).orElseThrow(
+                () -> new ResourceNotFoundException("No Corporate found with corporate_id = " + corporateId));
+        if (searchCorporate == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        List<CorporateField> corporateFields = corporateFieldRepository.findAllCorpFieldByUserId(searchCorporate);
+        if (corporateFields.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        List<ApiField> apiFields = apiFieldRepository.findAll();
+        if (apiFields.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        UserMappedFieldResponse userMappedFieldResponse = new UserMappedFieldResponse(corporateFields, apiFields);
+        
+        return new ResponseEntity<>(userMappedFieldResponse, HttpStatus.OK);
+    }
+
+    // Get all Corporate Fields by corporate_user_id
+    @GetMapping("/getAllCorpFieldByCorpUserIdOld/{corporateId}")
+    public ResponseEntity<List<CorporateField>> getAllCorpFieldByCorpUserIdOld(
             @PathVariable(value = "corporateId") Long corporateId) {
         CorporateUser searchCorporate = corporateUserRepository.findById(corporateId).orElseThrow(
                 () -> new ResourceNotFoundException("No Corporate found with corporate_id = " + corporateId));

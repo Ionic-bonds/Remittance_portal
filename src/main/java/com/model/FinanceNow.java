@@ -33,6 +33,20 @@ public class FinanceNow extends CommonApi {
     private String senderState;
     private String receiverNationality;
 
+    public FinanceNow() {};
+
+    @Override
+    @JsonProperty("Amount")
+    public double getAmount() {
+        return super.getAmount();
+    }
+
+    @Override
+    @JsonProperty("ReferenceId")
+    public String getReferenceId() {
+        return super.getReferenceId();
+    }
+
     @JsonProperty("BankAccountNumber")
     public String getBankAccountNumber() {
         return bankAccountNumber;
@@ -201,6 +215,7 @@ public class FinanceNow extends CommonApi {
         this.receiverNationality = receiverNationality;
     }
 
+    @Override
     public void apiSetter(String value, String dbField) {
         if (dbField.equals("BankAccountNumber")) {
             setBankAccountNumber(value);

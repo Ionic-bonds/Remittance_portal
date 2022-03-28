@@ -24,7 +24,7 @@ public class PaymentGo extends CommonApi {
     private String remitAccountNo;
     private String sourceOfFunds;
 
-    public PaymentGo() {}
+    public PaymentGo() {};
 
     public String getRemitGivenName() {
         return remitGivenName;

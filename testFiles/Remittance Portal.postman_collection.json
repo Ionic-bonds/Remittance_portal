@@ -576,7 +576,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"apiFieldId\" : 1\r\n}",
+					"raw": "[\r\n    {\r\n        \"corporateFieldId\" : 1,\r\n        \"apiFieldId\" : 1\r\n    },\r\n    {\r\n    \"corporateFieldId\" : 2,\r\n    \"apiFieldId\" : 2\r\n    }\r\n]",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -584,7 +584,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/addFieldMapping/1",
+					"raw": "http://localhost:8080/api/addFieldMapping",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -592,8 +592,7 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"addFieldMapping",
-						"1"
+						"addFieldMapping"
 					]
 				},
 				"description": "Insert a new entry into field_mapping table (2 Param)"
@@ -611,7 +610,7 @@
 						{
 							"key": "file",
 							"type": "file",
-							"src": "/D:/Yu Quan/Downloads/SMU DUMMY DATA.xlsx"
+							"src": []
 						}
 					]
 				},
@@ -636,6 +635,39 @@
 						}
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Headers",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/D:/Yu Quan/Downloads/SMU DUMMY DATA.xlsx"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/uploadExcelHeader/1/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"uploadExcelHeader",
+						"1",
+						"2"
+					]
+				},
+				"description": "Upload an excel file with a specified header row"
 			},
 			"response": []
 		}

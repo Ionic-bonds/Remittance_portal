@@ -1,4 +1,4 @@
-package com.transaction.request;
+package com.request;
 
 import com.model.CommonApi;
 

@@ -25,8 +25,8 @@ public class EverywhereRemit extends CommonApi {
     private String units;
     private String source_of_funds;
     private String remittance_purpose;
-    
-    public EverywhereRemit() {}
+
+    public EverywhereRemit() {};
 
     public String getSource_type() {
         return source_type;

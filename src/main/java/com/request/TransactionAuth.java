@@ -1,4 +1,4 @@
-package com.transaction.request;
+package com.request;
 
 public class TransactionAuth {
     private String username;
