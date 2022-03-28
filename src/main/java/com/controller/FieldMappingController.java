@@ -151,15 +151,15 @@ public class FieldMappingController {
         return returnMessage;
     }
 
-    @PostMapping("/uploadFieldMapping/{corporateUserId}/{amountCol}")
+    @PostMapping("/uploadFieldMapping/{corporateUserId}")
     public ResponseEntity<TransactResponse> addFieldMapping(
         @PathVariable("corporateUserId") long corporateUserId, 
-        @PathVariable("amountCol") int amountCol, 
         @RequestParam("file") MultipartFile file) {
         
         List<TransactOutcome> transactOutcomeList = new ArrayList<>();
         List<CommonApi> commonApiList = new ArrayList<>();
         List<String> errorList = new ArrayList<>();
+        int amountCol = -1;
 
         CorporateUser corporateUser = corporateUserRepository.findById(corporateUserId).orElseThrow(() 
             -> new ResourceNotFoundException("No Corporate found with corporate_id = " + corporateUserId));
@@ -171,7 +171,26 @@ public class FieldMappingController {
         while (iterCorpField.hasNext()) {
             CorporateField currentCorpField = iterCorpField.next();
             Set<ApiField> currentApiFields = currentCorpField.getApiFields();
-            fieldMapping.put(currentCorpField.getCorporateFieldName(), currentApiFields);
+            String corpFieldName = currentCorpField.getCorporateFieldName();
+            // Retrieve amount column
+            if (amountCol == -1) {
+                Iterator<ApiField> amountIterator = currentApiFields.iterator();
+                while (amountIterator.hasNext()) {
+                    ApiField amountIter = amountIterator.next();
+                    if (amountIter.getApiFieldName().equals("ReceivingAmount") || 
+                        amountIter.getApiFieldName().equals("receiving_amount") || 
+                        amountIter.getApiFieldName().equals("receivingAmount")) {
+                            amountCol = Integer.parseInt(corpFieldName.substring(
+                                corpFieldName.lastIndexOf("_") + 1, corpFieldName.length()));
+                        }
+                }
+            }
+            fieldMapping.put(corpFieldName, currentApiFields);
+        }
+        if (amountCol == -1) {
+            errorList.add(String.format("Spreadsheet does not have a mapped amount column"));
+            TransactResponse TransactResponse = new TransactResponse(null, errorList);
+            return new ResponseEntity<>(TransactResponse, HttpStatus.CREATED);
         }
         try {
             Workbook workbook = new XSSFWorkbook(file.getInputStream());
