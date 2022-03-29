@@ -1,159 +1,117 @@
 package com.model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class PaymentGo extends CommonApi {
-    private String remitGivenName;
-    private String remitSurname;
-    private String remitCaType;
-    private String remitCaNo;
-    private String merTransAmount;
-    private String remitCountryCode;
-    private String remitAddress;
-    private String nationality;
-    private String remitPurpose;
-    private String payeeCaType;
-    private String settleCurrency;
-    private String transCurrency;
-    private String payeeGivenName;
-    private String payeeSurname;   
-    private String payeeBirthDate;
-    private String payeeAccountNo;
     private String payeePhone;
+    private LocalDate payeeBirthDate;
     private String payeeBankName;
     private String payeeBranchName;
     private String payeeCaNo;
     private String remitAccountNo;
-    private String sourceOfFunds;
+    private String transCurrency;
+    private String settleCurrency;
+    private String merTransAmount;
 
     public PaymentGo() {};
 
-    public String getRemitGivenName() {
-        return remitGivenName;
+    // Common Fields
+    @Override
+    @JsonProperty("amount")
+    public double getAmount() {
+        return super.getAmount();
     }
-
-    public void setRemitGivenName(String remitGivenName) {
-        this.remitGivenName = remitGivenName;
+    
+    @Override
+    @JsonProperty("referenceId")
+    public String getReferenceId() {
+        return super.getReferenceId();
     }
-
-    public String getRemitSurname() {
-        return remitSurname;
+    
+    @Override
+    @JsonProperty("payeeAccountNo")
+    public String getBankAccountNumber() {
+        return super.getBankAccountNumber();
     }
-
-    public void setRemitSurname(String remitSurname) {
-        this.remitSurname = remitSurname;
+    
+    @Override
+    @JsonProperty("remitGivenName")
+    public String getSenderFirstName() {
+        return super.getSenderFirstName();
     }
-
-    public String getRemitCaType() {
-        return remitCaType;
+    
+    @Override
+    @JsonProperty("remitSurname")
+    public String getSenderLastName() {
+        return super.getSenderLastName();
     }
-
-    public void setRemitCaType(String remitCaType) {
-        this.remitCaType = remitCaType;
+    
+    @Override
+    @JsonProperty("remitCaNo")
+    public String getSenderIdNumber() {
+        return super.getSenderIdNumber();
     }
-
-    public String getRemitCaNo() {
-        return remitCaNo;
+    
+    @Override
+    @JsonProperty("remitAddress")
+    public String getSenderAddress() {
+        return super.getSenderAddress();
     }
-
-    public void setRemitCaNo(String remitCaNo) {
-        this.remitCaNo = remitCaNo;
+    
+    @Override
+    @JsonProperty("remitCountryCode")
+    public String getSenderCountry() {
+        return super.getSenderCountry();
     }
-
-    public String getMerTransAmount() {
-        return merTransAmount;
+    
+    @Override
+    @JsonProperty("nationality")
+    public String getSenderNationality() {
+        return super.getSenderNationality();
     }
-
-    public void setMerTransAmount(String merTransAmount) {
-        this.merTransAmount = merTransAmount;
+    
+    @Override
+    @JsonProperty("remitCaType")
+    public int getSenderIdType() {
+        return super.getSenderIdType();
     }
-
-    public String getRemitCountryCode() {
-        return remitCountryCode;
+    
+    @Override
+    @JsonProperty("payeeGivenName")
+    public String getReceiverFirstName() {
+        return super.getReceiverFirstName();
     }
-
-    public void setRemitCountryCode(String remitCountryCode) {
-        this.remitCountryCode = remitCountryCode;
+    
+    @Override
+    @JsonProperty("payeeSurname")
+    public String getReceiverLastName() {
+        return super.getReceiverLastName();
     }
-
-    public String getRemitAddress() {
-        return remitAddress;
+    
+    @Override
+    @JsonProperty("payeeCaType")
+    public int getReceiverIdType() {
+        return super.getReceiverIdType();
     }
-
-    public void setRemitAddress(String remitAddress) {
-        this.remitAddress = remitAddress;
+    
+    @Override
+    @JsonProperty("sourceOfFunds")
+    public int getSourceOfFund() {
+        return super.getSourceOfFund();
     }
-
-    public String getNationality() {
-        return nationality;
+    
+    @Override
+    @JsonProperty("remitPurpose")
+    public int getPurposeOfRemit() {
+        return super.getPurposeOfRemit();
     }
-
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
-    }
-
-    public String getRemitPurpose() {
-        return remitPurpose;
-    }
-
-    public void setRemitPurpose(String remitPurpose) {
-        this.remitPurpose = remitPurpose;
-    }
-
-    public String getPayeeCaType() {
-        return payeeCaType;
-    }
-
-    public void setPayeeCaType(String payeeCaType) {
-        this.payeeCaType = payeeCaType;
-    }
-
-    public String getSettleCurrency() {
-        return settleCurrency;
-    }
-
-    public void setSettleCurrency(String settleCurrency) {
-        this.settleCurrency = settleCurrency;
-    }
-
-    public String getTransCurrency() {
-        return transCurrency;
-    }
-
-    public void setTransCurrency(String transCurrency) {
-        this.transCurrency = transCurrency;
-    }
-
-    public String getPayeeGivenName() {
-        return payeeGivenName;
-    }
-
-    public void setPayeeGivenName(String payeeGivenName) {
-        this.payeeGivenName = payeeGivenName;
-    }
-
-    public String getPayeeSurname() {
-        return payeeSurname;
-    }
-
-    public void setPayeeSurname(String payeeSurname) {
-        this.payeeSurname = payeeSurname;
-    }
-
-    public String getPayeeBirthDate() {
-        return payeeBirthDate;
-    }
-
-    public void setPayeeBirthDate(String payeeBirthDate) {
-        this.payeeBirthDate = payeeBirthDate;
-    }
-
-    public String getPayeeAccountNo() {
-        return payeeAccountNo;
-    }
-
-    public void setPayeeAccountNo(String payeeAccountNo) {
-        this.payeeAccountNo = payeeAccountNo;
-    }
-
+    
+    // PaymentGo Fields
+    @JsonProperty("payeePhone")
     public String getPayeePhone() {
         return payeePhone;
     }
@@ -162,6 +120,16 @@ public class PaymentGo extends CommonApi {
         this.payeePhone = payeePhone;
     }
 
+    @JsonProperty("payeeBirthDate")
+    public LocalDate getPayeeBirthDate() {
+        return payeeBirthDate;
+    }
+
+    public void setPayeeBirthDate(LocalDate payeeBirthDate) {
+        this.payeeBirthDate = payeeBirthDate;
+    }
+
+    @JsonProperty("payeeBankName")
     public String getPayeeBankName() {
         return payeeBankName;
     }
@@ -170,6 +138,7 @@ public class PaymentGo extends CommonApi {
         this.payeeBankName = payeeBankName;
     }
 
+    @JsonProperty("payeeBranchName")
     public String getPayeeBranchName() {
         return payeeBranchName;
     }
@@ -178,6 +147,7 @@ public class PaymentGo extends CommonApi {
         this.payeeBranchName = payeeBranchName;
     }
 
+    @JsonProperty("payeeCaNo")
     public String getPayeeCaNo() {
         return payeeCaNo;
     }
@@ -186,6 +156,7 @@ public class PaymentGo extends CommonApi {
         this.payeeCaNo = payeeCaNo;
     }
 
+    @JsonProperty("remitAccountNo")
     public String getRemitAccountNo() {
         return remitAccountNo;
     }
@@ -194,77 +165,111 @@ public class PaymentGo extends CommonApi {
         this.remitAccountNo = remitAccountNo;
     }
 
-    public String getSourceOfFunds() {
-        return sourceOfFunds;
+    @JsonProperty("transCurrency")
+    public String getTransCurrency() {
+        return transCurrency;
     }
 
-    public void setSourceOfFunds(String sourceOfFunds) {
-        this.sourceOfFunds = sourceOfFunds;
+    public void setTransCurrency(String transCurrency) {
+        this.transCurrency = transCurrency;
     }
 
-    public void apiSetter(String value, String dbField) {
-        if (dbField.equals("remitGivenName")) {
-            setRemitGivenName(value);
-        } else if (dbField.equals("remitSurname")) {
-            setRemitSurname(value);
-        } else if (dbField.equals("remitCaType")) {
-            setRemitCaType(value);
-        } else if (dbField.equals("remitCaNo")) {
-            setRemitCaNo(value);
-        } else if (dbField.equals("remitCountryCode")) {
-            setRemitCountryCode(value);
-        } else if (dbField.equals("remitAddress")) {
-            setRemitAddress(value);
-        } else if (dbField.equals("nationality")) {
-            setNationality(value);
-        } else if (dbField.equals("remitPurpose")) {
-            setRemitPurpose(value);
-        } else if (dbField.equals("payeeCaType")) {
-            setPayeeCaType(value);
-        } else if (dbField.equals("settleCurrency")) {
-            setSettleCurrency(value);
-        } else if (dbField.equals("transCurrency")) {
-            setTransCurrency(value);
-        } else if (dbField.equals("payeeGivenName")) {
-            setPayeeGivenName(value);
-        } else if (dbField.equals("payeeSurname")) { 
-            setPayeeSurname(value);
-        } else if (dbField.equals("payeeBirthDate")) {
-            setPayeeBirthDate(value);
-        } else if (dbField.equals("payeeAccountNo")) {
-            setPayeeAccountNo(value);
-        } else if (dbField.equals("payeePhone")) {
-            setPayeePhone(value);
-        } else if (dbField.equals("payeeBankName")) {
-            setPayeeBankName(value);
-        } else if (dbField.equals("payeeBranchName")) {
-            setPayeeBranchName(value);
-        } else if (dbField.equals("payeeCaNo")) {
-            setPayeeCaNo(value);
-        } else if (dbField.equals("merTransAmount")) {
-            setMerTransAmount(value);
-        } else if (dbField.equals("remitAccountNo")) {
-            setRemitAccountNo(value);
-        } else if (dbField.equals("sourceOfFunds")) {
-            setSourceOfFunds(value);
-        // Common Fields
-        } else if (dbField.equals("referenceId")) {
-            super.setReferenceId(value);
-        } else if (dbField.equals("receivingAmount")) {
-            super.setAmount(Double.parseDouble(value));
-        }
+    @JsonProperty("settleCurrency")
+    public String getSettleCurrency() {
+        return settleCurrency;
+    }
+
+    public void setSettleCurrency(String settleCurrency) {
+        this.settleCurrency = settleCurrency;
+    }
+
+    @JsonProperty("merTransAmount")
+    public String getMerTransAmount() {
+        return merTransAmount;
+    }
+
+    public void setMerTransAmount(String merTransAmount) {
+        this.merTransAmount = merTransAmount;
     }
 
     @Override
-    public String toString() {
-        return "PaymentGo [merTransAmount=" + merTransAmount + ", nationality=" + nationality + ", payeeAccountNo="
-                + payeeAccountNo + ", payeeBankName=" + payeeBankName + ", payeeBirthDate=" + payeeBirthDate
-                + ", payeeBranchName=" + payeeBranchName + ", payeeCaNo=" + payeeCaNo + ", payeeCaType=" + payeeCaType
-                + ", payeeGivenName=" + payeeGivenName + ", payeePhone=" + payeePhone + ", payeeSurname=" + payeeSurname
-                + ", remitAccountNo=" + remitAccountNo + ", remitAddress=" + remitAddress + ", remitCaNo=" + remitCaNo
-                + ", remitCaType=" + remitCaType + ", remitCountryCode=" + remitCountryCode + ", remitGivenName="
-                + remitGivenName + ", remitPurpose=" + remitPurpose + ", remitSurname=" + remitSurname
-                + ", settleCurrency=" + settleCurrency + ", sourceOfFunds=" + sourceOfFunds + ", transCurrency="
-                + transCurrency + "]";
+    public void apiSetter(String value, String dbField) {
+        switch (dbField) {
+            // Common Fields
+            case "referenceId":
+                super.setReferenceId(value);
+                break;
+            case "amount":
+                super.setAmount(Double.parseDouble(value));
+                break;
+            case "payeeAccountNo":
+                super.setBankAccountNumber(value);
+                break;
+            case "remitGivenName":
+                super.setSenderFirstName(value);
+                break;
+            case "remitSurname":
+                super.setSenderLastName(value);
+                break;
+            case "remitCaNo":
+                super.setSenderIdNumber(value);
+                break;
+            case "remitAddress":
+                super.setSenderAddress(value);
+                break;
+            case "remitCountryCode":
+                super.setSenderCountry(value);
+                break;
+            case "nationality":
+                super.setSenderNationality(value);
+                break;
+            case "remitCaType":
+                super.setSenderIdType(Integer.parseInt(value));
+                break;
+            case "payeeGivenName":
+                super.setReceiverFirstName(value);
+                break;
+            case "payeeSurname":
+                super.setReceiverLastName(value);
+                break;
+            case "payeeCaType":
+                super.setReceiverIdType(Integer.parseInt(value));
+                break;
+            case "sourceOfFunds":
+                super.setSourceOfFund(Integer.parseInt(value));
+                break;
+            case "remitPurpose":
+                super.setPurposeOfRemit(Integer.parseInt(value));
+                break;
+            // PaymentGo Fields
+            case "payeePhone":
+                setPayeePhone(value);
+                break;
+            case "payeeBirthDate":
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.ENGLISH);
+                setPayeeBirthDate(LocalDate.parse(value, formatter));
+                break;
+            case "payeeBankName":
+                setPayeeBankName(value);
+                break;
+            case "payeeBranchName":
+                setPayeeBranchName(value);
+                break;
+            case "payeeCaNo":
+                setPayeeCaNo(value);
+                break;
+            case "remitAccountNo":
+                setRemitAccountNo(value);
+                break;
+            case "transCurrency":
+                setTransCurrency(value);
+                break;
+            case "settleCurrency":
+                setSettleCurrency(value);
+                break;
+            case "merTransAmount":
+                setMerTransAmount(value);
+                break;
+        }
     }
 }

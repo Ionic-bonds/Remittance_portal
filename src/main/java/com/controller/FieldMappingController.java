@@ -22,11 +22,13 @@ import com.model.EverywhereRemit;
 import com.model.FinanceNow;
 import com.model.PaymentGo;
 import com.model.SelectedField;
+import com.model.Transaction;
 import com.repository.ApiFieldRepository;
 import com.repository.ApiRepository;
 import com.repository.CorporateFieldRepository;
 import com.repository.CorporateUserRepository;
 import com.repository.SelectedFieldRepository;
+import com.repository.TransactionRepository;
 import com.request.FieldMapRequest;
 import com.request.SendTransaction;
 import com.request.TransactionAuth;
@@ -44,6 +46,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -68,6 +71,8 @@ public class FieldMappingController {
     private CorporateUserRepository corporateUserRepository;
     @Autowired
     private SelectedFieldRepository selectedFieldRepository;
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     public Api determineApi(List<Api> apiList, double amount) {
         Api searchApi = null;
@@ -121,8 +126,8 @@ public class FieldMappingController {
             }
         // Field is a selected field
         } else {
-            errorMessage = String.format("invalid cell input '%s' for '%s' to '%s'", 
-                cell, currentHeader, apiField.getApiFieldName());
+            errorMessage = String.format("invalid cell input '%s' for '%s' to '%s' [API: %s]", 
+                cell, currentHeader, apiField.getApiFieldName(), apiField.getApi().getApiName());
             Iterator<SelectedField> iterSelectedField = selectedFields.iterator();
             // Validation: Check if cell is inside selectedFields
             while (iterSelectedField.hasNext()) {
@@ -173,6 +178,7 @@ public class FieldMappingController {
         CorporateUser corporateUser = corporateUserRepository.findById(corporateUserId).orElseThrow(() 
             -> new ResourceNotFoundException("No Corporate found with corporate_id = " + corporateUserId));
         List<CorporateField> corporateFields = corporateFieldRepository.findAllCorpFieldByUserId(corporateUser);
+        int headerRow = corporateUser.getHeaderRow();
 
         // Generate CorporateField HashMap
         Iterator<CorporateField> iterCorpField = corporateFields.iterator();
@@ -186,12 +192,12 @@ public class FieldMappingController {
                 Iterator<ApiField> amountIterator = currentApiFields.iterator();
                 while (amountIterator.hasNext()) {
                     ApiField amountIter = amountIterator.next();
-                    if (amountIter.getApiFieldName().equals("ReceivingAmount") || 
-                        amountIter.getApiFieldName().equals("receiving_amount") || 
-                        amountIter.getApiFieldName().equals("receivingAmount")) {
-                            amountCol = Integer.parseInt(corpFieldName.substring(
-                                corpFieldName.lastIndexOf("_") + 1, corpFieldName.length()));
-                        }
+                    if (amountIter.getApiFieldName().equals("ReceivingAmount") 
+                            || amountIter.getApiFieldName().equals("receiving_amount") 
+                            || amountIter.getApiFieldName().equals("receivingAmount")) {
+                        amountCol = Integer.parseInt(corpFieldName.substring(
+                            corpFieldName.lastIndexOf("_") + 1, corpFieldName.length()));
+                    }
                 }
             }
             fieldMapping.put(corpFieldName, currentApiFields);
@@ -203,8 +209,6 @@ public class FieldMappingController {
         }
         try {
             Workbook workbook = new XSSFWorkbook(file.getInputStream());
-            // To be changed
-            int headerRow = 1;
             Sheet sh = workbook.getSheetAt(0);
             Row header = sh.getRow(headerRow);
             List<Api> apiList = apiRepository.findAll();
@@ -248,15 +252,17 @@ public class FieldMappingController {
                             if (apiFields != null) {
                                 for (ApiField apiField : apiFields) {
                                     // Calls checkDataType method to perform data validation
-                                    String validationOutput = checkDataType(cell, apiField, currentHeader);
-                                    if (validationOutput.equals("")) {
-                                        String apiFieldName = apiField.getApiFieldName();
-                                        commonApi.apiSetter(cell, apiFieldName);
-                                    }
-                                    // Column has failed data validation
-                                    else {
-                                        // Validation: 
-                                        errorMessage += validationOutput;
+                                    if (apiField.getApi().getApiName().equals(searchApi.getApiName())) {
+                                        String validationOutput = checkDataType(cell, apiField, currentHeader);
+                                        if (validationOutput.equals("")) {
+                                            String apiFieldName = apiField.getApiFieldName();
+                                            commonApi.apiSetter(cell, apiFieldName);
+                                        }
+                                        // Column has failed data validation
+                                        else {
+                                            // Validation: 
+                                            errorMessage += validationOutput;
+                                        }
                                     }
                                 }
                             }
@@ -264,13 +270,13 @@ public class FieldMappingController {
                         if (errorMessage.equals("")) {
                             commonApiList.add(commonApi);
                         } else {
-                            errorList.add(String.format("Error row%s: %s", String.valueOf(rowNum), errorMessage));
+                            errorList.add(String.format("Error row%s: %s", String.valueOf(rowNum+headerRow), errorMessage));
                         }
                     }
                     // Amount is not within the range
                     else {
                         // Validation: 
-                        errorList.add(String.format("Error row%s: %s", String.valueOf(rowNum), "Amount is not within API range"));
+                        errorList.add(String.format("Error row%s: %s", String.valueOf(rowNum+headerRow), "Amount is not within API range"));
                     }
                 // amount column has a non-number value
                 } catch (NumberFormatException e) {
@@ -283,6 +289,12 @@ public class FieldMappingController {
         }
         if (errorList.size() == 0) {
             transactOutcomeList = uploadAllTransactions(commonApiList);
+            for (TransactOutcome transactOutcome : transactOutcomeList) {
+                Transaction transactionRequest = new Transaction();
+                transactionRequest.setReferenceId(transactOutcome.getCommonApi().getReferenceId());
+                transactionRequest.setOutcome(transactOutcome.getOutcome());
+                addTransaction(corporateUserId, transactionRequest);
+            }
         }
         TransactResponse TransactResponse = new TransactResponse(transactOutcomeList, errorList);
         return new ResponseEntity<>(TransactResponse, HttpStatus.CREATED);
@@ -367,4 +379,49 @@ public class FieldMappingController {
     //     }).orElseThrow(() -> new ResourceNotFoundException("No Corporate Field found with corporate_field_id = " + corporateFieldId));
     //     return new ResponseEntity<>(apiField, HttpStatus.CREATED);
     // }
+
+    // Get all Transactions
+    @GetMapping("/getAllTransaction")
+    public ResponseEntity<List<Transaction>> getAllTransaction() {
+        List<Transaction> transactions = transactionRepository.findAll();
+        if (transactions.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(transactions, HttpStatus.OK);
+    }
+
+    // Get Transaction by transaction_id
+    @GetMapping("/getTransactionById/{transactionId}")
+    public ResponseEntity<Transaction> getTransactionById(@PathVariable("transactionId") long transactionId) {
+        Transaction transaction = transactionRepository.findById(transactionId).orElseThrow(
+                () -> new ResourceNotFoundException("No Transaction found with transaction_id = " + transactionId));
+        return new ResponseEntity<>(transaction, HttpStatus.OK);
+    }
+
+    // Get all Transactions by corporate_user_id
+    @GetMapping("/getAllTransactionByCorpId/{corporateId}")
+    public ResponseEntity<List<Transaction>> getAllTransactionByApiId(
+            @PathVariable(value = "corporateId") Long corporateId) {
+        CorporateUser corporateUser = corporateUserRepository.findById(corporateId).orElseThrow(
+                () -> new ResourceNotFoundException("No Corporate User found with corporate_user_id = " + corporateId));
+        if (corporateUser == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        List<Transaction> apiFields = transactionRepository.findAllTransactByCorpUserId(corporateUser);
+        if (apiFields.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(apiFields, HttpStatus.OK);
+    }
+
+    // Add new Transaction
+    public Transaction addTransaction(@PathVariable(value = "corporateId") Long corporateId,
+            @RequestBody Transaction transactionRequest) {
+        Transaction transaction = corporateUserRepository.findById(corporateId).map(corporateUser -> {
+            transactionRequest.setCorporateUser(corporateUser);
+            return transactionRepository.save(transactionRequest);
+        }).orElseThrow(() -> new ResourceNotFoundException(
+                "No Corporate User found with corporate_user_id = " + corporateId));
+        return transaction;
+    }
 }
