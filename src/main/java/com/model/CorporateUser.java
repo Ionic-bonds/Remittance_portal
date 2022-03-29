@@ -32,10 +32,12 @@ public class CorporateUser {
   @Size(max = 120)
   private String password;
 
+  private int headerRow;
+
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(name = "user_roles", 
-             joinColumns = @JoinColumn(name = "corporate_user_id"),
-             inverseJoinColumns = @JoinColumn(name = "role_id"))
+              joinColumns = @JoinColumn(name = "corporate_user_id"),
+              inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new HashSet<>();
 
   public CorporateUser() {
@@ -45,6 +47,7 @@ public class CorporateUser {
     this.username = username;
     this.email = email;
     this.password = password;
+    this.headerRow = 0;
   }
 
   public Long getCorporateUserId() {
@@ -77,6 +80,14 @@ public class CorporateUser {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public int getHeaderRow() {
+    return headerRow;
+  }
+
+  public void setHeaderRow(int headerRow) {
+    this.headerRow = headerRow;
   }
 
   public Set<Role> getRoles() {

@@ -103,15 +103,12 @@ public class CorporateFieldController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         List<CorporateField> corporateFields = corporateFieldRepository.findAllCorpFieldByUserId(searchCorporate);
-        if (corporateFields.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
         List<ApiField> apiFields = apiFieldRepository.findAll();
         if (apiFields.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+        // User has not uploaded any corporate fields
         UserMappedFieldResponse userMappedFieldResponse = new UserMappedFieldResponse(corporateFields, apiFields);
-        
         return new ResponseEntity<>(userMappedFieldResponse, HttpStatus.OK);
     }
 
