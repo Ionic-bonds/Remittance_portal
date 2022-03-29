@@ -34,6 +34,7 @@ import com.response.TransactOutcome;
 import com.response.TransactResponse;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -83,46 +84,54 @@ public class FieldMappingController {
     }
 
     // Returns "" if there is not error
-    public String checkDataType(Cell column, ApiField apiField) {
+    public String checkDataType(String cell, ApiField apiField, String currentHeader) {
+        List<SelectedField> selectedFields = selectedFieldRepository.findAllSelectedByApiFieldId(apiField);
         String errorMessage = "";
         String dataType = apiField.getDatatype();
-        List<SelectedField> selectedFields = selectedFieldRepository.findAllSelectedByApiFieldId(apiField);
 
         // Check if the field is a selected field
         if (selectedFields.isEmpty()) {
-            // Validation: Return true if column.toString() is a String (Regex Validation - only alphanumeric and symbols)
+            // Validation: Return true if cell is a String (Regex Validation - only alphanumeric and symbols)
             if (dataType.equals("String")) {
                 // code goes here: 
                 
 
                 return errorMessage;
             } 
-            // Validation: Return true if column.toString() is able to parse into an Int/Double
-            else if (dataType.equals("Number")) {
+            // Validation: Return true if cell is able to parse into an Integer
+            else if (dataType.equals("Integer")) {
+                // code goes here: 
+    
+    
+                return errorMessage;
+            }
+            // Validation: Return true if cell is able to parse into a Double
+            else if (dataType.equals("Double")) {
                 // code goes here: 
     
     
                 return errorMessage;
             } 
-            // Validation: Return true if column.toString() is able to parse into DateTime
+            // Validation: Return true if cell is able to parse into a Date
             else if (dataType.equals("Date")) {
                 // code goes here: 
     
                 
                 return errorMessage;
             }
+        // Field is a selected field
         } else {
-            // Iterator<SelectedField> iterSelectedField = selectedFields.iterator();
-            // Validation: Check if column.toString() is inside selectedFields
-
-            return errorMessage;
-            // To be completed
-            // while (iterSelectedField.hasNext()) {
-            //     SelectedField currentIterSelected = iterSelectedField.next();
-            //     if (currentIterSelected.getSelectedFieldCode().equals(column.toString())) {
-            //         return true;
-            //     } 
-            // }
+            errorMessage = String.format("invalid cell input '%s' for '%s' to '%s'", 
+                cell, currentHeader, apiField.getApiFieldName());
+            Iterator<SelectedField> iterSelectedField = selectedFields.iterator();
+            // Validation: Check if cell is inside selectedFields
+            while (iterSelectedField.hasNext()) {
+                SelectedField currentIterSelected = iterSelectedField.next();
+                if (currentIterSelected.getSelectedFieldCode().equals(cell)) {
+                    errorMessage = "";
+                    break;
+                } 
+            }
         }
         return errorMessage;
     }
@@ -217,31 +226,32 @@ public class FieldMappingController {
                     Api searchApi = determineApi(apiList, amount);
                     // Amount matches an API range 
                     if (searchApi != null) {
-                        String testApiName = searchApi.getApiName();
-                        if (testApiName.equals("FinanceNow")) {
+                        String searchApiName = searchApi.getApiName();
+                        if (searchApiName.equals("FinanceNow")) {
                             commonApi = new FinanceNow();
-                        } else if (testApiName.equals("EverywhereRemit")) {
+                        } else if (searchApiName.equals("EverywhereRemit")) {
                             commonApi = new EverywhereRemit();
-                        } else if (testApiName.equals("PaymentGo")) {
+                        } else if (searchApiName.equals("PaymentGo")) {
                             commonApi = new PaymentGo();
                         }
                         // Retrieving the row's cell value
                         Iterator<Cell> iterApiCol = currentRow.iterator();
                         Iterator<Cell> iterHeadGet = header.iterator();
                         while (iterApiCol.hasNext()) {
-                            Cell currentCol = iterApiCol.next();
-                            Cell currentHeader = iterHeadGet.next();
+                            DataFormatter dataFormatter = new DataFormatter();
+                            String cell = dataFormatter.formatCellValue(iterApiCol.next());
+                            String currentHeader = dataFormatter.formatCellValue(iterHeadGet.next());
                             // Concatenates Excel's column header with colCounter to retrieve mapped fields
-                            String searchApiField = currentHeader.toString() + "_" + String.valueOf(colCounter++);
+                            String searchApiField = currentHeader + "_" + String.valueOf(colCounter++);
                             Set<ApiField> apiFields = fieldMapping.get(searchApiField);
                             // Current header is matched to an API Field
                             if (apiFields != null) {
                                 for (ApiField apiField : apiFields) {
                                     // Calls checkDataType method to perform data validation
-                                    String validationOutput = checkDataType(currentCol, apiField);
+                                    String validationOutput = checkDataType(cell, apiField, currentHeader);
                                     if (validationOutput.equals("")) {
                                         String apiFieldName = apiField.getApiFieldName();
-                                        commonApi.apiSetter(currentCol.toString(), apiFieldName);
+                                        commonApi.apiSetter(cell, apiFieldName);
                                     }
                                     // Column has failed data validation
                                     else {
@@ -285,6 +295,7 @@ public class FieldMappingController {
         int apiDelay = 0;
         List<TransactOutcome> transactOutcomeList = new ArrayList<>();
 
+        // Determine the "api_name" to be sent to Sandbox
         for (CommonApi commonApi : commonApiList) {
             String apiName = "";
             if (commonApi instanceof FinanceNow) {
@@ -300,6 +311,7 @@ public class FieldMappingController {
             HttpEntity<SendTransaction> requestEntity = new HttpEntity<>(credentials);
             ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, requestEntity, String.class);
             try {
+                // Retrieving the "message" value from Sandbox response
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode rootNode = mapper.readTree(responseEntity.getBody());
                 JsonNode innerNode = rootNode.get("message");

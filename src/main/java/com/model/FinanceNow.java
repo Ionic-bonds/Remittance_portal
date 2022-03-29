@@ -35,18 +35,19 @@ public class FinanceNow extends CommonApi {
 
     public FinanceNow() {};
 
+    // Common Fields
     @Override
     @JsonProperty("Amount")
     public double getAmount() {
         return super.getAmount();
     }
-
     @Override
     @JsonProperty("ReferenceId")
     public String getReferenceId() {
         return super.getReferenceId();
     }
 
+    // FinanceNow Fields
     @JsonProperty("BankAccountNumber")
     public String getBankAccountNumber() {
         return bankAccountNumber;
@@ -217,55 +218,87 @@ public class FinanceNow extends CommonApi {
 
     @Override
     public void apiSetter(String value, String dbField) {
-        if (dbField.equals("BankAccountNumber")) {
-            setBankAccountNumber(value);
-        } else if (dbField.equals("PaymentMode")) {
-            setPaymentMode(value);
-        } else if (dbField.equals("PayoutCurrency")) {
-            setPayoutCurrency(value);
-        } else if (dbField.equals("PurposeOfRemittance")) {
-            setPurposeOfRemittance(value);
-        } else if (dbField.equals("ReceiverAddress")) {
-            setReceiverAddress(value);
-        } else if (dbField.equals("ReceiverCity")) {
-            setReceiverCity(value);
-        } else if (dbField.equals("ReceiverCountry")) {
-            setReceiverCountry(value);
-        } else if (dbField.equals("ReceiverFirstName")) {
-            setReceiverFirstName(value);
-        } else if (dbField.equals("ReceiverIdNumber")) {
-            setReceiverIdNumber(value);
-        } else if (dbField.equals("ReceiverIdType")) {
-            setReceiverIdType(value);
-        } else if (dbField.equals("ReceiverLastName")) {
-            setReceiverLastName(value);
-        } else if (dbField.equals("SenderAddress")) {
-            setSenderAddress(value);
-        } else if (dbField.equals("SenderCity")) {   
-            setSenderCity(value);  
-        } else if (dbField.equals("SenderDateOfBirth")) {
-            setSenderDateOfBirth(value);
-        } else if (dbField.equals("SenderFirstName")) {
-            setSenderFirstName(value);
-        } else if (dbField.equals("SenderIdNumber")) {
-            setSenderIdNumber(value);
-        } else if (dbField.equals("SenderIdType")) {
-            setSenderIdType(value);
-        } else if (dbField.equals("SenderLastName")) {
-            setSenderLastName(value);
-        } else if (dbField.equals("SenderNationality")) {  
-            setSenderNationality(value); 
-        } else if (dbField.equals("SenderSourceOfFund")) {
-            setSenderSourceOfFund(value);
-        } else if (dbField.equals("SenderState")) {
-            setSenderState(value);
-        } else if (dbField.equals("ReceiverNationality")) {
-            setReceiverNationality(value);
-        // Common Fields
-        } else if (dbField.equals("ReferenceId")) {
-            super.setReferenceId(value);
-        } else if (dbField.equals("ReceivingAmount")) {
-            super.setAmount(Double.parseDouble(value));
+        switch (dbField) {
+            // Common Fields
+            case "ReferenceId":
+                super.setReferenceId(value);
+                break;
+            case "ReceivingAmount":
+                super.setAmount(Double.parseDouble(value));
+                break;
+            // FinanceNow Fields
+            case "BankAccountNumber":
+                setBankAccountNumber(value);
+                break;
+            case "PaymentMode":
+                setPaymentMode(value);
+                break;
+            case "PayoutCurrency":
+                setPayoutCurrency(value);
+                break;
+            case "PurposeOfRemittance":
+                setPurposeOfRemittance(value);
+                break;
+            case "ReceiverAddress":
+                setReceiverAddress(value);
+                break;
+            case "ReceiverCity":
+                setReceiverCity(value);
+                break;
+            case "ReceiverCountry":
+                setReceiverCountry(value);
+                break;
+            case "ReceiverFirstName":
+                setReceiverFirstName(value);
+                break;
+            case "ReceiverIdNumber":
+                setReceiverIdNumber(value);
+                break;
+            case "ReceiverIdType":
+                setReceiverIdType(value);
+                break;
+            case "ReceiverLastName":
+                setReceiverLastName(value);
+                break;
+            case "SenderAddress":
+                setSenderAddress(value);
+                break;
+            case "SenderBeneficiaryRelationship":
+                setSenderBeneficiaryRelationship(value);
+                break;
+            case "SenderCity":
+                setSenderCity(value);
+                break;
+            case "SenderCountry":
+                setSenderCountry(value);
+                break;
+            case "SenderDateOfBirth":
+                setSenderDateOfBirth(value);
+                break;
+            case "SenderFirstName":
+                setSenderFirstName(value);
+                break;
+            case "SenderIdNumber":
+                setSenderIdNumber(value);
+                break;
+            case "SenderIdType":
+                setSenderIdType(value);
+                break;
+            case "SenderLastName":
+                setSenderLastName(value);
+                break;
+            case "SenderNationality":
+                setSenderNationality(value);
+                break;
+            case "SenderSourceOfFund":
+                setSenderSourceOfFund(value);
+                break;
+            case "SenderState":
+                setSenderState(value);
+                break;
+            case "ReceiverNationality":
+                setReceiverNationality(value);
+                break;
         }
     }
 

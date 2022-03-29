@@ -1,6 +1,7 @@
 package com.model;
 
 public class CommonApi {
+    // Fields Present in All 3 APIs
     private double amount;
     private String referenceId;
     
