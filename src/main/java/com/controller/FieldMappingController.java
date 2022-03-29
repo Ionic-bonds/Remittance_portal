@@ -126,8 +126,8 @@ public class FieldMappingController {
             }
         // Field is a selected field
         } else {
-            errorMessage = String.format("invalid cell input '%s' for '%s' to '%s'", 
-                cell, currentHeader, apiField.getApiFieldName());
+            errorMessage = String.format("invalid cell input '%s' for '%s' to '%s' [API: %s]", 
+                cell, currentHeader, apiField.getApiFieldName(), apiField.getApi().getApiName());
             Iterator<SelectedField> iterSelectedField = selectedFields.iterator();
             // Validation: Check if cell is inside selectedFields
             while (iterSelectedField.hasNext()) {
@@ -252,15 +252,17 @@ public class FieldMappingController {
                             if (apiFields != null) {
                                 for (ApiField apiField : apiFields) {
                                     // Calls checkDataType method to perform data validation
-                                    String validationOutput = checkDataType(cell, apiField, currentHeader);
-                                    if (validationOutput.equals("")) {
-                                        String apiFieldName = apiField.getApiFieldName();
-                                        commonApi.apiSetter(cell, apiFieldName);
-                                    }
-                                    // Column has failed data validation
-                                    else {
-                                        // Validation: 
-                                        errorMessage += validationOutput;
+                                    if (apiField.getApi().getApiName().equals(searchApi.getApiName())) {
+                                        String validationOutput = checkDataType(cell, apiField, currentHeader);
+                                        if (validationOutput.equals("")) {
+                                            String apiFieldName = apiField.getApiFieldName();
+                                            commonApi.apiSetter(cell, apiFieldName);
+                                        }
+                                        // Column has failed data validation
+                                        else {
+                                            // Validation: 
+                                            errorMessage += validationOutput;
+                                        }
                                     }
                                 }
                             }
@@ -268,13 +270,13 @@ public class FieldMappingController {
                         if (errorMessage.equals("")) {
                             commonApiList.add(commonApi);
                         } else {
-                            errorList.add(String.format("Error row%s: %s", String.valueOf(rowNum), errorMessage));
+                            errorList.add(String.format("Error row%s: %s", String.valueOf(rowNum+headerRow), errorMessage));
                         }
                     }
                     // Amount is not within the range
                     else {
                         // Validation: 
-                        errorList.add(String.format("Error row%s: %s", String.valueOf(rowNum), "Amount is not within API range"));
+                        errorList.add(String.format("Error row%s: %s", String.valueOf(rowNum+headerRow), "Amount is not within API range"));
                     }
                 // amount column has a non-number value
                 } catch (NumberFormatException e) {
