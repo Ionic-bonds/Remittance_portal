@@ -1,5 +1,7 @@
 package com.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,38 +98,88 @@ public class FieldMappingController {
 
         // Check if the field is a selected field
         if (selectedFields.isEmpty()) {
-            // Validation: Return true if cell is a String (Regex Validation - only alphanumeric and symbols)
-            if (dataType.equals("String")) {
-                // code goes here: 
-                
+            // Validation: Return true if cell is not empty
+            if (!cell.isEmpty() || cell.length() != 0) {
+                // Validation: Return true if cell is a String (Regex Validation - only alphanumeric and symbols)
+                if (dataType.equals("String")) {
+                    // Check if cell is a first name or last name
+                    if (currentHeader == "First Name" || currentHeader == "Last Name"
+                        || apiField.getApiFieldName() == "ReceiverFirstName" || apiField.getApiFieldName() == "ReceiverLastName"
+                        || apiField.getApiFieldName() == "SenderFirstName" || apiField.getApiFieldName() == "SenderLastName"
+                        || apiField.getApiFieldName() == "recipient_legal_name_first" || apiField.getApiFieldName() == "recipient_legal_name_last"
+                        || apiField.getApiFieldName() == "sender_legal_name_first" || apiField.getApiFieldName() == "sender_legal_name_last"
+                        || apiField.getApiFieldName() == "payeeGivenName" || apiField.getApiFieldName() == "payeeSurname"
+                        || apiField.getApiFieldName() == "remitGivenName" || apiField.getApiFieldName() == "remitSurname")
+                    {
+                        // Check if cell (First Name or Last Name) contains non english alphabets
+                        if (!cell.replaceAll("\\s", "").matches("[a-zA-Z]+")){
+                            errorMessage = String.format("STRING ERROR '%s' for '%s' to '%s' [API: %s]: " +
+                                "Please ensure cell input only contains non english alphabets.", 
+                                cell, currentHeader, apiField.getApiFieldName(), apiField.getApi().getApiName());
+                            
+                            return errorMessage;
+                        }
+                    }
+    
+                    return errorMessage;
+                } 
+                // Validation: Return true if cell is able to parse into an Integer
+                else if (dataType.equals("Integer")) {
+                    try {
+                        Integer.parseInt(cell);
+                    } catch(NumberFormatException e) {
+                        // Not a Double
+                        errorMessage = String.format("INTEGER ERROR '%s' for '%s' to '%s' [API: %s]: " +
+                            "Please ensure cell input is in numeric (integer) format.", 
+                            cell, currentHeader, apiField.getApiFieldName(), apiField.getApi().getApiName());
+                    }
 
-                return errorMessage;
-            } 
-            // Validation: Return true if cell is able to parse into an Integer
-            else if (dataType.equals("Integer")) {
-                // code goes here: 
-    
-    
-                return errorMessage;
+                    return errorMessage;
+                }
+                // Validation: Return true if cell is able to parse into a Double
+                else if (dataType.equals("Double")) {
+                    try {
+                        Double.parseDouble(cell);
+                    } catch(NumberFormatException e) {
+                        // Not a Double
+                        errorMessage = String.format("DOUBLE ERROR '%s' for '%s' to '%s' [API: %s]: " +
+                            "Please ensure cell input is in numeric (double) format.", 
+                            cell, currentHeader, apiField.getApiFieldName(), apiField.getApi().getApiName());
+                    }
+        
+                    return errorMessage;
+                } 
+                // Validation: Return true if cell is able to parse into a Date
+                else if (dataType.equals("Date")) {                    
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+                    try {
+                        LocalDate.parse(cell, formatter);
+                     }
+                     catch (Exception e){
+                         // Not a Date 
+                        errorMessage = String.format("DATE ERROR '%s' for '%s' to '%s' [API: %s]: " +
+                            "Please ensure cell input is in YYYY-MM-DD format.", 
+                            cell, currentHeader, apiField.getApiFieldName(), apiField.getApi().getApiName());
+                     }
+                    
+                    return errorMessage;
+                }
             }
-            // Validation: Return true if cell is able to parse into a Double
-            else if (dataType.equals("Double")) {
-                // code goes here: 
-    
-    
-                return errorMessage;
-            } 
-            // Validation: Return true if cell is able to parse into a Date
-            else if (dataType.equals("Date")) {
-                // code goes here: 
-    
-                
-                return errorMessage;
-            }
+            
+            errorMessage = String.format("EMPTY INPUT ERROR Empty data input for '%s' to '%s' [API: %s] " +
+                "Please ensure cell input contains a value.", 
+                currentHeader, apiField.getApiFieldName(), apiField.getApi().getApiName());
+
         // Field is a selected field
         } else {
-            errorMessage = String.format("invalid cell input '%s' for '%s' to '%s' [API: %s]", 
+            // errorMessage = String.format("invalid cell input '%s' for '%s' to '%s' [API: %s]", 
+            //     cell, currentHeader, apiField.getApiFieldName(), apiField.getApi().getApiName());
+
+            errorMessage = String.format("ALPHA 3-CODE ERROR '%s' for '%s' to '%s' [API: %s]: " +
+                "Please ensure cell input is a valid country code Alpha-3.", 
                 cell, currentHeader, apiField.getApiFieldName(), apiField.getApi().getApiName());
+
             Iterator<SelectedField> iterSelectedField = selectedFields.iterator();
             // Validation: Check if cell is inside selectedFields
             while (iterSelectedField.hasNext()) {
