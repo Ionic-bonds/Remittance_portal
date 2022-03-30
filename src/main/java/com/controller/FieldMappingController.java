@@ -348,10 +348,10 @@ public class FieldMappingController {
         for (FieldMapRequest fieldMapRequest : fieldMapRequests) {
             long corporateFieldId = fieldMapRequest.getCorporateFieldId();
             long apiFieldId = fieldMapRequest.getApiFieldId();
-            CorporateField corporateField = corporateFieldRepository.findById(apiFieldId).orElseThrow(() 
-                -> new ResourceNotFoundException("No Api found with corporate_field_id = " + corporateFieldId));
+            CorporateField corporateField = corporateFieldRepository.findById(corporateFieldId).orElseThrow(() 
+                -> new ResourceNotFoundException("No Corporate Field found with corporate_field_id = " + corporateFieldId));
             ApiField apiField = apiFieldRepository.findById(apiFieldId).orElseThrow(() 
-                -> new ResourceNotFoundException("No Api found with api_field_id = " + apiFieldId));
+                -> new ResourceNotFoundException("No Api Field found with api_field_id = " + apiFieldId));
             corporateFieldRepository.save(corporateField);
             apiFieldList.add(apiFieldRepository.save(apiField));
         }
