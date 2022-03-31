@@ -7,11 +7,11 @@ and PaymentGo.
 ---
 
 ### Table of Content
-* [Description](/Description)
-* [Tech Stack](/Tech-Stack)
-* [Code Navigation](/Code-Navigation)
-* [Steps to Run Application](/Steps-to-Run-Application)
-* [Contributors](/Contributors)
+* [Description](/README.md#description)
+* [Tech Stack](/README.md#tech-stack)
+* [Code Navigation](/README.md#code-navigation)
+* [Steps to Run Application](/README.md#steps-to-run-application)
+* [Contributors](/README.md#contributors)
 
 ---
 
