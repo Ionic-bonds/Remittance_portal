@@ -217,7 +217,6 @@ public class FieldMappingController {
     }
 
     // Update Corporate User
-    // @PutMapping("/updateCorpUser/{corporateUserId}")
     public void updateCorpUser(long corporateUserId, CorporateUser corporateUser) {
         CorporateUser _api = corporateUserRepository.findById(corporateUserId)
                 .orElseThrow(() -> new ResourceNotFoundException(
@@ -225,7 +224,6 @@ public class FieldMappingController {
         _api.setEmail(corporateUser.getEmail());
         _api.setPassword(corporateUser.getPassword());
         _api.setHeaderRow(corporateUser.getHeaderRow());
-        // return new ResponseEntity<>(corporateUserRepository.save(_api), HttpStatus.OK);
     }
 
     // Get all Corporate Fields
