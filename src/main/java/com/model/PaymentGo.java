@@ -19,7 +19,7 @@ public class PaymentGo extends CommonApi {
 
     // Common Fields
     @Override
-    @JsonProperty("amount")
+    @JsonProperty("receivingAmount")
     public double getAmount() {
         return super.getAmount();
     }
@@ -197,7 +197,7 @@ public class PaymentGo extends CommonApi {
             case "referenceId":
                 super.setReferenceId(value);
                 break;
-            case "amount":
+            case "receivingAmount":
                 super.setAmount(Double.parseDouble(value));
                 break;
             case "payeeAccountNo":

@@ -21,7 +21,7 @@ public class EverywhereRemit extends CommonApi {
 
     // Common Fields
     @Override
-    @JsonProperty("amount")
+    @JsonProperty("receiving_amount")
     public double getAmount() {
         return super.getAmount();
     }
@@ -218,7 +218,7 @@ public class EverywhereRemit extends CommonApi {
             case "reference_id":
                 super.setReferenceId(value);
                 break;
-            case "amount":
+            case "receiving_amount":
                 super.setAmount(Double.parseDouble(value));
                 break;
             case "recipient_account_number":
