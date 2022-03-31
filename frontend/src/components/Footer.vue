@@ -1,7 +1,7 @@
 <template>
     <div class="footer">
         <p class="footer--left">© SMUX - Object Orientated Programming - G2 - Group 2</p>
-        <p class="footer--right">Partner with TechG - Jan 2022 - Apr 2022</p>
+        <p class="footer--right">Partner with TechG: January - April 2022</p>
     </div>
 
 </template>
@@ -42,6 +42,10 @@ export default {
 .footer--right{
     float: right;
     margin: 20px;
+}
+
+.empty--div{
+    height: 100px;
 }
 
 @media only screen and (max-width: 730px) {
