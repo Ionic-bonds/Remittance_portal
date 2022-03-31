@@ -83,20 +83,6 @@ export default {
 };
 </script>
 
-</template>
-
-
-<script >
-export default {
-    name: 'HomeCanva',
-    data() {
-        return { 
-        }
-    },
-}
-</script>
-
-
 <style scoped>
 
 .home--intro--container{
