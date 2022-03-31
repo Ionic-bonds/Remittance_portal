@@ -1,0 +1,769 @@
+[
+    {
+        "corporateFieldId": 41,
+        "corporateFieldName": "First Name_1",
+        "apiFields": [
+            {
+                "apiFieldId": 17,
+                "apiFieldName": "SenderFirstName",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 1,
+                    "apiName": "FinanceNow",
+                    "minAmount": 1.0,
+                    "maxAmount": 3000.0
+                }
+            },
+            {
+                "apiFieldId": 28,
+                "apiFieldName": "sender_legal_name_first",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 2,
+                    "apiName": "EverywhereRemit",
+                    "minAmount": 3001.0,
+                    "maxAmount": 6000.0
+                }
+            },
+            {
+                "apiFieldId": 49,
+                "apiFieldName": "remitGivenName",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 3,
+                    "apiName": "PaymentGo",
+                    "minAmount": 6001.0,
+                    "maxAmount": 9000.0
+                }
+            }
+        ]
+    },
+    {
+        "corporateFieldId": 42,
+        "corporateFieldName": "Last Name_2",
+        "apiFields": [
+            {
+                "apiFieldId": 29,
+                "apiFieldName": "sender_legal_name_last",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 2,
+                    "apiName": "EverywhereRemit",
+                    "minAmount": 3001.0,
+                    "maxAmount": 6000.0
+                }
+            },
+            {
+                "apiFieldId": 20,
+                "apiFieldName": "SenderLastName",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 1,
+                    "apiName": "FinanceNow",
+                    "minAmount": 1.0,
+                    "maxAmount": 3000.0
+                }
+            },
+            {
+                "apiFieldId": 50,
+                "apiFieldName": "remitSurname",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 3,
+                    "apiName": "PaymentGo",
+                    "minAmount": 6001.0,
+                    "maxAmount": 9000.0
+                }
+            }
+        ]
+    },
+    {
+        "corporateFieldId": 43,
+        "corporateFieldName": "ID Number_3",
+        "apiFields": [
+            {
+                "apiFieldId": 52,
+                "apiFieldName": "remitCaNo",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 3,
+                    "apiName": "PaymentGo",
+                    "minAmount": 6001.0,
+                    "maxAmount": 9000.0
+                }
+            },
+            {
+                "apiFieldId": 34,
+                "apiFieldName": "sender_id_number",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 2,
+                    "apiName": "EverywhereRemit",
+                    "minAmount": 3001.0,
+                    "maxAmount": 6000.0
+                }
+            },
+            {
+                "apiFieldId": 18,
+                "apiFieldName": "SenderIdNumber",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 1,
+                    "apiName": "FinanceNow",
+                    "minAmount": 1.0,
+                    "maxAmount": 3000.0
+                }
+            }
+        ]
+    },
+    {
+        "corporateFieldId": 44,
+        "corporateFieldName": "ID Type_4",
+        "apiFields": [
+            {
+                "apiFieldId": 32,
+                "apiFieldName": "sender_id_type",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 2,
+                    "apiName": "EverywhereRemit",
+                    "minAmount": 3001.0,
+                    "maxAmount": 6000.0
+                }
+            },
+            {
+                "apiFieldId": 51,
+                "apiFieldName": "remitCaType",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 3,
+                    "apiName": "PaymentGo",
+                    "minAmount": 6001.0,
+                    "maxAmount": 9000.0
+                }
+            },
+            {
+                "apiFieldId": 19,
+                "apiFieldName": "SenderIdType",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 1,
+                    "apiName": "FinanceNow",
+                    "minAmount": 1.0,
+                    "maxAmount": 3000.0
+                }
+            }
+        ]
+    },
+    {
+        "corporateFieldId": 45,
+        "corporateFieldName": "Date of Birth_5",
+        "apiFields": [
+            {
+                "apiFieldId": 30,
+                "apiFieldName": "sender_date_of_birth",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 2,
+                    "apiName": "EverywhereRemit",
+                    "minAmount": 3001.0,
+                    "maxAmount": 6000.0
+                }
+            },
+            {
+                "apiFieldId": 16,
+                "apiFieldName": "SenderDateOfBirth",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 1,
+                    "apiName": "FinanceNow",
+                    "minAmount": 1.0,
+                    "maxAmount": 3000.0
+                }
+            }
+        ]
+    },
+    {
+        "corporateFieldId": 46,
+        "corporateFieldName": "Nationality_6",
+        "apiFields": [
+            {
+                "apiFieldId": 56,
+                "apiFieldName": "nationality",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 3,
+                    "apiName": "PaymentGo",
+                    "minAmount": 6001.0,
+                    "maxAmount": 9000.0
+                }
+            },
+            {
+                "apiFieldId": 21,
+                "apiFieldName": "SenderNationality",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 1,
+                    "apiName": "FinanceNow",
+                    "minAmount": 1.0,
+                    "maxAmount": 3000.0
+                }
+            },
+            {
+                "apiFieldId": 31,
+                "apiFieldName": "sender_nationality",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 2,
+                    "apiName": "EverywhereRemit",
+                    "minAmount": 3001.0,
+                    "maxAmount": 6000.0
+                }
+            }
+        ]
+    },
+    {
+        "corporateFieldId": 47,
+        "corporateFieldName": "Country_7",
+        "apiFields": [
+            {
+                "apiFieldId": 15,
+                "apiFieldName": "SenderCountry",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 1,
+                    "apiName": "FinanceNow",
+                    "minAmount": 1.0,
+                    "maxAmount": 3000.0
+                }
+            },
+            {
+                "apiFieldId": 33,
+                "apiFieldName": "sender_id_country",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 2,
+                    "apiName": "EverywhereRemit",
+                    "minAmount": 3001.0,
+                    "maxAmount": 6000.0
+                }
+            },
+            {
+                "apiFieldId": 54,
+                "apiFieldName": "remitCountryCode",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 3,
+                    "apiName": "PaymentGo",
+                    "minAmount": 6001.0,
+                    "maxAmount": 9000.0
+                }
+            }
+        ]
+    },
+    {
+        "corporateFieldId": 48,
+        "corporateFieldName": "City_8",
+        "apiFields": [
+            {
+                "apiFieldId": 37,
+                "apiFieldName": "sender_address_city",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 2,
+                    "apiName": "EverywhereRemit",
+                    "minAmount": 3001.0,
+                    "maxAmount": 6000.0
+                }
+            }
+        ]
+    },
+    {
+        "corporateFieldId": 49,
+        "corporateFieldName": "Address_9",
+        "apiFields": [
+            {
+                "apiFieldId": 36,
+                "apiFieldName": "sender_address_line",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 2,
+                    "apiName": "EverywhereRemit",
+                    "minAmount": 3001.0,
+                    "maxAmount": 6000.0
+                }
+            },
+            {
+                "apiFieldId": 55,
+                "apiFieldName": "remitAddress",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 3,
+                    "apiName": "PaymentGo",
+                    "minAmount": 6001.0,
+                    "maxAmount": 9000.0
+                }
+            },
+            {
+                "apiFieldId": 12,
+                "apiFieldName": "SenderAddress",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 1,
+                    "apiName": "FinanceNow",
+                    "minAmount": 1.0,
+                    "maxAmount": 3000.0
+                }
+            }
+        ]
+    },
+    {
+        "corporateFieldId": 50,
+        "corporateFieldName": "Purpose of Remittance_10",
+        "apiFields": [
+            {
+                "apiFieldId": 48,
+                "apiFieldName": "remittance_purpose",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 2,
+                    "apiName": "EverywhereRemit",
+                    "minAmount": 3001.0,
+                    "maxAmount": 6000.0
+                }
+            },
+            {
+                "apiFieldId": 4,
+                "apiFieldName": "PurposeOfRemittance",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 1,
+                    "apiName": "FinanceNow",
+                    "minAmount": 1.0,
+                    "maxAmount": 3000.0
+                }
+            },
+            {
+                "apiFieldId": 57,
+                "apiFieldName": "remitPurpose",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 3,
+                    "apiName": "PaymentGo",
+                    "minAmount": 6001.0,
+                    "maxAmount": 9000.0
+                }
+            }
+        ]
+    },
+    {
+        "corporateFieldId": 51,
+        "corporateFieldName": "Relationship_11",
+        "apiFields": [
+            {
+                "apiFieldId": 13,
+                "apiFieldName": "SenderBeneficiaryRelationship",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 1,
+                    "apiName": "FinanceNow",
+                    "minAmount": 1.0,
+                    "maxAmount": 3000.0
+                }
+            }
+        ]
+    },
+    {
+        "corporateFieldId": 52,
+        "corporateFieldName": "Occupation_12",
+        "apiFields": []
+    },
+    {
+        "corporateFieldId": 53,
+        "corporateFieldName": "Source of Fund_13",
+        "apiFields": [
+            {
+                "apiFieldId": 70,
+                "apiFieldName": "sourceOfFunds",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 2,
+                    "apiName": "EverywhereRemit",
+                    "minAmount": 3001.0,
+                    "maxAmount": 6000.0
+                }
+            },
+            {
+                "apiFieldId": 22,
+                "apiFieldName": "SenderSourceOfFund",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 1,
+                    "apiName": "FinanceNow",
+                    "minAmount": 1.0,
+                    "maxAmount": 3000.0
+                }
+            },
+            {
+                "apiFieldId": 47,
+                "apiFieldName": "source_of_funds",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 2,
+                    "apiName": "EverywhereRemit",
+                    "minAmount": 3001.0,
+                    "maxAmount": 6000.0
+                }
+            }
+        ]
+    },
+    {
+        "corporateFieldId": 54,
+        "corporateFieldName": "First Name_14",
+        "apiFields": [
+            {
+                "apiFieldId": 41,
+                "apiFieldName": "recipient_legal_name_first",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 2,
+                    "apiName": "EverywhereRemit",
+                    "minAmount": 3001.0,
+                    "maxAmount": 6000.0
+                }
+            },
+            {
+                "apiFieldId": 8,
+                "apiFieldName": "ReceiverFirstName",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 1,
+                    "apiName": "FinanceNow",
+                    "minAmount": 1.0,
+                    "maxAmount": 3000.0
+                }
+            },
+            {
+                "apiFieldId": 61,
+                "apiFieldName": "payeeGivenName",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 3,
+                    "apiName": "PaymentGo",
+                    "minAmount": 6001.0,
+                    "maxAmount": 9000.0
+                }
+            }
+        ]
+    },
+    {
+        "corporateFieldId": 55,
+        "corporateFieldName": "Last Name_15",
+        "apiFields": [
+            {
+                "apiFieldId": 62,
+                "apiFieldName": "payeeSurname",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 3,
+                    "apiName": "PaymentGo",
+                    "minAmount": 6001.0,
+                    "maxAmount": 9000.0
+                }
+            },
+            {
+                "apiFieldId": 11,
+                "apiFieldName": "ReceiverLastName",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 1,
+                    "apiName": "FinanceNow",
+                    "minAmount": 1.0,
+                    "maxAmount": 3000.0
+                }
+            },
+            {
+                "apiFieldId": 42,
+                "apiFieldName": "recipient_legal_name_last",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 2,
+                    "apiName": "EverywhereRemit",
+                    "minAmount": 3001.0,
+                    "maxAmount": 6000.0
+                }
+            }
+        ]
+    },
+    {
+        "corporateFieldId": 56,
+        "corporateFieldName": "ID Number_16",
+        "apiFields": [
+            {
+                "apiFieldId": 9,
+                "apiFieldName": "ReceiverIdNumber",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 1,
+                    "apiName": "FinanceNow",
+                    "minAmount": 1.0,
+                    "maxAmount": 3000.0
+                }
+            }
+        ]
+    },
+    {
+        "corporateFieldId": 57,
+        "corporateFieldName": "ID Type_17",
+        "apiFields": [
+            {
+                "apiFieldId": 10,
+                "apiFieldName": "ReceiverIdType",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 1,
+                    "apiName": "FinanceNow",
+                    "minAmount": 1.0,
+                    "maxAmount": 3000.0
+                }
+            }
+        ]
+    },
+    {
+        "corporateFieldId": 58,
+        "corporateFieldName": "Date of Birth_18",
+        "apiFields": [
+            {
+                "apiFieldId": 63,
+                "apiFieldName": "payeeBirthDate",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 3,
+                    "apiName": "PaymentGo",
+                    "minAmount": 6001.0,
+                    "maxAmount": 9000.0
+                }
+            }
+        ]
+    },
+    {
+        "corporateFieldId": 59,
+        "corporateFieldName": "Account Number_19",
+        "apiFields": [
+            {
+                "apiFieldId": 44,
+                "apiFieldName": "recipient_account_number",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 2,
+                    "apiName": "EverywhereRemit",
+                    "minAmount": 3001.0,
+                    "maxAmount": 6000.0
+                }
+            },
+            {
+                "apiFieldId": 1,
+                "apiFieldName": "BankAccountNumber",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 1,
+                    "apiName": "FinanceNow",
+                    "minAmount": 1.0,
+                    "maxAmount": 3000.0
+                }
+            },
+            {
+                "apiFieldId": 64,
+                "apiFieldName": "payeeAccountNo",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 3,
+                    "apiName": "PaymentGo",
+                    "minAmount": 6001.0,
+                    "maxAmount": 9000.0
+                }
+            }
+        ]
+    },
+    {
+        "corporateFieldId": 60,
+        "corporateFieldName": "Nationality_20",
+        "apiFields": [
+            {
+                "apiFieldId": 24,
+                "apiFieldName": "ReceiverNationality",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 1,
+                    "apiName": "FinanceNow",
+                    "minAmount": 1.0,
+                    "maxAmount": 3000.0
+                }
+            }
+        ]
+    },
+    {
+        "corporateFieldId": 61,
+        "corporateFieldName": "City_21",
+        "apiFields": [
+            {
+                "apiFieldId": 6,
+                "apiFieldName": "ReceiverCity",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 1,
+                    "apiName": "FinanceNow",
+                    "minAmount": 1.0,
+                    "maxAmount": 3000.0
+                }
+            }
+        ]
+    },
+    {
+        "corporateFieldId": 62,
+        "corporateFieldName": "Address_22",
+        "apiFields": [
+            {
+                "apiFieldId": 5,
+                "apiFieldName": "ReceiverAddress",
+                "datatype": "String",
+                "mandatory": false,
+                "apiData": {
+                    "apiId": 1,
+                    "apiName": "FinanceNow",
+                    "minAmount": 1.0,
+                    "maxAmount": 3000.0
+                }
+            }
+        ]
+    },
+    {
+        "corporateFieldId": 63,
+        "corporateFieldName": "Reference ID _23",
+        "apiFields": [
+            {
+                "apiFieldId": 71,
+                "apiFieldName": "ReferenceId",
+                "datatype": "String",
+                "mandatory": true,
+                "apiData": {
+                    "apiId": 1,
+                    "apiName": "FinanceNow",
+                    "minAmount": 1.0,
+                    "maxAmount": 3000.0
+                }
+            },
+            {
+                "apiFieldId": 73,
+                "apiFieldName": "referenceId",
+                "datatype": "String",
+                "mandatory": true,
+                "apiData": {
+                    "apiId": 3,
+                    "apiName": "PaymentGo",
+                    "minAmount": 6001.0,
+                    "maxAmount": 9000.0
+                }
+            },
+            {
+                "apiFieldId": 72,
+                "apiFieldName": "reference_id",
+                "datatype": "String",
+                "mandatory": true,
+                "apiData": {
+                    "apiId": 2,
+                    "apiName": "EverywhereRemit",
+                    "minAmount": 3001.0,
+                    "maxAmount": 6000.0
+                }
+            }
+        ]
+    },
+    {
+        "corporateFieldId": 64,
+        "corporateFieldName": "Receiving Amount_24",
+        "apiFields": [
+            {
+                "apiFieldId": 75,
+                "apiFieldName": "receiving_amount",
+                "datatype": "Number",
+                "mandatory": true,
+                "apiData": {
+                    "apiId": 2,
+                    "apiName": "EverywhereRemit",
+                    "minAmount": 3001.0,
+                    "maxAmount": 6000.0
+                }
+            },
+            {
+                "apiFieldId": 74,
+                "apiFieldName": "ReceivingAmount",
+                "datatype": "Number",
+                "mandatory": true,
+                "apiData": {
+                    "apiId": 1,
+                    "apiName": "FinanceNow",
+                    "minAmount": 1.0,
+                    "maxAmount": 3000.0
+                }
+            },
+            {
+                "apiFieldId": 76,
+                "apiFieldName": "receivingAmount",
+                "datatype": "Number",
+                "mandatory": true,
+                "apiData": {
+                    "apiId": 3,
+                    "apiName": "PaymentGo",
+                    "minAmount": 6001.0,
+                    "maxAmount": 9000.0
+                }
+            }
+        ]
+    }
+]
