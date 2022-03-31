@@ -19,8 +19,6 @@ public class EverywhereRemit extends CommonApi {
     private String segment;
     private double units;
 
-    public EverywhereRemit() {};
-
     // Common Fields
     @Override
     @JsonProperty("amount")

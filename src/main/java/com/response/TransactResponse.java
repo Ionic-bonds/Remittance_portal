@@ -2,6 +2,8 @@ package com.response;
 
 import java.util.List;
 
+import com.request.TransactOutcome;
+
 public class TransactResponse {
     private List<TransactOutcome> transactOutcomeList;
     private List<String> errorList;

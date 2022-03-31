@@ -17,29 +17,6 @@ public class CommonApi {
     private int receiverIdType;
     private int sourceOfFund;
     private int purposeOfRemit;
-    
-    public CommonApi() {};
-
-    public CommonApi(double amount, String referenceId, String senderFirstName, String senderLastName,
-            String senderIdNumber, String senderAddress, String senderCountry, String senderNationality,
-            int senderIdType, String bankAccountNumber, String receiverFirstName, String receiverLastName,
-            int receiverIdType, int sourceOfFund, int purposeOfRemit) {
-        this.amount = amount;
-        this.referenceId = referenceId;
-        this.senderFirstName = senderFirstName;
-        this.senderLastName = senderLastName;
-        this.senderIdNumber = senderIdNumber;
-        this.senderAddress = senderAddress;
-        this.senderCountry = senderCountry;
-        this.senderNationality = senderNationality;
-        this.senderIdType = senderIdType;
-        this.bankAccountNumber = bankAccountNumber;
-        this.receiverFirstName = receiverFirstName;
-        this.receiverLastName = receiverLastName;
-        this.receiverIdType = receiverIdType;
-        this.sourceOfFund = sourceOfFund;
-        this.purposeOfRemit = purposeOfRemit;
-    }
 
     public double getAmount() {
         return amount;

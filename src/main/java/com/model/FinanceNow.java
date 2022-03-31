@@ -19,8 +19,6 @@ public class FinanceNow extends CommonApi {
     private String payoutCurrency;
     private String senderBeneficiaryRelationship;
 
-    public FinanceNow() {};
-
     // Common Fields
     @Override
     @JsonProperty("Amount")
