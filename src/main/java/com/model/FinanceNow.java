@@ -21,7 +21,7 @@ public class FinanceNow extends CommonApi {
 
     // Common Fields
     @Override
-    @JsonProperty("Amount")
+    @JsonProperty("ReceivingAmount")
     public double getAmount() {
         return super.getAmount();
     }
