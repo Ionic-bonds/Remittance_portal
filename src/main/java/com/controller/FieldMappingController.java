@@ -39,6 +39,7 @@ import com.request.TransactOutcome;
 import com.request.TransactionAuth;
 import com.response.TransactResponse;
 
+import org.apache.commons.collections4.IteratorUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
@@ -106,25 +107,13 @@ public class FieldMappingController {
             if (!cell.isEmpty() || cell.length() != 0) {
                 // Validation: Return true if cell is a String (Regex Validation - only alphanumeric and symbols)
                 if (dataType.equals("Name")) {
-                    // Check if cell is a first name or last name
-                    // if (currentHeader == "First Name" || currentHeader == "Last Name"
-                    //     || apiField.getApiFieldName() == "ReceiverFirstName" || apiField.getApiFieldName() == "ReceiverLastName"
-                    //     || apiField.getApiFieldName() == "SenderFirstName" || apiField.getApiFieldName() == "SenderLastName"
-                    //     || apiField.getApiFieldName() == "recipient_legal_name_first" || apiField.getApiFieldName() == "recipient_legal_name_last"
-                    //     || apiField.getApiFieldName() == "sender_legal_name_first" || apiField.getApiFieldName() == "sender_legal_name_last"
-                    //     || apiField.getApiFieldName() == "payeeGivenName" || apiField.getApiFieldName() == "payeeSurname"
-                    //     || apiField.getApiFieldName() == "remitGivenName" || apiField.getApiFieldName() == "remitSurname")
-                    // {
-                        // Check if cell (First Name or Last Name) contains non english alphabets
                         if (!cell.replaceAll("\\s", "").matches("[a-zA-Z]+")){
                             errorMessage = String.format("STRING ERROR '%s' for '%s' to '%s' [API: %s]: " +
                                 "Please ensure cell input only contains non english alphabets.", 
                                 cell, currentHeader, apiField.getApiFieldName(), apiField.getApi().getApiName());
-                            
                             return errorMessage;
                         }
                     // }
-    
                     return errorMessage;
                 } 
                 // Validation: Return true if cell is able to parse into an Integer
@@ -137,7 +126,6 @@ public class FieldMappingController {
                             "Please ensure cell input is in numeric (integer) format.", 
                             cell, currentHeader, apiField.getApiFieldName(), apiField.getApi().getApiName());
                     }
-
                     return errorMessage;
                 }
                 // Validation: Return true if cell is able to parse into a Double
@@ -150,23 +138,20 @@ public class FieldMappingController {
                             "Please ensure cell input is in numeric (double) format.", 
                             cell, currentHeader, apiField.getApiFieldName(), apiField.getApi().getApiName());
                     }
-        
                     return errorMessage;
                 } 
                 // Validation: Return true if cell is able to parse into a Date
                 else if (dataType.equals("Date")) {                    
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
                     try {
                         LocalDate.parse(cell, formatter);
-                     }
-                     catch (Exception e){
+                    }
+                    catch (Exception e){
                          // Not a Date 
                         errorMessage = String.format("DATE ERROR '%s' for '%s' to '%s' [API: %s]: " +
                             "Please ensure cell input is in YYYY-MM-DD format.", 
                             cell, currentHeader, apiField.getApiFieldName(), apiField.getApi().getApiName());
-                     }
-                    
+                    }
                     return errorMessage;
                 }
             }
@@ -178,11 +163,8 @@ public class FieldMappingController {
             }
         // Field is a selected field
         } else {
-            // errorMessage = String.format("invalid cell input '%s' for '%s' to '%s' [API: %s]", 
-            //     cell, currentHeader, apiField.getApiFieldName(), apiField.getApi().getApiName());
-
-            errorMessage = String.format("ALPHA 3-CODE ERROR '%s' for '%s' to '%s' [API: %s]: " +
-                "Please ensure cell input is a valid country code Alpha-3.", 
+            errorMessage = String.format("Invalid Cell Input '%s' for '%s' to '%s' [API: %s]: " +
+                "Please ensure cell matches the list of values", 
                 cell, currentHeader, apiField.getApiFieldName(), apiField.getApi().getApiName());
 
             Iterator<SelectedField> iterSelectedField = selectedFields.iterator();
@@ -221,6 +203,20 @@ public class FieldMappingController {
         }
         return returnMessage;
     }
+
+    private static boolean isRowEmpty(Row row) {
+		boolean isEmpty = true;
+		DataFormatter dataFormatter = new DataFormatter();
+		if (row != null) {
+			for (Cell cell : row) {
+				if (dataFormatter.formatCellValue(cell).trim().length() > 0) {
+					isEmpty = false;
+					break;
+				}
+			}
+		}
+		return isEmpty;
+	}
 
     @PostMapping("/uploadFieldMapping/{corporateUserId}")
     public ResponseEntity<TransactResponse> addFieldMapping(
@@ -272,24 +268,20 @@ public class FieldMappingController {
             Workbook workbook = new XSSFWorkbook(file.getInputStream());
             Sheet sh = workbook.getSheetAt(0);
             Row header = sh.getRow(headerRow);
+            int totalRows = sh.getLastRowNum();
             List<Api> apiList = apiRepository.findAll();
-            Iterator<Row> iterApiRow = sh.iterator();
-            // Skipping headers row
-            for (int i=0; i<headerRow; i++) {
-                iterApiRow.next();
-            }
-            while (iterApiRow.hasNext()) {
-                try {
-                    int colCounter = 1;
-                    Row currentRow = iterApiRow.next();
-                    int rowNum = currentRow.getRowNum();
+            for (int i=headerRow; i<totalRows; i++) {
+                Row currentRow = sh.getRow(i);
+                if (isRowEmpty(currentRow)) {
+                    continue;
+                }
+                int rowNum = currentRow.getRowNum();
+                int colCounter = 1;
+                String errorMessage = "";
+                try {                
                     CommonApi commonApi = new CommonApi();
-                    String errorMessage = "";
-
-                    // Determine which API to instantiate based on the amount
                     Double amount = Double.parseDouble(currentRow.getCell(amountCol - 1).toString());
                     Api searchApi = determineApi(apiList, amount);
-                    // Amount matches an API range 
                     if (searchApi != null) {
                         String searchApiName = searchApi.getApiName();
                         if (searchApiName.equals("FinanceNow")) {
@@ -300,11 +292,11 @@ public class FieldMappingController {
                             commonApi = new PaymentGo();
                         }
                         // Retrieving the row's cell value
-                        Iterator<Cell> iterApiCol = currentRow.iterator();
+                        // Iterator<Cell> iterApiCol = currentRow.iterator();
                         Iterator<Cell> iterHeadGet = header.iterator();
-                        while (iterApiCol.hasNext()) {
+                        for (Cell col : currentRow) {
                             DataFormatter dataFormatter = new DataFormatter();
-                            String cell = dataFormatter.formatCellValue(iterApiCol.next());
+                            String cell = dataFormatter.formatCellValue(col);
                             String currentHeader = dataFormatter.formatCellValue(iterHeadGet.next());
                             // Concatenates Excel's column header with colCounter to retrieve mapped fields
                             String searchApiField = currentHeader + "_" + String.valueOf(colCounter++);
@@ -331,22 +323,23 @@ public class FieldMappingController {
                         if (errorMessage.equals("")) {
                             commonApiList.add(commonApi);
                         } else {
-                            errorList.add(String.format("Error row%s: %s", String.valueOf(rowNum+headerRow), errorMessage));
+                            errorList.add(String.format("Error row%s: %s", String.valueOf(rowNum+1), errorMessage));
                         }
                     }
                     // Amount is not within the range
                     else {
                         // Validation: 
-                        errorList.add(String.format("Error row%s: %s", String.valueOf(rowNum+headerRow), "Amount is not within API range."));
+                        errorList.add(String.format("Error row%s: %s", String.valueOf(rowNum+1), "Amount is not within API range."));
                     }
-                // amount column has a non-number value
                 } catch (NumberFormatException e) {
-                    // Validation: 
-
+                    // Validation:
+                    if (rowNum > headerRow && rowNum < totalRows-1) {
+                        errorList.add(String.format("Error row%s: %s", String.valueOf(rowNum+1), "Amount is invalid."));
+                    }
                 }
             }
         } catch (IOException e) {
-            throw new RuntimeException("Fail upload transactions: " + e.getMessage());
+            throw new RuntimeException("Invalid excel file: " + e.getMessage());
         }
         if (errorList.size() == 0) {
             transactOutcomeList = uploadAllTransactions(commonApiList);
