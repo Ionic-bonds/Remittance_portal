@@ -1,31 +1,62 @@
 <template>
   <div>
-    <div>
-      <el-row class="home--container">
-        <el-col :sm="11" class="nav--image--container hidden-sm-and-down">
-          <img class="nav--image" src="../assets/TechG_front.jpg" />
-        </el-col>
-        <el-col :sm="22" :md="13" class="home--intro--container">
-          <h1 class="home--intro--title">
-            Support transactions for what matters the most to you. <br />
-            <img class="g-image" src="../assets/G.png" />
-            uaranteed easy.
-          </h1>
-          <p class="home--intro--subtitle">
-            Import your own data file to our system.
-            <span style="font-weight: bolder; color: rgb(123,245,166) "
-              >It's that simple.</span
-            >
-          </p>
-        </el-col>
-      </el-row>
+    <el-row class="home--container">
+      <el-col :sm="11" class="nav--image--container hidden-sm-and-down">
+        <img class="nav--image" src="../assets/TechG_front.jpg" />
+      </el-col>
+      <el-col :sm="22" :md="13" class="home--intro--container">
+        <h1 class="home--intro--title">
+          Support transactions for what matters the most to you. <br />
+          <img class="g-image" src="../assets/G.png" />
+          uaranteed easy.
+        </h1>
+        <p class="home--intro--subtitle">
+          Import your own data file to our system.
+          <span style="font-weight: bolder; color: rgb(123, 245, 166)"
+            >It's that simple.</span
+          >
+        </p>
+      </el-col>
+    </el-row>
 
-      <el-divider class="divider"></el-divider>
-    </div>
+    <el-divider class="divider"></el-divider>
+
+    <el-row :gutter="20" style="margin: 20px">
+      <el-col :span="22" :offset="1" class="standard_text">OUR SEAMLESS SOLUTION, YOUR DIGITAL HEADSTART</el-col>
+      <el-col :span="22" :offset="1">
+        <el-carousel style="margin: 10px" :interval="4000" type="card" height="250px">
+          <el-carousel-item>
+            <el-row :gutter="12">
+              <el-col :span="24">
+                <el-card shadow="never" style="text-align: center" class="carousel_title">Excel Uploads for Mass Payments</el-card>
+              </el-col>
+            </el-row>
+            <el-row :gutter="12">
+              <el-col :span="24">
+                <el-card shadow="never" style="text-align: center" class="carousel_title">Excel Uploads for Mass Payments</el-card>
+              </el-col>
+            </el-row>
+          </el-carousel-item>
+          <el-carousel-item>
+            <h3 style="text-align: center">
+              <span class="carousel_title">Excel Uploads for Mass Payments</span>
+              <p>Hello</p>
+            </h3>
+          </el-carousel-item>
+          <el-carousel-item>
+            <h3 style="text-align: center">
+              <span class="carousel_title">Excel Uploads for Mass Payments</span>
+              <p>Hello</p>
+            </h3>
+          </el-carousel-item>
+        </el-carousel>
+      </el-col>
+    </el-row>
+  
 
     <div class="demo-image">
       <div v-for="i in 6" :key="i" class="block">
-        <span class="demonstration">{{ names[i-1] }}</span>
+        <span class="demonstration">{{ names[i - 1] }}</span>
         <el-image style="width: 100px; height: 100px" :src="url" :fit="cover" />
       </div>
     </div>
@@ -37,8 +68,15 @@ export default {
   name: "HomeCanva",
   data() {
     return {
-    //   fits: ["fill", "contain", "cover", "none", "scale-down"],
-      names: ["Cheow Tianle", "David Lim", "Gan Shaohong", "Leonard Wong", "Wang Shurui", "Yeo Yu Quan"],
+      //   fits: ["fill", "contain", "cover", "none", "scale-down"],
+      names: [
+        "Cheow Tianle",
+        "David Lim",
+        "Gan Shaohong",
+        "Leonard Wong",
+        "Wang Shurui",
+        "Yeo Yu Quan",
+      ],
       url: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
     };
   },
@@ -88,6 +126,63 @@ export default {
   width: 22px;
 }
 
+.standard_text{
+  text-align: center; 
+  font-size: 25px; 
+  font-weight: bold;
+  color: rgba(123, 245, 166, 0.932);
+}
+
+/* Carousel */
+.el-row {
+  margin-bottom: 20px;
+}
+
+.el-row:last-child {
+  margin-bottom: 0;
+}
+
+.el-col {
+  border-radius: 4px;
+}
+
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
+}
+
+.row-bg {
+  padding: 10px 0;
+  background-color: #f9fafc;
+}
+
+.carousel_title{
+  color: rgb(255, 78, 47); 
+  font-size: 18px;
+  background-color: #d3dce6;
+}
+
+.el-carousel__item h3 {
+  color: #475669;
+  border-radius: 10px;
+  font-size: 14px;
+  opacity: 0.75;
+  line-height: 200px;
+  margin: 0;
+  text-align: center;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+  border-radius: 10px;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
+  border-radius: 10px;
+}
+
+/* Final demographics image */
 .demo-image .block {
   padding: 20px 0;
   text-align: center;
@@ -109,7 +204,7 @@ export default {
 .demo-image .demonstration {
   display: block;
   color: rgb(81, 49, 22);
-  color: rgb(123,245,166);
+  color: rgb(123, 245, 166);
   font-size: 14px;
   font-weight: bold;
   margin-bottom: 20px;
