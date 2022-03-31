@@ -64,15 +64,15 @@ public class CorporateFieldController {
     }
 
     // Update Corporate User
-    @PutMapping("/updateCorpUser/{corporateUserId}")
-    public ResponseEntity<CorporateUser> updateCorpUser(@PathVariable("corporateUserId") long corporateUserId,
-            @RequestBody CorporateUser corporateUser) {
+    // @PutMapping("/updateCorpUser/{corporateUserId}")
+    public void updateCorpUser(long corporateUserId, CorporateUser corporateUser) {
         CorporateUser _api = corporateUserRepository.findById(corporateUserId)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "No Corporate User found with corporate_user_id = " + corporateUserId));
         _api.setEmail(corporateUser.getEmail());
         _api.setPassword(corporateUser.getPassword());
-        return new ResponseEntity<>(corporateUserRepository.save(_api), HttpStatus.OK);
+        _api.setHeaderRow(corporateUser.getHeaderRow());
+        // return new ResponseEntity<>(corporateUserRepository.save(_api), HttpStatus.OK);
     }
 
     // Get all Corporate Fields
@@ -187,6 +187,8 @@ public class CorporateFieldController {
             CorporateUser corporateUser = corporateUserRepository.findById(corporateUserId)
                     .orElseThrow(() -> new ResourceNotFoundException(
                             "No Corporate User found with corporate_user_id = " + corporateUserId));
+            corporateUser.setHeaderRow(headerRow);
+            updateCorpUser(corporateUserId, corporateUser);
 
             // // Check if headers exist --> if it already does, return Error 400 Bad
             // Request
