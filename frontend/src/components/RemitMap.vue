@@ -3,16 +3,21 @@
 
     <!-- First part of the mapping -->
 
-    <div class="map--transaction--container">
+    <div class="map--transaction--container" v-if ="!this.secondaryStep">
         <h1>Map Transaction Column</h1>
         <MapTable v-model:masterTableDataProp = "masterTableData"  v-model:masterOptionListProp = "masterOptionList" v-model:usedOptionProp = "usedOption"></MapTable>
-    </div>   
-
-
+    </div>
+    
+    <!-- Error List -->
+    <div class="map--transaction--container" v-if ="this.secondaryStep">
+        <h1 class="error--color">SOMETHING WRONG! <br>Please rectify and try again :)</h1> 
+        <ErrorTable v-model:errorListProp = "errorList"></ErrorTable>>
+    </div>
+    
     <!-- Buttons -->
     <div class = "button--wrapper">
         <button @click = "this.back" class = "button--back">{{'<'}} Back</button>
-        <button @click="this.continue" class = "button--continue">Continue {{'>'}}</button>
+        <button v-if="!this.secondaryStep" @click="this.continue" class = "button--continue">Continue {{'>'}}</button>
     </div>
     </div>
 
@@ -23,27 +28,25 @@
 <script >
 import MapTable from "./MapTable.vue"
 import Feedback from './Feedback.vue'
+import ErrorTable from './ErrorTable.vue'
 import { ElLoading } from 'element-plus'
 import ApiDataService from "../api/ApiDataService";
 
-
-// <el-icon><arrow-right-bold /></el-icon>
-// <el-icon><d-arrow-right /></el-icon>
-
 export default {
     name: 'RemitMap',
-    props: ["step","masterObjectProp", "file", "manualMappingProp"],
-    components: {MapTable},
+    props: ["step","masterObjectProp", "file", "manualMappingProp","secStepProp", "outcomeListProp"],
+    components: {MapTable, ErrorTable},
     data() {
         return {
             value: "",
             // amountJson: paramJson.param.slice(0,1), // first occurance as the money param .slice(0,1)
             // paramJson: paramJson.param.slice(1),
             // optionJson: optionJson.option,
-            secondaryStep: false,
+            // secondaryStep: true,
             truthyValue: false,
             excludeOption: [],
             loadinstance: "",
+            errorList:  [],
         }
     },
     methods: {
@@ -86,13 +89,21 @@ export default {
                             console.log(response)
 
                             this.stoploading(this.loadinstance)
-
+                            if (response.data.errorList.length > 0 ){
+                                this.errorList = response.data.errorList
+                                this.secondaryStep = true
+                            } else{
+                                this.outcomeList = response.data.transactOutcomeList
+                                this.importStep = 2
+                            }
+                            
 
                         }).catch((e)=>{
                             var errMsg 
                             (e?.response?.data) ? (errMsg = e.response.data.message) : (errMsg = e.message)
                             console.log(errMsg)
                             Feedback.open5(errMsg, "Something's Wrong!")
+                            this.stoploading(this.loadinstance)
                         })
 
                     }).catch((e)=>{
@@ -100,44 +111,18 @@ export default {
                         (e?.response?.data) ? (errMsg = e.response.data.message) : (errMsg = e.message)
                         console.log(errMsg)
                         Feedback.open5(errMsg, "Something's Wrong!")
+                        this.stoploading(this.loadinstance)
                     })
 
 
                 }
             })
-            return
-            // console.log(this.masterTableData)
-            // console.log(this.fieldMappingList)
-            // this.masterTableData[0]["apiFields"][0]["apiFieldList"] = []
-
-
-            // const loadingInstance = ElLoading.service({
-            //     lock: true,
-            //     text: 'Loading',
-            //     background: 'rgba(0, 0, 0, 0.7)',
-            // })
-
-            // if (!this.secondaryStep) {
-            //     if (this.paramAmount[0]["map"]){
-            //         // TODO: Get API involved
-            //         this.secondaryStep = !this.secondaryStep
-            //         loadingInstance.close()
-                    
-            //     } else{
-            //         // Feedback.loadingScreen
-            //         loadingInstance.close()
-            //         Feedback.open5("Please select a column.", "Error")
-            //     }
-                
-            // } else {
-            //     // TODO: validation before uploading
-            //     console.log("validation Before uploading")
-            //     loadingInstance.close()
-            // }
         },
         back: function(){
+            // Feedback.open1("Going Back", "info")
             if (this.secondaryStep)  {
                 this.secondaryStep = !this.secondaryStep
+                Feedback.open1("Map Again!", "info")
             } else {
                 // this.importStep = 0
                 Feedback.open2().then((d)=>{
@@ -156,6 +141,22 @@ export default {
             },
             set(value){
                 this.$emit('update:step', value)
+            }
+        },
+        outcomeList: {
+            get(){
+                return this.outcomeListProp
+            },
+            set(value){
+                this.$emit('update:outcomeListProp', value)
+            }
+        },
+        secondaryStep: {
+            get(){
+                return this.secStepProp
+            },
+            set(value){
+                this.$emit('update:secStepProp', value)
             }
         },
         masterObject: {
@@ -205,6 +206,7 @@ export default {
             }
             return result
         },
+        
     },
     mounted() {
         // console.log(this.file)
@@ -217,6 +219,9 @@ export default {
         // console.log(JSON.parse(JSON.stringify(this.paramJson)));
     },
     watch: {
+        // secondaryStep: function(val, oldval){
+        //     console.log(val, oldval)
+        // },
         // masterTableData: {
         //     handler: function (val, oldVal) {
         //         console.log(val, oldVal)
@@ -258,7 +263,9 @@ h1{
 
 }
 
-
+.error--color{
+    background-color: hsla(336, 77%, 57%, 0.965);
+}
 .map--transaction--container{
     margin: 30px auto;
     border-radius: 20px;

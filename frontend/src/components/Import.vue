@@ -8,10 +8,14 @@
     
     >
         <h1>Upload XLSX file here:</h1>
-
-        <el-button type="primary" class = "import--download" @click = "downloadJson">
-        Download Current Mapping<el-icon class="el-icon--right"><Upload/></el-icon>
-        </el-button>
+        <span>
+            <el-button type="primary" class = "import--download" @click = "downloadJson">
+            Download Current Mapping<el-icon class="el-icon--right"><Upload/></el-icon>
+            </el-button>
+            <el-button type="success" class = "import--template" @click = "downloadTemplate">
+            Download Template File<el-icon class="el-icon--right"><Upload/></el-icon>
+            </el-button>
+        </span>
 
 
         <el-upload
@@ -44,6 +48,7 @@
         </el-upload>
 
         <button @click.prevent="uploadButton" class = "import--button">Start Importing</button>
+        <iframe id="my_iframe" style="display:none;"></iframe>
     </div>
 </template>
 
@@ -77,11 +82,15 @@ export default {
             headerNum: false,
             exportName: "mapping",
             loadinstance: "",
+            templateUrl: "/TEMPLATE_DATA.xlsx",
         }
     },
     methods: {
         stoploading: (l) =>{
             l.close()
+        },
+        downloadTemplate: function (){
+            document.getElementById('my_iframe').src = this.templateUrl
         },
         downloadJson: function() {
             console.log("downloading now")
@@ -90,7 +99,6 @@ export default {
             console.log("invoking API 20: Get all fields + Mappings")
             ApiDataService.getMappingsAndFields(this.$store.getters.user)
             .then((response)=>{
-                // console.log(response)                
                 this.downloadObjectasJson(response.data)
                 Feedback.open1("Download Success!", "success")
 
@@ -327,4 +335,14 @@ h1 > a{
     cursor: pointer;
 }
 
+
+.import--template, .import--download{
+    width: 250px;
+    margin: 0px 0px 20px 0px;
+    height: 30px;
+    font-family: 'Poppins', sans-serif;
+}
+.import--template:hover, .import--download:hover{
+    cursor: pointer;
+}
 </style>

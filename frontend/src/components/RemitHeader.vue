@@ -2,7 +2,7 @@
     <div>
         <h1 class = "rh--header">Remit</h1>
         <p class = "rh--subheader">A seemless and efficient remittance platform that connects you across countries</p>
-        <Progress :step = "step" />
+        <Progress :step = "step" :secStep = "secStepProp"/>
 
         <hr/>
     </div>
@@ -21,7 +21,7 @@ export default {
     components: {
         Progress
     },
-    props: ['step'],
+    props: ['step', "secStepProp"],
     mounted(){
         // console.log(this.step)
     }

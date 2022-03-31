@@ -1,13 +1,14 @@
 <template>
   <div class="remit">
-      <RemitHeader :step = "remitStep"></RemitHeader>
+      <RemitHeader :step = "remitStep" :secStepProp = "secStep"></RemitHeader>
 
       <Import v-if = "this.remitStep == 0" v-model:file = "file" v-model:step = "remitStep" v-model:mapFieldsProp = "mapFields" v-model:headersColProp = "headersCol" ></Import>
 
-      <importJson v-if = "this.remitStep == 1" v-model:manualMappingProp = "manualMapping"></importJson>
+      <importJson v-if = "this.remitStep == 1 && !this.secStep" v-model:manualMappingProp = "manualMapping"></importJson>
 
-      <RemitMap v-if="this.remitStep == 1" v-model:file = "file" v-model:step = "remitStep" v-model:masterObjectProp = "masterObject" v-model:manualMappingProp = "manualMapping"></RemitMap>
-      <button @click="clickbutton">click</button>
+      <RemitMap v-if="this.remitStep == 1" v-model:outcomeListProp = "outcomeList" v-model:file = "file" v-model:secStepProp = "secStep" v-model:step = "remitStep" v-model:masterObjectProp = "masterObject" v-model:manualMappingProp = "manualMapping"></RemitMap>
+      
+      <RemitSuccess v-if = "this.remitStep == 2" :outcomeListProp = "outcomeList" v-model:step = "remitStep"></RemitSuccess>
   </div>
 </template>
 
@@ -17,6 +18,7 @@ import RemitHeader from '@/components/RemitHeader.vue'
 import Import from '@/components/Import.vue'
 import RemitMap from '@/components/RemitMap.vue'
 import importJson from '@/components/importJson.vue'
+import RemitSuccess from '@/components/RemitSuccess.vue'
 
 
 export default {
@@ -29,15 +31,17 @@ export default {
       file: "",
       manualMapping: [],
       masterObject: {},
+      secStep: false,
+      outcomeList: [],
     }
   },
   components: {
-    RemitHeader, Import, RemitMap, importJson
+    RemitHeader, Import, RemitMap, importJson, RemitSuccess
   },
   methods: {
-    clickbutton: function (){
-      console.log(this.mapFields)
-    }
+    // clickbutton: function (){
+    //   console.log(this.mapFields)
+    // }
   },
   watch: {
     remitStep: function (val, oldVal) {
