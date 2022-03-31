@@ -84,13 +84,46 @@ export default {
 </script>
 
 <style scoped>
+.home--intro--container {
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  flex-direction: column;
+  padding: 60px 3.5rem 60px 3rem;
+}
 
-.home--intro--container{
-    display: flex;
-    /* align-items: center; */
-    justify-content: center;
-    flex-direction: column;
-    padding: 50px 5rem 50px 5rem;
+.home--intro--title {
+  font-family: "Poppins", sans-serif;
+  font-style: 700px;
+  font-size: 30px;
+  color: white;
+  /* margin: 120px 50px 40px 80px; */
+}
+
+.home--intro--subtitle {
+  font-family: "Poppins", sans-serif;
+  color: white;
+  /* margin: 10px 50px 40px 80px; */
+}
+
+.nav--image--container {
+  display: flex;
+  justify-content: center; /* align horizontal */
+  align-items: center; /* align vertical */
+}
+.nav--image {
+  margin: 0px 10px;
+  width: 30rem;
+}
+
+.divider {
+  margin: 0 auto;
+  width: 50%;
+}
+
+.g-image {
+  margin: 0px -7px -3px -2px;
+  width: 22px;
 }
 
 .standard_text{
@@ -160,16 +193,12 @@ export default {
   vertical-align: top;
 }
 
-.home--intro--subtitle{
-    font-family: 'Poppins', sans-serif;
-    color: white;
-    /* margin: 10px 50px 40px 80px; */
+.demo-image .block:last-child {
+  border-right: none;
 }
 
-.nav--image--container{
-    display: flex;
-    justify-content: center; /* align horizontal */
-    align-items: center; /* align vertical */
+.demo-image .block:first-child {
+  margin-left: 20px;
 }
 
 .demo-image .demonstration {
