@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -347,38 +348,30 @@ public class FieldMappingController {
         List<ApiField> apiFieldList = new ArrayList<ApiField>();
         for (FieldMapRequest fieldMapRequest : fieldMapRequests) {
             long corporateFieldId = fieldMapRequest.getCorporateFieldId();
-            long apiFieldId = fieldMapRequest.getApiFieldId();
-            CorporateField corporateField = corporateFieldRepository.findById(corporateFieldId).orElseThrow(() 
+            long apiFieldRequestId = fieldMapRequest.getApiFieldId();
+            ApiField apiFieldRequest = apiFieldRepository.findById(apiFieldRequestId)
+                .orElseThrow(() -> 
+                    new ResourceNotFoundException("No Api Field found with api_field_id = " + apiFieldRequestId));
+            ApiField apiField = corporateFieldRepository.findById(corporateFieldId).map(corporateField -> {
+                long apiFieldId = fieldMapRequest.getApiFieldId();
+                // ApiField exists
+                if (apiFieldId != 0L) {
+                    ApiField _apiField = apiFieldRepository.findById(apiFieldId)
+                        .orElseThrow(() 
+                            -> new ResourceNotFoundException("No Api Field found with api_field_id = " + apiFieldId));
+                    corporateField.addApiField(_apiField);
+                    corporateFieldRepository.save(corporateField);
+                    return _apiField;
+                }
+                // Add ApiField 
+                corporateField.addApiField(apiFieldRequest);
+                return apiFieldRepository.save(apiFieldRequest);
+            }).orElseThrow(() 
                 -> new ResourceNotFoundException("No Corporate Field found with corporate_field_id = " + corporateFieldId));
-            ApiField apiField = apiFieldRepository.findById(apiFieldId).orElseThrow(() 
-                -> new ResourceNotFoundException("No Api Field found with api_field_id = " + apiFieldId));
-            corporateFieldRepository.save(corporateField);
             apiFieldList.add(apiFieldRepository.save(apiField));
         }
         return new ResponseEntity<>(apiFieldList, HttpStatus.CREATED);
     }
-
-    // @PostMapping("/addFieldMappingOld/{corporateFieldId}")
-    // public ResponseEntity<ApiField> addFieldMappingOld(
-    //     @PathVariable(value = "corporateFieldId") Long corporateFieldId, 
-    //     @RequestBody ApiField apiFieldRequest) {
-
-    //     ApiField apiField = corporateFieldRepository.findById(corporateFieldId).map(corporateField -> {
-    //         long apiFieldId = apiFieldRequest.getApiFieldId();
-    //         // ApiField exists
-    //         if (apiFieldId != 0L) {
-    //             ApiField _apiField = apiFieldRepository.findById(apiFieldId)
-    //                 .orElseThrow(() -> new ResourceNotFoundException("No Api Field found with api_field_id = " + apiFieldId));
-    //             corporateField.addApiField(_apiField);
-    //             corporateFieldRepository.save(corporateField);
-    //             return _apiField;
-    //         }
-    //         // Add ApiField 
-    //         corporateField.addApiField(apiFieldRequest);
-    //         return apiFieldRepository.save(apiFieldRequest);
-    //     }).orElseThrow(() -> new ResourceNotFoundException("No Corporate Field found with corporate_field_id = " + corporateFieldId));
-    //     return new ResponseEntity<>(apiField, HttpStatus.CREATED);
-    // }
 
     // Get all Transactions
     @GetMapping("/getAllTransaction")
