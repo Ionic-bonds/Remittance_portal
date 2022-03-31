@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -24,12 +23,14 @@ import com.model.FinanceNow;
 import com.model.PaymentGo;
 import com.model.SelectedField;
 import com.model.Transaction;
+import com.model.UserApiRequest;
 import com.repository.ApiFieldRepository;
 import com.repository.ApiRepository;
 import com.repository.CorporateFieldRepository;
 import com.repository.CorporateUserRepository;
 import com.repository.SelectedFieldRepository;
 import com.repository.TransactionRepository;
+import com.repository.UserApiRequestRepository;
 import com.request.FieldMapRequest;
 import com.request.SendTransaction;
 import com.request.TransactionAuth;
@@ -74,6 +75,8 @@ public class FieldMappingController {
     private SelectedFieldRepository selectedFieldRepository;
     @Autowired
     private TransactionRepository transactionRepository;
+    @Autowired
+    private UserApiRequestRepository userApiRequestRepository;
 
     public Api determineApi(List<Api> apiList, double amount) {
         Api searchApi = null;
@@ -168,9 +171,10 @@ public class FieldMappingController {
 
     @PostMapping("/uploadFieldMapping/{corporateUserId}")
     public ResponseEntity<TransactResponse> addFieldMapping(
-        @PathVariable("corporateUserId") long corporateUserId, 
-        @RequestParam("file") MultipartFile file) {
+            @PathVariable("corporateUserId") long corporateUserId, 
+            @RequestParam("file") MultipartFile file) {
         
+        UserApiRequest userApiRequest = new UserApiRequest();
         List<TransactOutcome> transactOutcomeList = new ArrayList<>();
         List<CommonApi> commonApiList = new ArrayList<>();
         List<String> errorList = new ArrayList<>();
@@ -206,6 +210,9 @@ public class FieldMappingController {
         if (amountCol == -1) {
             errorList.add(String.format("Spreadsheet does not have a mapped amount column"));
             TransactResponse TransactResponse = new TransactResponse(null, errorList);
+            userApiRequest.setStatusCode(200);
+            userApiRequest.setMessage("Validation Failed: No Amount column found");
+            addUserApiRequest(corporateUserId, userApiRequest);
             return new ResponseEntity<>(TransactResponse, HttpStatus.CREATED);
         }
         try {
@@ -296,6 +303,26 @@ public class FieldMappingController {
                 transactionRequest.setOutcome(transactOutcome.getOutcome());
                 addTransaction(corporateUserId, transactionRequest);
             }
+            if (transactOutcomeList.size() == commonApiList.size()) {
+                userApiRequest.setStatusCode(400);
+                userApiRequest.setMessage("Transaction Success");
+                addUserApiRequest(corporateUserId, userApiRequest);
+            }
+            else {
+                userApiRequest.setStatusCode(200);
+                userApiRequest.setMessage("Transaction Failed: Invalid Access Token or API");
+                addUserApiRequest(corporateUserId, userApiRequest);
+            }
+            
+        }
+        else {
+            String errorMessage = "";
+            for (String error : errorList) {
+                errorMessage += error + "\n";
+            }
+            userApiRequest.setStatusCode(200);
+            userApiRequest.setMessage("Validation Failed: " + errorMessage);
+            addUserApiRequest(corporateUserId, userApiRequest);
         }
         TransactResponse TransactResponse = new TransactResponse(transactOutcomeList, errorList);
         return new ResponseEntity<>(TransactResponse, HttpStatus.CREATED);
@@ -328,6 +355,10 @@ public class FieldMappingController {
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode rootNode = mapper.readTree(responseEntity.getBody());
                 JsonNode innerNode = rootNode.get("message");
+                if (innerNode == null) {
+                    // Connection with sandbox failed
+                    return transactOutcomeList;
+                }
                 transactOutcomeList.add(new TransactOutcome(commonApi, innerNode.asText(), apiName));
             } catch (JsonMappingException e) {
                 e.printStackTrace();
@@ -407,6 +438,40 @@ public class FieldMappingController {
         return new ResponseEntity<>(apiFields, HttpStatus.OK);
     }
 
+    // Get all UserApiRequests
+    @GetMapping("/getAllUserApiRequest")
+    public ResponseEntity<List<UserApiRequest>> getAllUserApiRequest() {
+        List<UserApiRequest> userApiRequests = userApiRequestRepository.findAll();
+        if (userApiRequests.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(userApiRequests, HttpStatus.OK);
+    }
+
+    // Get UserApiRequest by userApiRequest_id
+    @GetMapping("/getUserApiRequestById/{userApiRequestId}")
+    public ResponseEntity<UserApiRequest> getUserApiRequestById(@PathVariable("userApiRequestId") long userApiRequestId) {
+        UserApiRequest userApiRequest = userApiRequestRepository.findById(userApiRequestId).orElseThrow(
+                () -> new ResourceNotFoundException("No UserApiRequest found with UserApiRequest_id = " + userApiRequestId));
+        return new ResponseEntity<>(userApiRequest, HttpStatus.OK);
+    }
+
+    // Get all UserApiRequests by corporate_user_id
+    @GetMapping("/getAllUserApiRequestByCorpId/{corporateId}")
+    public ResponseEntity<List<UserApiRequest>> getAllUserApiRequestByApiId(
+            @PathVariable(value = "corporateId") Long corporateId) {
+        CorporateUser corporateUser = corporateUserRepository.findById(corporateId).orElseThrow(
+                () -> new ResourceNotFoundException("No Corporate User found with corporate_user_id = " + corporateId));
+        if (corporateUser == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        List<UserApiRequest> apiFields = userApiRequestRepository.findAllApiRequestByCorpUserId(corporateUser);
+        if (apiFields.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(apiFields, HttpStatus.OK);
+    }
+
     // Add new Transaction
     public Transaction addTransaction(@PathVariable(value = "corporateId") Long corporateId,
             @RequestBody Transaction transactionRequest) {
@@ -416,5 +481,15 @@ public class FieldMappingController {
         }).orElseThrow(() -> new ResourceNotFoundException(
                 "No Corporate User found with corporate_user_id = " + corporateId));
         return transaction;
+    }
+
+    // Add new User Api Request
+    public void addUserApiRequest(@PathVariable(value = "corporateId") Long corporateId,
+            @RequestBody UserApiRequest userApiRequest) {
+        corporateUserRepository.findById(corporateId).map(corporateUser -> {
+            userApiRequest.setCorporateUser(corporateUser);
+            return userApiRequestRepository.save(userApiRequest);
+        }).orElseThrow(() -> new ResourceNotFoundException(
+                "No Corporate User found with corporate_user_id = " + corporateId));
     }
 }
