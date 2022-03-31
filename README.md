@@ -53,14 +53,18 @@ A visual representation of the workflow is as follows:
 2. Ensure db access password is according to your OS System i.e, "" 
 3. Check your SQL port number is correct (port 3306)
 4. mvnw dependency:purge-local-repository
+        - Remove the project dependencies from the local repository, and optionally re-resolve them.
 5. mvnw spring-boot:run
-
+        - Triggers the download of Apache Tomcat and initializes the startup of Tomcat
+        
 #### (for Mac)
 1. Load MAMP
 2. Ensure db access password is according to your OS System i.e, "root"
 3. Check your SQL port number is correct (port 8889)
 4. mvn dependency:purge-local-repository
+        - Remove the project dependencies from the local repository, and optionally re-resolve them.
 5. mvn spring-boot:run
+        - Triggers the download of Apache Tomcat and initializes the startup of Tomcat
 
 ---
 

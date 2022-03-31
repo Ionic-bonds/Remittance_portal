@@ -50,8 +50,6 @@ public class Api {
         this.apiName = apiName;
     }
 
-
-
     public double getMinAmount() {
         return minAmount;
     }
