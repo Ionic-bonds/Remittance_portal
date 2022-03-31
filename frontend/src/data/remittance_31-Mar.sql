@@ -1658,3 +1658,4 @@ INSERT INTO `remittance`.`user_roles` (`corporate_user_id`, `role_id`) VALUES (2
 INSERT INTO `remittance`.`user_roles` (`corporate_user_id`, `role_id`) VALUES (3, 1);
 
 COMMIT;
+

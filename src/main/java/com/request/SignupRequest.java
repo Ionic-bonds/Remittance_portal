@@ -1,4 +1,4 @@
-package com.payload.request;
+package com.request;
 
 import java.util.Set;
 

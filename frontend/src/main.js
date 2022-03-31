@@ -11,7 +11,7 @@ import './overwrite.css'
 
 
 createApp(App)
-.use(store) 
+.use(store)
 .use(router)
 .use(ElementPlus)
 .mount('#app')

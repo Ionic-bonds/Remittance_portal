@@ -1,9 +1,14 @@
 <template>
     <div class = "progressContainer">
-        <el-steps :active="this.step" align-center :process-status = "process" :finish-status = "finish">
+        <el-steps v-if = "!this.secStep" :active="this.step" align-center :process-status = "this.processProp" :finish-status = "finish">
             <el-step title="Step 1" description="Import files"></el-step>
             <el-step title="Step 2" description="Mapping Columns"></el-step>
-            <el-step title="Step 3" description="Remit"></el-step>
+            <el-step title="Step 3" description="Remit Details"></el-step>
+        </el-steps>
+        <el-steps v-if = "this.secStep" :active="this.step" align-center :process-status = "this.processProp" :finish-status = "finish">
+            <el-step title="Step 1" description="Import files"></el-step>
+            <el-step  title="Step 2" description="Error!"></el-step>
+            <el-step title="Step 3" description="Remit Details"></el-step>
         </el-steps>
     </div>
 </template>
@@ -17,11 +22,26 @@ export default {
     name: 'Progress',
     data() {
         return { 
-            process: "process",
+            // process: "process",
             finish: "success",
         }
     },
-    props: ["step"]
+    computed: {
+        processProp() {
+            if (this.secStep){
+                return "error"
+            } else {
+                return "process"
+            }
+        },
+    },
+    watch: {
+        // secStep: function (val, oldVal) {
+        //     console.log("old: ", oldVal, ", New:", val)
+        //     console.log(this.processProp)
+        // }
+    },
+    props: ["step", "secStep"]
 }
 </script>
 
