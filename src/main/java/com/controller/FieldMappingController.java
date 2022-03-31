@@ -101,16 +101,16 @@ public class FieldMappingController {
             // Validation: Return true if cell is not empty
             if (!cell.isEmpty() || cell.length() != 0) {
                 // Validation: Return true if cell is a String (Regex Validation - only alphanumeric and symbols)
-                if (dataType.equals("String")) {
+                if (dataType.equals("Name")) {
                     // Check if cell is a first name or last name
-                    if (currentHeader == "First Name" || currentHeader == "Last Name"
-                        || apiField.getApiFieldName() == "ReceiverFirstName" || apiField.getApiFieldName() == "ReceiverLastName"
-                        || apiField.getApiFieldName() == "SenderFirstName" || apiField.getApiFieldName() == "SenderLastName"
-                        || apiField.getApiFieldName() == "recipient_legal_name_first" || apiField.getApiFieldName() == "recipient_legal_name_last"
-                        || apiField.getApiFieldName() == "sender_legal_name_first" || apiField.getApiFieldName() == "sender_legal_name_last"
-                        || apiField.getApiFieldName() == "payeeGivenName" || apiField.getApiFieldName() == "payeeSurname"
-                        || apiField.getApiFieldName() == "remitGivenName" || apiField.getApiFieldName() == "remitSurname")
-                    {
+                    // if (currentHeader == "First Name" || currentHeader == "Last Name"
+                    //     || apiField.getApiFieldName() == "ReceiverFirstName" || apiField.getApiFieldName() == "ReceiverLastName"
+                    //     || apiField.getApiFieldName() == "SenderFirstName" || apiField.getApiFieldName() == "SenderLastName"
+                    //     || apiField.getApiFieldName() == "recipient_legal_name_first" || apiField.getApiFieldName() == "recipient_legal_name_last"
+                    //     || apiField.getApiFieldName() == "sender_legal_name_first" || apiField.getApiFieldName() == "sender_legal_name_last"
+                    //     || apiField.getApiFieldName() == "payeeGivenName" || apiField.getApiFieldName() == "payeeSurname"
+                    //     || apiField.getApiFieldName() == "remitGivenName" || apiField.getApiFieldName() == "remitSurname")
+                    // {
                         // Check if cell (First Name or Last Name) contains non english alphabets
                         if (!cell.replaceAll("\\s", "").matches("[a-zA-Z]+")){
                             errorMessage = String.format("STRING ERROR '%s' for '%s' to '%s' [API: %s]: " +
@@ -119,7 +119,7 @@ public class FieldMappingController {
                             
                             return errorMessage;
                         }
-                    }
+                    // }
     
                     return errorMessage;
                 } 
@@ -166,11 +166,12 @@ public class FieldMappingController {
                     return errorMessage;
                 }
             }
-            
-            errorMessage = String.format("EMPTY INPUT ERROR Empty data input for '%s' to '%s' [API: %s] " +
-                "Please ensure cell input contains a value.", 
-                currentHeader, apiField.getApiFieldName(), apiField.getApi().getApiName());
-
+            else {
+                // Empty cell
+                errorMessage = String.format("EMPTY INPUT ERROR Empty data input for '%s' to '%s' [API: %s] " +
+                    "Please ensure cell input contains a value.", 
+                    currentHeader, apiField.getApiFieldName(), apiField.getApi().getApiName());
+            }
         // Field is a selected field
         } else {
             // errorMessage = String.format("invalid cell input '%s' for '%s' to '%s' [API: %s]", 
@@ -328,12 +329,12 @@ public class FieldMappingController {
                     // Amount is not within the range
                     else {
                         // Validation: 
-                        errorList.add(String.format("Error row%s: %s", String.valueOf(rowNum+headerRow), "Amount is not within API range"));
+                        errorList.add(String.format("Error row%s: %s", String.valueOf(rowNum+headerRow), "Amount is not within API range."));
                     }
                 // amount column has a non-number value
                 } catch (NumberFormatException e) {
                     // Validation: 
-                    
+
                 }
             }
         } catch (IOException e) {
