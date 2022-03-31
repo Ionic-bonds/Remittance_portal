@@ -25,30 +25,32 @@
       <el-col :span="22" :offset="1" class="standard_text">OUR SEAMLESS SOLUTION, YOUR DIGITAL HEADSTART</el-col>
       <el-col :span="22" :offset="1">
         <el-carousel style="margin: 10px" :interval="4000" type="card" height="250px">
+
           <el-carousel-item>
-            <el-row :gutter="12">
+            <!-- <el-row :gutter="12">
               <el-col :span="24">
-                <el-card shadow="never" style="text-align: center" class="carousel_title">Excel Uploads for Mass Payments</el-card>
+                <el-card shadow="never" style="text-align: center"><h3>Excel Uploads for Mass Payments</h3></el-card>
               </el-col>
             </el-row>
             <el-row :gutter="12">
               <el-col :span="24">
                 <el-card shadow="never" style="text-align: center" class="carousel_title">Excel Uploads for Mass Payments</el-card>
               </el-col>
-            </el-row>
+            </el-row> -->
+            <h3 class="carousel_title" style="text-align: center">Excel Uploads for Mass Payments</h3>
           </el-carousel-item>
+
+          <el-carousel-item>
+            <h3 class="carousel_title" style="text-align: center">Excel Uploads for Mass Payments</h3>
+          </el-carousel-item>
+
           <el-carousel-item>
             <h3 style="text-align: center">
               <span class="carousel_title">Excel Uploads for Mass Payments</span>
               <p>Hello</p>
             </h3>
           </el-carousel-item>
-          <el-carousel-item>
-            <h3 style="text-align: center">
-              <span class="carousel_title">Excel Uploads for Mass Payments</span>
-              <p>Hello</p>
-            </h3>
-          </el-carousel-item>
+
         </el-carousel>
       </el-col>
     </el-row>
@@ -134,7 +136,8 @@ export default {
 }
 
 /* Carousel */
-.el-row {
+
+/* .el-row {
   margin-bottom: 20px;
 }
 
@@ -154,22 +157,24 @@ export default {
 .row-bg {
   padding: 10px 0;
   background-color: #f9fafc;
-}
+} */
 
-.carousel_title{
+/* .carousel_title{
   color: rgb(255, 78, 47); 
   font-size: 18px;
-  background-color: #d3dce6;
-}
+  font-weight: bold;
+  background: transparent;
+} */
 
 .el-carousel__item h3 {
-  color: #475669;
   border-radius: 10px;
-  font-size: 14px;
-  opacity: 0.75;
-  line-height: 200px;
+  /* opacity: 0.95; */
+  line-height: 80px;
   margin: 0;
   text-align: center;
+  color: rgb(255, 78, 47); 
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .el-carousel__item:nth-child(2n) {
