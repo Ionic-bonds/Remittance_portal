@@ -1,7 +1,7 @@
 # TechG Remittance Application 
 ### Object-Oriented-Programming-G2Project
 
-This Digital Remittance Portal (DRP.) has a network of Digital Funds Transfer Payout API that supports digital cross-border funds transfer,FinanceNow,EverywhereRemit
+This Digital Remittance Portal (DRP.) has a network of Digital Funds Transfer Payout API that supports digital cross-border funds transfer: FinanceNow, EverywhereRemit
 and PaymentGo.
 
 ---
@@ -46,7 +46,7 @@ A visual representation of the workflow is as follows:
 ---
 
 ### Steps to Run Application
-1. Run remittance.sql script in SQL engine (MySQL or PHPAdmin) 
+* Run remittance.sql script in SQL engine (MySQL or PHPAdmin) 
 
 #### (For Windows)
 1. Load WAMP
