@@ -17,8 +17,6 @@ public class PaymentGo extends CommonApi {
     private String settleCurrency;
     private String merTransAmount;
 
-    public PaymentGo() {};
-
     // Common Fields
     @Override
     @JsonProperty("amount")
