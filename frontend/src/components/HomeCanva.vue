@@ -21,40 +21,47 @@
 
     <el-divider class="divider"></el-divider>
 
-    <el-row :gutter="20" style="margin: 20px">
-      <el-col :span="22" :offset="1" class="standard_text">OUR SEAMLESS SOLUTION, YOUR DIGITAL HEADSTART</el-col>
-      <el-col :span="22" :offset="1">
+    <el-row :gutter="20" style="margin: 3rem 5rem">
+      <el-col :span="24" class="standard_text" style="padding-bottom:1rem">OUR SEAMLESS SOLUTION, YOUR DIGITAL HEADSTART</el-col>
+      <el-col :span="24">
         <el-carousel style="margin: 10px" :interval="4000" type="card" height="250px">
 
-          <el-carousel-item>
-            <!-- <el-row :gutter="12">
-              <el-col :span="24">
-                <el-card shadow="never" style="text-align: center"><h3>Excel Uploads for Mass Payments</h3></el-card>
-              </el-col>
-            </el-row>
-            <el-row :gutter="12">
-              <el-col :span="24">
-                <el-card shadow="never" style="text-align: center" class="carousel_title">Excel Uploads for Mass Payments</el-card>
-              </el-col>
-            </el-row> -->
-            <h3 class="carousel_title" style="text-align: center">Excel Uploads for Mass Payments</h3>
-          </el-carousel-item>
-
-          <el-carousel-item>
-            <h3 class="carousel_title" style="text-align: center">Excel Uploads for Mass Payments</h3>
-          </el-carousel-item>
-
-          <el-carousel-item>
+          <el-carousel-item align="center">
+            <img class="icon-image" style="padding-top:20px" src="../assets/budget.png" />
             <h3 style="text-align: center">
-              <span class="carousel_title">Excel Uploads for Mass Payments</span>
-              <p>Hello</p>
-            </h3>
+              Easy Reconciliation & Tracking</h3>
+            <p>Our simple and intuitive account statements are hard not to love. Download your transaction history anytime and make your reconciliations a breeze.</p>
+          </el-carousel-item>
+
+          <el-carousel-item align="center">
+            <img class="icon-image" style="padding-top:20px" src="../assets/collaborative.png" />
+            <h3 style="text-align: center">
+              Excel Uploads for Mass Payments</h3>
+            <p>Simply upload an Excel File with multiple transactions and let our solutions sort the APIs for you. No technical integration required.</p>
+          </el-carousel-item>
+
+          <el-carousel-item align="center">
+            <img class="icon-image" style="padding-top:20px" src="../assets/budget.png" />
+            <h3 style="text-align: center">
+              Easy Reconciliation & Tracking</h3>
+            <p>Our simple and intuitive account statements are hard not to love. Download your transaction history anytime and make your reconciliations a breeze.</p>
           </el-carousel-item>
 
         </el-carousel>
       </el-col>
     </el-row>
-  
+
+    <el-row :gutter="50" style="margin: 7rem">
+      <el-col :span="24" class="standard_text" style="padding-bottom:3rem">WHAT DO WE HAVE?</el-col>
+      <el-col :span="24"><div/>
+        <el-tabs :tab-position="this.tabPosition" style="height: 200px" class="demo-tabs">
+          <el-tab-pane label="User">User</el-tab-pane>
+          <el-tab-pane label="Config">Config</el-tab-pane>
+          <el-tab-pane label="Role">Role</el-tab-pane>
+          <el-tab-pane label="Task">Task</el-tab-pane>
+        </el-tabs>
+      </el-col>
+    </el-row>
 
     <div class="demo-image">
       <div v-for="i in 6" :key="i" class="block">
@@ -80,6 +87,7 @@ export default {
         "Yeo Yu Quan",
       ],
       url: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+      tabPosition: "left",
     };
   },
 };
@@ -91,7 +99,7 @@ export default {
   /* align-items: center; */
   justify-content: center;
   flex-direction: column;
-  padding: 60px 3.5rem 60px 3rem;
+  padding: 6rem 4rem 6rem 3rem;
 }
 
 .home--intro--title {
@@ -166,15 +174,24 @@ export default {
   background: transparent;
 } */
 
+.icon-image{
+  width: 55px;
+}
+
 .el-carousel__item h3 {
   border-radius: 10px;
   /* opacity: 0.95; */
-  line-height: 80px;
+  line-height: 45px;
   margin: 0;
   text-align: center;
   color: rgb(255, 78, 47); 
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
+}
+
+.el-carousel__item > p{
+  margin: 10px 35px;
+  color: black;
 }
 
 .el-carousel__item:nth-child(2n) {
@@ -186,6 +203,20 @@ export default {
   background-color: #d3dce6;
   border-radius: 10px;
 }
+
+/* Tabs - Extra Info */
+.demo-tabs > .el-tabs__content {
+  padding: 32px;
+  color: #6b778c;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.el-tabs--right .el-tabs__content,
+.el-tabs--left .el-tabs__content {
+  height: 100%;
+}
+
 
 /* Final demographics image */
 .demo-image .block {
