@@ -67,7 +67,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api")
 public class FieldMappingController {
-    private final String transactionToken = "UGdsCTmT3AEWmngHyJg9OoWxwSl8Z4";
+    // private final String transactionToken = "token goes here";
     @Autowired
     private ApiRepository apiRepository;
     @Autowired
@@ -340,15 +340,6 @@ public class FieldMappingController {
                             "No Corporate User found with corporate_user_id = " + corporateUserId));
             corporateUser.setHeaderRow(headerRow);
             updateCorpUser(corporateUserId, corporateUser);
-
-            // // Check if headers exist --> if it already does, return Error 400 Bad
-            // Request
-            // if (!(checkIfHeadersExist(iterHeader, corporateUserId))) {
-            // message += "You have already submitted these corporate field headers. You
-            // cannot submit the same ones twice";
-            // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new
-            // ResponseMessage(message));
-            // }
             
             int colCounter = 1;
             // Iterate through the columns within a row
@@ -373,10 +364,6 @@ public class FieldMappingController {
     }
 
 
-
-
-
-
     public Api determineApi(List<Api> apiList, double amount) {
         Api searchApi = null;
         Iterator<Api> iterApi = apiList.iterator();
@@ -391,7 +378,7 @@ public class FieldMappingController {
         return searchApi;
     }
 
-    // Returns "" if there is not error
+    // Returns "" if there is no error
     public String checkDataType(String cell, ApiField apiField, String currentHeader) {
         List<SelectedField> selectedFields = selectedFieldRepository.findAllSelectedByApiFieldId(apiField);
         String errorMessage = "";
@@ -403,13 +390,12 @@ public class FieldMappingController {
             if (!cell.isEmpty() || cell.length() != 0) {
                 // Validation: Return true if cell is a String (Regex Validation - only alphanumeric and symbols)
                 if (dataType.equals("Name")) {
-                        if (!cell.replaceAll("\\s", "").matches("[a-zA-Z]+")){
-                            errorMessage = String.format("STRING ERROR '%s' for '%s' to '%s' [API: %s]: " +
-                                "Please ensure cell input only contains non english alphabets.", 
-                                cell, currentHeader, apiField.getApiFieldName(), apiField.getApi().getApiName());
-                            return errorMessage;
-                        }
-                    // }
+                    if (!cell.replaceAll("\\s", "").matches("[a-zA-Z]+")){
+                        errorMessage = String.format("STRING ERROR '%s' for '%s' to '%s' [API: %s]: " +
+                            "Please ensure cell input only contains non english alphabets.", 
+                            cell, currentHeader, apiField.getApiFieldName(), apiField.getApi().getApiName());
+                        return errorMessage;
+                    }
                     return errorMessage;
                 } 
                 // Validation: Return true if cell is able to parse into an Integer
@@ -480,7 +466,7 @@ public class FieldMappingController {
     public String authSandbox() {
         String url = "https://prelive.paywho.com/api/smu_authenticate";
         RestTemplate restTemplate = new RestTemplate();
-        TransactionAuth credentials = new TransactionAuth("test", "123456");
+        TransactionAuth credentials = new TransactionAuth("g2team2", "ouhenglieh");
 
         HttpEntity<TransactionAuth> requestEntity = new HttpEntity<>(credentials);
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, requestEntity, String.class);
@@ -588,7 +574,6 @@ public class FieldMappingController {
                             commonApi = new PaymentGo();
                         }
                         // Retrieving the row's cell value
-                        // Iterator<Cell> iterApiCol = currentRow.iterator();
                         Iterator<Cell> iterHeadGet = header.iterator();
                         for (Cell col : currentRow) {
                             DataFormatter dataFormatter = new DataFormatter();
@@ -689,7 +674,7 @@ public class FieldMappingController {
             else if (commonApi instanceof PaymentGo) {
                 apiName = "paymentgo";
             }
-            // String transactionToken = authSandbox();
+            String transactionToken = authSandbox();
             SendTransaction credentials = new SendTransaction(transactionToken, apiName, commonApi);
             HttpEntity<SendTransaction> requestEntity = new HttpEntity<>(credentials);
             ResponseEntity<String> responseEntity = restTemplate.postForEntity(url, requestEntity, String.class);
