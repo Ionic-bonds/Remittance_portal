@@ -30,7 +30,7 @@
             <img class="icon-image" src="../assets/budget.png" />
             <h3 style="text-align: center">
               Easy Reconciliation & Tracking</h3>
-            <p>Our simple and intuitive account statements are hard not to love. Download your transaction history anytime and make your reconciliations a breeze.</p>
+            <p>Our simple and intuitive account statements are hard to ignore. View your transaction history anytime and make your reconciliations a breeze.</p>
           </el-carousel-item>
 
           <el-carousel-item align="center">
@@ -140,7 +140,7 @@ export default {
           icon: MoreFilled,
         },
         {
-          title: 'a. New users / New mappings',
+          title: '2a. New users / New mappings',
           content: '1. Upload an excel (.xlsx) file with information on transations',
           contentextra1: '2. Specify the row to be used as header',
           contentextra2: '3. Select fields from the dropdown boxes to map your columns to fields required in each API',
@@ -148,7 +148,7 @@ export default {
           hollow: true,
         },
           {
-          title: 'b. Reuse mappings',
+          title: '2b. Reuse mappings',
           content: '1. Download your previous mappings in JSON format',
           contentextra1: '2. Upload the JSON file',
           contentextra2: '3. Make changes to pre-saved mappings if necessary',
@@ -157,6 +157,8 @@ export default {
         },
         {
           title: 'Step 3: Retify potential errors',
+          content: 'We will sound out mismatching fields, unmapped columns, incorrect data types and more.',
+          contentextra1: 'A summary of the errors will be consolidated and displayed for you.',
           color: '#ff8fb3',
         },
         {
