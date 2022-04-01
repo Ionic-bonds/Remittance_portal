@@ -41,10 +41,11 @@
           </el-carousel-item>
 
           <el-carousel-item align="center">
-            <img class="icon-image" style="padding-top:20px" src="../assets/budget.png" />
+            <img class="icon-image" style="padding-top:20px" src="../assets/save.png" />
             <h3 style="text-align: center">
-              Easy Reconciliation & Tracking</h3>
-            <p>Our simple and intuitive account statements are hard not to love. Download your transaction history anytime and make your reconciliations a breeze.</p>
+              Pre-saved most updated mapping</h3>
+            <p>Used our services before? Performed several transactions at once and you do not want to repeat the mundane process again? 
+              <br>We've got you covered! We keep a record of your last transaction mappings so you can always reuse them.</p>
           </el-carousel-item>
 
         </el-carousel>
@@ -53,26 +54,43 @@
 
     <el-row :gutter="50" style="margin: 7rem">
       <el-col :span="24" class="standard_text" style="padding-bottom:3rem">WHAT DO WE HAVE?</el-col>
-      <el-col :span="24"><div/>
-        <el-tabs :tab-position="this.tabPosition" style="height: 200px" class="demo-tabs">
-          <el-tab-pane label="User">User</el-tab-pane>
-          <el-tab-pane label="Config">Config</el-tab-pane>
-          <el-tab-pane label="Role">Role</el-tab-pane>
-          <el-tab-pane label="Task">Task</el-tab-pane>
+      <el-col :span="24">
+        <el-tabs :tab-position="this.tabPosition" style="height: 350px" class="demo-tabs">
+          <el-tab-pane label="Available Services">User</el-tab-pane>
+          <el-tab-pane label="How it works">
+            <el-timeline>
+              <el-timeline-item
+                v-for="(activity, index) in activities"
+                :key="index"
+                :icon="activity.icon"
+                :type="activity.type"
+                :color="activity.color"
+                :size="activity.size"
+                :hollow="activity.hollow"
+                :timestamp="activity.timestamp"
+              >
+                {{ activity.content }}
+              </el-timeline-item>
+            </el-timeline>
+          </el-tab-pane>
+          <!-- <el-tab-pane label="Role">Role</el-tab-pane>
+          <el-tab-pane label="Task">Task</el-tab-pane> -->
         </el-tabs>
       </el-col>
     </el-row>
 
+    <div class="standard_text" style="margin: 25px auto">Meet us ~</div>
     <div class="demo-image">
       <div v-for="i in 6" :key="i" class="block">
         <span class="demonstration">{{ names[i - 1] }}</span>
-        <el-image style="width: 100px; height: 100px" :src="url" :fit="cover" />
+        <el-image style="width: 100px; height: 100px" :src="urls[i - 1]" :fit="cover" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { MoreFilled } from '@element-plus/icons-vue'
 export default {
   name: "HomeCanva",
   data() {
@@ -86,8 +104,44 @@ export default {
         "Wang Shurui",
         "Yeo Yu Quan",
       ],
-      url: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+      urls: [
+        require("../assets/david.jpg"),
+        require("../assets/david.jpg"),
+        require("../assets/david.jpg"),
+        require("../assets/leonard.jpg"),
+        require("../assets/shurui.jpg"),
+        require("../assets/yuquan.jpg"),
+      ],
       tabPosition: "left",
+      activities: [
+        {
+          content: 'Custom icon',
+          timestamp: '2018-04-12 20:46',
+          size: 'large',
+          type: 'primary',
+          icon: MoreFilled,
+        },
+        {
+          content: 'Custom color',
+          timestamp: '2018-04-03 20:46',
+          color: '#0bbd87',
+        },
+        {
+          content: 'Custom size',
+          timestamp: '2018-04-03 20:46',
+          size: 'large',
+        },
+        {
+          content: 'Custom hollow',
+          timestamp: '2018-04-03 20:46',
+          type: 'primary',
+          hollow: true,
+        },
+        {
+          content: 'Default node',
+          timestamp: '2018-04-03 20:46',
+        },
+      ],
     };
   },
 };
@@ -217,10 +271,22 @@ export default {
   height: 100%;
 }
 
+.el-tabs__item {
+    padding: 0 20px;
+    height: 40px;
+    box-sizing: border-box;
+    line-height: 40px;
+    display: inline-block;
+    list-style: none;
+    font-size: 25px;
+    font-weight: 500;
+    color: var(--el-text-color-primary);
+    position: relative;
+}
 
 /* Final demographics image */
 .demo-image .block {
-  padding: 20px 0;
+  padding: 30px 0;
   text-align: center;
   border-right: solid 1px #9ea19c;
   display: inline-block;
