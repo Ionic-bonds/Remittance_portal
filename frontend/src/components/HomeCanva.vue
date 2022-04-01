@@ -21,27 +21,27 @@
 
     <el-divider class="divider"></el-divider>
 
-    <el-row :gutter="20" style="margin: 3rem 5rem">
-      <el-col :span="24" class="standard_text" style="padding-bottom:1rem">OUR SEAMLESS SOLUTION, YOUR DIGITAL HEADSTART</el-col>
+    <el-row :gutter="20" style="margin: 0 5rem">
+      <el-col :span="24" class="standard_text">OUR SEAMLESS SOLUTION, YOUR DIGITAL HEADSTART</el-col>
       <el-col :span="24">
-        <el-carousel style="margin: 10px" :interval="4000" type="card" height="250px">
+        <el-carousel style="margin: 10px" :interval="4000" type="card" height="280px">
 
           <el-carousel-item align="center">
-            <img class="icon-image" style="padding-top:20px" src="../assets/budget.png" />
+            <img class="icon-image" src="../assets/budget.png" />
             <h3 style="text-align: center">
               Easy Reconciliation & Tracking</h3>
             <p>Our simple and intuitive account statements are hard not to love. Download your transaction history anytime and make your reconciliations a breeze.</p>
           </el-carousel-item>
 
           <el-carousel-item align="center">
-            <img class="icon-image" style="padding-top:20px" src="../assets/collaborative.png" />
+            <img class="icon-image" src="../assets/collaborative.png" />
             <h3 style="text-align: center">
               Excel Uploads for Mass Payments</h3>
             <p>Simply upload an Excel File with multiple transactions and let our solutions sort the APIs for you. No technical integration required.</p>
           </el-carousel-item>
 
           <el-carousel-item align="center">
-            <img class="icon-image" style="padding-top:20px" src="../assets/save.png" />
+            <img class="icon-image" src="../assets/save.png" />
             <h3 style="text-align: center">
               Pre-saved most updated mapping</h3>
             <p>Used our services before? Performed several transactions at once and you do not want to repeat the mundane process again? 
@@ -52,26 +52,39 @@
       </el-col>
     </el-row>
 
-    <el-row :gutter="50" style="margin: 7rem">
-      <el-col :span="24" class="standard_text" style="padding-bottom:3rem">WHAT DO WE HAVE?</el-col>
-      <el-col :span="24">
+    <el-row :gutter="60">
+      <el-col :span="24" class="standard_text" style="margin-top: 6rem">WHAT DO WE HAVE?</el-col>
+      <el-col :span="20" style="margin: 0 auto">
         <el-tabs :tab-position="this.tabPosition" style="height: 350px" class="demo-tabs">
-          <el-tab-pane label="Available Services">User</el-tab-pane>
+          <el-tab-pane label="Available Services">The easiest way to remit money internationally through
+            <ol style="font-size:2.2rem">
+              <li v-for="api in apis" :key="api">
+                {{ api }}
+              </li>
+            </ol>
+          </el-tab-pane>
           <el-tab-pane label="How it works">
-            <el-timeline>
-              <el-timeline-item
-                v-for="(activity, index) in activities"
-                :key="index"
-                :icon="activity.icon"
-                :type="activity.type"
-                :color="activity.color"
-                :size="activity.size"
-                :hollow="activity.hollow"
-                :timestamp="activity.timestamp"
-              >
-                {{ activity.content }}
-              </el-timeline-item>
-            </el-timeline>
+            <el-scrollbar height="400px">
+              <el-timeline>
+                <el-timeline-item
+                  v-for="(activity, index) in activities"
+                  :key="index"
+                  :icon="activity.icon"
+                  :type="activity.type"
+                  :color="activity.color"
+                  :size="activity.size"
+                  :hollow="activity.hollow"
+                  :timestamp="activity.timestamp"
+                >
+                  <div class="steps">{{ activity.title }}</div>
+                  <div class="steps" style="font-weight: 550; font-size: 16px">
+                    {{ activity.content }} <br>
+                    {{ activity.contentextra1 }} <br>
+                    {{ activity.contentextra2 }}
+                  </div>
+                </el-timeline-item>
+              </el-timeline>
+            </el-scrollbar>
           </el-tab-pane>
           <!-- <el-tab-pane label="Role">Role</el-tab-pane>
           <el-tab-pane label="Task">Task</el-tab-pane> -->
@@ -79,7 +92,7 @@
       </el-col>
     </el-row>
 
-    <div class="standard_text" style="margin: 25px auto">Meet us ~</div>
+    <div class="standard_text">Meet us ~</div>
     <div class="demo-image">
       <div v-for="i in 6" :key="i" class="block">
         <span class="demonstration">{{ names[i - 1] }}</span>
@@ -107,7 +120,7 @@ export default {
       urls: [
         require("../assets/david.jpg"),
         require("../assets/david.jpg"),
-        require("../assets/david.jpg"),
+        require("../assets/shaohong.jpg"),
         require("../assets/leonard.jpg"),
         require("../assets/shurui.jpg"),
         require("../assets/yuquan.jpg"),
@@ -115,33 +128,47 @@ export default {
       tabPosition: "left",
       activities: [
         {
-          content: 'Custom icon',
-          timestamp: '2018-04-12 20:46',
+          title: 'Step 1: Log In or Sign Up!',
+          content:"Create an account with your email",
+          color: '#0bbd87',
+        },
+        {
+          title: 'Step 2: Load your data',
+          content:"2 ways of loading your data",
           size: 'large',
           type: 'primary',
           icon: MoreFilled,
         },
         {
-          content: 'Custom color',
-          timestamp: '2018-04-03 20:46',
-          color: '#0bbd87',
+          title: 'a. New users / New mappings',
+          content: '1. Upload an excel (.xlsx) file with information on transations',
+          contentextra1: '2. Specify the row to be used as header',
+          contentextra2: '3. Select fields from the dropdown boxes to map your columns to fields required in each API',
+          type: 'primary',
+          hollow: true,
         },
-        {
-          content: 'Custom size',
-          timestamp: '2018-04-03 20:46',
-          size: 'large',
-        },
-        {
-          content: 'Custom hollow',
-          timestamp: '2018-04-03 20:46',
+          {
+          title: 'b. Reuse mappings',
+          content: '1. Download your previous mappings in JSON format',
+          contentextra1: '2. Upload the JSON file',
+          contentextra2: '3. Make changes to pre-saved mappings if necessary',
           type: 'primary',
           hollow: true,
         },
         {
-          content: 'Default node',
-          timestamp: '2018-04-03 20:46',
+          title: 'Step 3: Retify potential errors',
+          color: '#ff8fb3',
+        },
+        {
+          title: 'Step 4: Transaction history',
+          content:'Navigate to transaction page to check your past transactions if needed',
+        },
+        {
+          title: 'Success!',
+          color: '#0bbd87',
         },
       ],
+      apis: ["FinanceNow", "EverywhereRemit", "PaymentGo"]
     };
   },
 };
@@ -192,9 +219,10 @@ export default {
 
 .standard_text{
   text-align: center; 
-  font-size: 25px; 
+  font-size: 2rem; 
   font-weight: bold;
   color: rgba(123, 245, 166, 0.932);
+  margin: 4rem 0 1.5rem;
 }
 
 /* Carousel */
@@ -230,12 +258,13 @@ export default {
 
 .icon-image{
   width: 55px;
+  padding-top:30px
 }
 
 .el-carousel__item h3 {
   border-radius: 10px;
   /* opacity: 0.95; */
-  line-height: 45px;
+  line-height: 50px;
   margin: 0;
   text-align: center;
   color: rgb(255, 78, 47); 
@@ -259,29 +288,17 @@ export default {
 }
 
 /* Tabs - Extra Info */
-.demo-tabs > .el-tabs__content {
-  padding: 32px;
-  color: #6b778c;
-  font-size: 32px;
-  font-weight: 600;
+.el-tab-pane{
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  color: #fff;
 }
 
-.el-tabs--right .el-tabs__content,
-.el-tabs--left .el-tabs__content {
-  height: 100%;
-}
-
-.el-tabs__item {
-    padding: 0 20px;
-    height: 40px;
-    box-sizing: border-box;
-    line-height: 40px;
-    display: inline-block;
-    list-style: none;
-    font-size: 25px;
-    font-weight: 500;
-    color: var(--el-text-color-primary);
-    position: relative;
+/* Steps - What do we have? */
+.steps{
+  font-weight: 700; 
+  font-size:1rem; 
+  color: white;
 }
 
 /* Final demographics image */
