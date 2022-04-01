@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
 public class CorporateUser {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long corporateUserId;
+  private long corporateUserId;
 
   @NotBlank
   @Size(max = 20)
@@ -50,11 +50,11 @@ public class CorporateUser {
     this.headerRow = 0;
   }
 
-  public Long getCorporateUserId() {
+  public long getCorporateUserId() {
     return corporateUserId;
   }
 
-  public void setCorporateUserId(Long corporateUserId) {
+  public void setCorporateUserId(long corporateUserId) {
     this.corporateUserId = corporateUserId;
   }
 

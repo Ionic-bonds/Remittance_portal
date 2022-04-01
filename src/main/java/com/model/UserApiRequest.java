@@ -45,10 +45,6 @@ public class UserApiRequest {
         return userApiRequestId;
     }
 
-    public void setUserApiRequestId(long userApiRequestId) {
-        this.userApiRequestId = userApiRequestId;
-    }
-
     public CorporateUser getCorporateUser() {
         return corporateUser;
     }

@@ -3,11 +3,6 @@ package com.request;
 public class FieldMapRequest {
     private long corporateFieldId;
     private long apiFieldId;
-    
-    public FieldMapRequest(long corporateFieldId, long apiFieldId) {
-        this.corporateFieldId = corporateFieldId;
-        this.apiFieldId = apiFieldId;
-    }
 
     public long getCorporateFieldId() {
         return corporateFieldId;
