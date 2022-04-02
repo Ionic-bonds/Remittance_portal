@@ -73,6 +73,10 @@ class ApiDataService {
   //   return http.get(`/getAllCorpField`);
   // }
 
+  // API 36
+  getTransactionReq(id){
+    return http.get(`/getAllUserApiRequestByCorpId/${id}`);
+  }
   
 
 }

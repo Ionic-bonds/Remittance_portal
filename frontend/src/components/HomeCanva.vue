@@ -52,7 +52,7 @@
       </el-col>
     </el-row>
 
-    <el-row :gutter="60">
+    <el-row :gutter="0">
       <el-col :span="24" class="standard_text" style="margin-top: 6rem">WHAT DO WE HAVE?</el-col>
       <el-col :span="20" style="margin: 0 auto">
         <el-tabs :tab-position="this.tabPosition" style="height: 350px" class="demo-tabs">
@@ -86,8 +86,6 @@
               </el-timeline>
             </el-scrollbar>
           </el-tab-pane>
-          <!-- <el-tab-pane label="Role">Role</el-tab-pane>
-          <el-tab-pane label="Task">Task</el-tab-pane> -->
         </el-tabs>
       </el-col>
     </el-row>

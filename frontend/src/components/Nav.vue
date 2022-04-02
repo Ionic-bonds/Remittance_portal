@@ -21,7 +21,7 @@
       Remit
     </el-menu-item>
 
-    <el-menu-item class="nav--right" index="/transaction" :disabled="!loginStatus">Transactions</el-menu-item>
+    <el-menu-item class="nav--right" index="/transactions" :disabled="!loginStatus">Transactions</el-menu-item>
 
     <button
       class="nav--login"

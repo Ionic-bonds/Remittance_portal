@@ -22,7 +22,7 @@ import RemitSuccess from '@/components/RemitSuccess.vue'
 
 
 export default {
-  name: 'HomeView',
+  name: 'Remit',
   data(){
     return{
       remitStep: 0,

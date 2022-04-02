@@ -46,7 +46,6 @@ import router from "@/router";
 import Feedback from './Feedback.vue'
 import axios from "axios";
 
-
 export default {
     name: 'LoginForm',
     props: ['loginToggle'],

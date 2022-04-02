@@ -22,8 +22,8 @@ const routes = [
     beforeEnter: [checkAuth]
   },
   {
-    path: '/transactionsView',
-    name: 'transactionsView',
+    path: '/transactions',
+    name: 'transactions',
     component: TransactionsView,
     beforeEnter: [checkAuth]
   }

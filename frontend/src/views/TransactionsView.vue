@@ -12,7 +12,7 @@
 import Transactions from '@/components/Transactions.vue'
 
 export default {
-  name: 'HomeView',
+  name: 'TransactionsView',
   components: {
     Transactions
   }

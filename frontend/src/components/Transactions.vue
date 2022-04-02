@@ -1,58 +1,75 @@
 <template>
   <div class="transactions">
-    <div class="transactions--header">
-      <div class="transactions--header--left">
-        <div class="transactions--header--left--title">
-          <h1>Transactions</h1>
-        </div>
-        <div class="transactions--header--left--search">
-          <input type="text" placeholder="Search" />
-        </div>
-      </div>
-      <div class="transactions--header--right">
-        <div class="transactions--header--right--add">
-          <button class="btn btn-primary">Add Transaction</button>
-        </div>
-      </div>
-    </div>
-    <div class="transactions--body">
-      <div class="transactions--body--left">
-        <div class="transactions--body--left--title">
-          <h2>Transactions</h2>
-        </div>
-        <div class="transactions--body--left--list">
-          <div class="transactions--body--left--list--item">
-            <div class="transactions--body--left--list--item--title">
-              <h3>Transaction 1</h3>
-            </div>
-            <div class="transactions--body--left--list--item--details">
-              <div class="transactions--body--left--list--item--details--date">
-                <p>Date:</p>
-              </div>
-              <div
-                class="transactions--body--left--list--item--details--amount"
-              >
-                <p>Amount:</p>
-              </div>
-              <div
-                class="transactions--body--left--list--item--details--category"
-              >
-                <p>Category:</p>
-              </div>
-              <div
-                class="transactions--body--left--list--item--details--description"
-              >
-                <p>Description:</p>
-              </div>
-            </div>
-          </div>
-          <div class="transactions--body--left--list--item">
-            <div class="transactions--body--left--list--item--title">
-              <h3>Transaction 2</h3>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <h3>hello world</h3>
+    <!-- Created -->
+    <!-- response.data -->
+    <el-table :data="tableData" style="width: 100%">
+      <el-table-column prop="date" label="Date" width="250"></el-table-column>
+      <el-table-column prop="type" label="Type" align="center" width="150">
+      </el-table-column>
+      <el-table-column
+        prop="description"
+        label="Desc"
+        align="center"
+        width="180"
+      >
+      </el-table-column>
+      <el-table-column prop="income" label="Income" align="center" width="170">
+      </el-table-column>
+      <el-table-column prop="expend" label="Expand" align="center" width="170">
+      </el-table-column>
+      <el-table-column prop="cash" label="Cash" align="center" width="170">
+      </el-table-column>
+      <el-table-column prop="remark" label="Remark" align="center" width="220">
+      </el-table-column>
+    </el-table>
   </div>
 </template>
+
+<script>
+import ApiDataService from "../api/ApiDataService";
+import { reactive } from "vue";
+
+let tableData = reactive({
+  arr: [this.tableData], //store the table data here
+});
+console.log(tableData);
+console.log("Reactive tableData");
+
+export default {
+  name: "Transactions",
+  props: ["masterApiRequestsProp"],
+  data() {
+    return {
+      tableData: tableData.arr,
+    };
+  },
+  methods: {
+    history() {
+      console.log("calling API - transactions");
+      ApiDataService.getTransactionReq(this.$store.getters.user)
+        .then((response) => {
+          tableData = response.data;
+          console.log(tableData);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+  },
+  computed: {
+    masterApiRequests:{
+        get: function(){
+            return this.masterApiRequestsProp
+        },
+        // set: function(newVal){
+        //     this.masterApiRequestsProp = newVal
+        // }
+    }
+  },
+  mounted() {
+    console.log("Transactions mounted");
+    this.history();
+  },
+};
+</script>
