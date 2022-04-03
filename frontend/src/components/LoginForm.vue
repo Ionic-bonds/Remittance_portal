@@ -44,7 +44,6 @@
 import ApiDataService from "../api/ApiDataService";
 import router from "@/router";
 import Feedback from './Feedback.vue'
-import axios from "axios";
 
 export default {
     name: 'LoginForm',
@@ -71,18 +70,11 @@ export default {
         login() {
             this.$refs["loginForm"].validate((valid)=>{
                 if (valid){
-                    // console.log("login form validation: True")
-                    console.log("calling API - login")
                     ApiDataService.login({
                         "username": this.name,
                         "password": this.password
                     })
                     .then(response => {
-                        // console.log(response, "!")
-                        // var cookie = response.data.cookie.split(";")[0]
-                        // this.$store.commit("updateCookie", cookie)
-                        // axios.defaults.headers.cookie = cookie
-
                         this.$store.commit("updateLogin", response.data.username)
                         this.$store.commit("updateUser", response.data.id)
                         this.name = ""
@@ -91,7 +83,6 @@ export default {
                         router.push("/remit")
                         this.visible = !this.visible
                         Feedback.open3(response.data.message, "Welcome " + this.$store.getters.login)
-                        console.log("Log in user: " + this.$store.getters.login)
                     }).catch(e =>{
                         (e?.response?.data) ? (this.errormsg = e.response.data.message) : (this.errormsg = e.message)
                         this.errorBool = true
@@ -100,50 +91,11 @@ export default {
                     })
 
                 } else{
-                    // console.log("login form validation: False")
                     this.errorBool = false
                     this.name = ""
                     this.password = ""
                 }
-            })
-            // if (this.name && this.password && this.password.length >= 6){
-            //     ApiDataService.login({
-            //         "username": this.name,
-            //         "password": this.password
-            //     })
-            //     .then(response => {
-            //         // console.log(response, "!")
-            //         this.$store.commit("updateLogin", response.data.username)
-            //         this.$store.commit("updateUser", response.data.id)
-            //         this.name = ""
-            //         this.password = ""
-            //         this.errorBool = false
-            //         router.push("/remit")
-            //         this.visible = !this.visible
-            //         Feedback.open3(response.data.message, "Welcome " + this.$store.getters.login)
-            //         console.log("Log in user: " + this.$store.getters.login)
-            //     }).catch(e =>{
-            //         (e?.response?.data) ? (this.errormsg = e.response.data.message) : (this.errormsg = e.message)
-            //         this.errorBool = true
-            //         this.name = ""
-            //         this.password = ""
-            //     })
-            // } else{
-
-            //     if (!this.name && !this.password){
-            //         this.errormsg = "Please enter username and password."
-            //     } else if (!this.name){
-            //         this.errormsg = "Username must not be empty!"
-            //     } else if (!this.password){
-            //         this.errormsg = "Password must not be empty!"
-            //     } else if (this.password.length < 6){
-            //         this.errormsg = "Password must be at least 6 characters!"
-            //     }
-            //     this.errorBool = true
-            //     this.name = ""
-            //     this.password = ""
-            // }
-            
+            })            
         }
     },
     computed: {
@@ -161,18 +113,10 @@ export default {
                 password: this.password
             }
         }
-        // loginStatus: {
-        //     get(){
-        //         return this.status
-        //     },
-        //     set(value){
-        //         this.$emit('update:status', value)
-        //     }
-        // }
+
     },
     watch: {
         visible: function (val, oldVal) {
-            // console.log("old: ", oldVal, ", New:", val)
             if (oldVal) {
                 this.name = ""
                 this.password = ""
@@ -185,12 +129,6 @@ export default {
 
 
 <style scoped>
-/* .box-card{
-    font-family: 'Poppins', sans-serif;
-    background-color:rgba(196, 196, 196, 0.8);
-    border-color: rgba(196, 196, 196, 0.8);
-    border-radius: 15px;
-} */
 
 .login--title{
     text-align: center;
@@ -223,7 +161,6 @@ export default {
 .login--error{
     color: red;
     text-align: center;
-    /* display: none; */
 }
 
 </style>

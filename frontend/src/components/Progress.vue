@@ -15,14 +15,11 @@
 
 
 <script >
-// status wait / process / finish / error / success
-// finish - success; error - error, process - process
-// direction="vertical"
+
 export default {
     name: 'Progress',
     data() {
         return { 
-            // process: "process",
             finish: "success",
         }
     },
@@ -30,17 +27,14 @@ export default {
         processProp() {
             if (this.secStep){
                 return "error"
+            } else if (this.step == 2) {
+                return "success"
             } else {
                 return "process"
             }
         },
     },
-    watch: {
-        // secStep: function (val, oldVal) {
-        //     console.log("old: ", oldVal, ", New:", val)
-        //     console.log(this.processProp)
-        // }
-    },
+
     props: ["step", "secStep"]
 }
 </script>
@@ -52,6 +46,5 @@ export default {
     padding: 30px 0px;
     margin: 20px 40px;
     border-radius: 10px;
-    /* text-weight: bold; */
 }
 </style>

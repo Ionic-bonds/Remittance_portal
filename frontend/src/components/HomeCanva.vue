@@ -177,7 +177,6 @@ export default {
 <style scoped>
 .home--intro--container {
   display: flex;
-  /* align-items: center; */
   justify-content: center;
   flex-direction: column;
   padding: 6rem 4rem 6rem 3rem;
@@ -188,13 +187,11 @@ export default {
   font-style: 700px;
   font-size: 30px;
   color: white;
-  /* margin: 120px 50px 40px 80px; */
 }
 
 .home--intro--subtitle {
   font-family: "Poppins", sans-serif;
   color: white;
-  /* margin: 10px 50px 40px 80px; */
 }
 
 .nav--image--container {
@@ -224,37 +221,6 @@ export default {
   color: rgba(123, 245, 166, 0.932);
   margin: 4rem 0 1.5rem;
 }
-
-/* Carousel */
-
-/* .el-row {
-  margin-bottom: 20px;
-}
-
-.el-row:last-child {
-  margin-bottom: 0;
-}
-
-.el-col {
-  border-radius: 4px;
-}
-
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-}
-
-.row-bg {
-  padding: 10px 0;
-  background-color: #f9fafc;
-} */
-
-/* .carousel_title{
-  color: rgb(255, 78, 47); 
-  font-size: 18px;
-  font-weight: bold;
-  background: transparent;
-} */
 
 .icon-image{
   width: 55px;

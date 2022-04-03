@@ -1,6 +1,6 @@
 <template>
     <div class="footer">
-        <p class="footer--left">© SMUX - Object Orientated Programming - G2 - Group 2</p>
+        <p class="footer--left">© SMUX - Object Oriented Programming - G2 - Group 2</p>
         <p class="footer--right">Partner with TechG: January - April 2022</p>
     </div>
 

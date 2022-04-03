@@ -25,8 +25,6 @@
 
 
 <script >
-import Feedback from './Feedback.vue'
-
 export default {
     name: 'RemitSuccess',
     data() {
@@ -41,14 +39,7 @@ export default {
         goBack: function(){
             this.importStep = 0
         }
-        // handleExceed: function(files) {
-        //     // Only accept 1 file
-        //     this.$refs.upload.clearFiles()
-        //     this.$refs.upload.handleStart(files[0])
-        // },
-    },
-    mounted(){
-        console.log(this.masterList)
+
     },
     props: ["outcomeListProp"],
     computed: {
@@ -85,15 +76,9 @@ export default {
                     outcome: subresult
                 })
             }
-            // console.log(result)
             return result
         }
     },
-    watch: {
-        // fileList: function (val, oldVal) {
-        //     console.log("old: ", oldVal, ", New:", val)
-        // }
-    }
 }
 </script>
 
@@ -109,7 +94,6 @@ export default {
     border-radius: 10px;
     flex-direction: column;
     margin-bottom: 0px;
-    /* padding-bottom: 40px; */
 }
 
 .success--table{

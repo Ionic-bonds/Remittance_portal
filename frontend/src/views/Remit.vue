@@ -20,7 +20,6 @@ import RemitMap from '@/components/RemitMap.vue'
 import importJson from '@/components/importJson.vue'
 import RemitSuccess from '@/components/RemitSuccess.vue'
 
-
 export default {
   name: 'Remit',
   data(){
@@ -38,14 +37,8 @@ export default {
   components: {
     RemitHeader, Import, RemitMap, importJson, RemitSuccess
   },
-  methods: {
-    // clickbutton: function (){
-    //   console.log(this.mapFields)
-    // }
-  },
   watch: {
     remitStep: function (val, oldVal) {
-        // console.log("old: ", oldVal, ", New Param:", val)
         if (val == 1){
           if (this.mapFields?.apiFieldList && this.headersCol.length > 0){
 
@@ -90,12 +83,6 @@ export default {
           } 
         }
     },
-    // headersCol: function (val, oldVal) {
-    //     console.log("old: ", oldVal, ", New Option:", val)
-    // },
-    // masterObject: function (val, oldVal) {
-    //     console.log("old : ", oldVal, ", New Option:", val)
-    // },
     manualMapping: function (val, oldVal) {
       if (val.length > 0 && this.masterObject != {}){
         
@@ -117,34 +104,7 @@ export default {
         }
 
       }
-      // console.log("old : ", oldVal, ", New Option:", val)
     },
-  },
-  computed:{
-
-  },
-  mounted(){
-    // console.log(this.mapFields)
-    // console.log(this.headersCol)
-    // console.log(this.masterObject)
-  }
+  },  
 }
 </script>
-
-
-<style scoped>
-/* 
-.remit--content--container{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 50px 10px;
-  flex-direction: column;
-} */
-
-/* .remit--import{
-  width: 100%;
-  height: 100%;
-} */
-
-</style>

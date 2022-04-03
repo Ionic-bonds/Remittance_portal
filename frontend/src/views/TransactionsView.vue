@@ -1,7 +1,5 @@
 <template>
   <div class="transactionView">
-    <!-- <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <Transactions></Transactions>
     
   </div>

@@ -23,12 +23,6 @@ export default {
             ]
         }
     },
-    methods: {
-        // sortChange: function(sortProp){
-        //     console.log(sortProp)
-        // },
-
-    },
     computed: {
         masterErrorList() {
             var result = [];
@@ -49,27 +43,13 @@ export default {
             }
         },
     },
-    mounted() {
-        // console.log(this.errorList)
-        // console.log(this.tableData)
-        // console.log(this.step)
-        // console.log(this.secStep)
-        // console.log(this.excludeOption)
-    },
 
 }
 </script>
 
 
 <style scoped>
-/* .map--container{
-    width: 80vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-content: center;
-    flex-direction: column;
-} */
+
 .map--wrapper{
     /* width: 80vw; */
     display: flex;

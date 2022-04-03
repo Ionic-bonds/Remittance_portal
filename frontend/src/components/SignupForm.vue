@@ -1,6 +1,4 @@
-<template>
-    <!-- <el-card class="box-card"> -->
-        
+<template>        
         <el-form 
 
         label-position = "top"
@@ -65,12 +63,10 @@
             <button class = "signup--button" @click="signup">Submit</button>
             
         </el-form>
-    <!-- </el-card> -->
 </template>
 
 
 <script >
-// https://vuejs.org/guide/essentials/lifecycle.html
 import ApiDataService from "../api/ApiDataService";
 import Feedback from './Feedback.vue'
 
@@ -110,8 +106,6 @@ export default {
         signup() {
             this.$refs["signupForm"].validate((valid)=>{
                 if (valid){
-                    // console.log("Signup Form Validation: True")
-                    console.log("calling API - signup")
                     ApiDataService.signup({
                         "username": this.name,
                         "email": this.email,
@@ -119,7 +113,6 @@ export default {
                         "roles": this.roles
                     })
                     .then(response => {
-                        // console.log(response)
                         this.name = ""
                         this.password = ""
                         this.email = ""
@@ -135,7 +128,6 @@ export default {
                         this.email = ""
                     })
                 } else{
-                    // console.log("Signup Form Validation: False")
                     this.name = ""
                     this.password = ""
                     this.email = ""
@@ -164,7 +156,6 @@ export default {
     },
     watch: {
         visible: function (val, oldVal) {
-            // console.log("old: ", oldVal, ", New:", val)
             if (oldVal) {
 
                 this.name = ""
@@ -210,7 +201,6 @@ export default {
 .signup--error{
     color: red;
     text-align: center;
-    /* display: none; */
 }
 
 </style>

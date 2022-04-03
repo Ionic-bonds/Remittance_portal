@@ -2,45 +2,6 @@ import http from "../api/http-common";
 import httpImport from "../api/http-import";
 
 class ApiDataService {
-  // getAll() {
-  //   return http.get("/v1/student");
-  //   // return http.get("/v1/student");
-  // }
-  // get(id) {
-  //   // return http.get(`/tutorials/${id}`);
-  //   return http.get(`/getAllCorpUsers`);
-  //   return http.get(`/getCorpUserById/${id}`);
-  // }
-  // create(data) {
-  //   return http.post("/addApi", data);
-  //   return http.post("/tutorials", data);
-  // }
-  // update(id, data) {
-  //   return http.put(`/tutorials/${id}`, data);
-  // }
-  // delete(id) {
-  //   return http.delete(`/tutorials/${id}`);
-  // }
-  // deleteAll() {
-  //   return http.delete(`/tutorials`);
-  // }
-  // findByTitle(title) {
-  //   return http.get(`/tutorials?title=${title}`);
-  // }
-
-  // // currently using this
-  // // user, pw, 
-  // loginAuthentication(user, pw){
-
-
-  //   if (user == "admin" && pw == "admin"){
-  //     return true
-  //   }
-  //   return false
-  // }
-  // upload(data){
-  //   return httpImport.post("/upload", data);
-  // }
   // ##################### Use API ##################### //
   // API 1
   login(data){
@@ -68,10 +29,6 @@ class ApiDataService {
   validateMap(file, id){
     return httpImport.post(`/uploadFieldMapping/${id}`, file);
   }
-
-  // test(){
-  //   return http.get(`/getAllCorpField`);
-  // }
 
   // API 36
   getTransactionReq(id){

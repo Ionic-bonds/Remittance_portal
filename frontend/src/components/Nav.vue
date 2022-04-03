@@ -6,7 +6,6 @@
     background-color="rgba(30, 22, 81, 1)"
     text-color="#fff"
     active-text-color="#ffd04b"
-    @select="handleSelect"
     :router="true"
   >
     <div class="nav--left">
@@ -50,7 +49,6 @@ import LoginForm from './LoginForm.vue'
 import SignupForm from './SignupForm.vue'
 import Feedback from './Feedback.vue'
 import router from "@/router";
-// import { ElMessage } from 'element-plus'
 
 export default {
   name: 'Nav',
@@ -59,34 +57,16 @@ export default {
       activeIndex: "0",
       loginFormVisible: false,
       signupFormVisible: false,
-      // loginStatus: false,
       activeLink: null,
     }
   },
   components: {
     LoginForm, SignupForm
   },
-  methods: {
-    handleSelect(index){
-      // console.log(this.$store.getters.login)
-      // console.log(this.loginStatus)
-      // console.log(index)
-    },
-    // loginButton: () => {
-    //   if(!this.loginStatus){
-    //     this.loginFormVisible = true
-    //   }
-    // }
-    signup(){
-      console.log("sign up")
-    }
-  },
   watch: {
     loginStatus: function (val, oldVal) {
-      // console.log("old: ", oldVal, ", New:", val)
       if (oldVal) {
         Feedback.open1("Successfully logged out!", "success")
-        console.log(this.loginStatus + ", log out!")
 
         this.activeLink = "/"
         router.push("/")
@@ -94,29 +74,17 @@ export default {
         this.activeLink = "/remit"
       }
     },
-    // activeLink: function (val, oldVal) {
-    //   console.log("old: ", oldVal, ", New:", val)
-    // },
+
     $route (to, from) {
-      // console.log(to.path)
       this.activeLink = to.path;
     }
   },
   computed: {
-    // loginStatus: {get(){return this.$store.state.login}}
     loginStatus: {get(){return this.$store.getters.login}}
 
   },
   mounted(){
     this.activeLink = this.$route.path;
-    // console.log(this.loginStatus)
-    // https://stackoverflow.com/questions/69984821/vue-js-state-value-reset-from-the-input-after-hard-refresh-how-to-fix-it
-    // Feedback.open1("Successfully logged out!", "success")
-    // if (!this.loginStatus){
-    //     this.activeLink = "0"
-    //     router.push("/")
-    // }
-    // console.log(router.currentRoute.value.path)
   }
 }
 </script>

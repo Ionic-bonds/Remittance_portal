@@ -42,7 +42,7 @@
 
             <template #tip>
                 <div class="el-upload__tip import--tip">
-                CSV/XLSX files with a size less than {{"<TechG insert size here>"}}
+                XLSX files with a size less than {{"<TechG insert size here>"}}
                 </div>
             </template>
         </el-upload>
@@ -93,10 +93,8 @@ export default {
             document.getElementById('my_iframe').src = this.templateUrl
         },
         downloadJson: function() {
-            console.log("downloading now")
             Feedback.open1("Downloading now...", "info")
 
-            console.log("invoking API 20: Get all fields + Mappings")
             ApiDataService.getMappingsAndFields(this.$store.getters.user)
             .then((response)=>{
                 this.downloadObjectasJson(response.data)
@@ -105,13 +103,10 @@ export default {
             }).catch((e)=>{
                 var errMsg 
                 (e?.response?.data) ? (errMsg = e.response.data.message) : (errMsg = e.message)
-                console.log(errMsg)
                 Feedback.open1("Download Faliure!", "error")
             })
         },
         downloadObjectasJson: function(data){
-            // console.log(data, this.exportName)
-            // console.log(data.corporateFieldList)
             var exportObj = data.corporateFieldList
             var exportName = this.exportName
             var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
@@ -128,43 +123,31 @@ export default {
             this.$refs.upload.handleStart(files[0])
         },
         beforeUpload: function(file) {
-            // Validation for type and size #TODO:
 
             var validationType = this.acceptable.includes(file.type)
 
             if (validationType) {
-                console.log("This is an excel file!!!")
                 return true
             } else {
-                console.log("This is not an excel file!")
                 this.stoploading(this.loadinstance)
                 Feedback.open1("Unacceptable file type!", "error")
-                // this.loadBool = false
-                // this.stoploading(this.loadinstance)
+
                 return false
             }            
-            // return false
         },
         uploadSuccess: function(file){
-            // #TODO: after knowing endpoint
-            console.log("Upload success!")
             this.stoploading(this.loadinstance)
             this.importStep = 1;
             Feedback.open1("Upload Success!", "success")
-            // this.loadBool = false
             
         },
         uploadError: function(msg){
-            //  #TODO: 
             this.stoploading(this.loadinstance)
             Feedback.open5(msg, "Something's Wrong!")
-            // this.loadBool = false
             
         },
         uploadButton: function(){
-            // #FIXME: change just to make sure everything flows
             if (this.fileList.length == 0) {
-                console.log("no file uploaded!")
                 Feedback.open1("No file detected!", "error")
              } else {
                 Feedback.open4()
@@ -172,8 +155,6 @@ export default {
 
                     if (number){
                         this.headerNum = number
-                        console.log("uploading files now...")
-                        // this.loadBool = true;
 
                         this.loadinstance = ElLoading.service({
                             lock: true,
@@ -188,50 +169,33 @@ export default {
             }            
         },
         uploadProgress: function(event){
-            // NOT USING THIS
-            // this.loadBool = true
-            console.log(event)
         },
         uploadFiles: function(event){   
-            // Ajax call here (need merge with the if statement on top)
             const data = new FormData()
             this.uploadFile = event.file
             data.append("file", event.file)
 
 
-            console.log("invoking API 20: Get all fields + Mappings")
             ApiDataService.getMappingsAndFields(this.$store.getters.user)
             .then((response)=>{
-                // console.log(response)
                 this.mapFields = response.data
                 
-                console.log("invoking API 29: Get Excel Headers")
                 ApiDataService.getFileHeaders(data, this.$store.getters.user, this.headerNum)
                 .then((response)=>{
-                    // console.log(response)
                     this.headersCol = response.data
                     event.onSuccess()
                 }).catch((e)=>{
                     var errMsg 
                     (e?.response?.data) ? (errMsg = e.response.data.message) : (errMsg = e.message)
-                    console.log(errMsg)
                     event.onError(errMsg)
                 })
             }).catch((e)=>{
                 var errMsg 
                 (e?.response?.data) ? (errMsg = e.response.data.message) : (errMsg = e.message)
-                console.log(errMsg)
                 event.onError(errMsg)
             })
 
         },
-    },
-    mounted(){
-        // console.log(this.$store.getters.login)
-        // console.log(this.$store.getters.user)
-        // console.log(this.$store.getters.cookie)
-        // console.log(this.$refs.upload)
-        // console.log(this.step)
     },
     props: ["step", "mapFieldsProp", "headersColProp", "file"],
     computed: {
@@ -267,19 +231,7 @@ export default {
                 this.$emit('update:file', value)
             }
         },
-        // downloadJsonData(){
-        //     if (mapFields.length > 0){
-        //         return mapFields.corporateFieldList
-        //     } else{
-        //         return []
-        //     }
-        // }, 
     },
-    watch: {
-        // mapFields: function (val, oldVal) {
-        //     console.log("old: ", oldVal, ", New:", val)
-        // }
-    }
 }
 </script>
 
@@ -301,7 +253,6 @@ h1{
     border-radius: 5px;
 }
 h1 > a{
-    /* text-decoration: none; */
     font-style: italic;
     color: black;
 }
@@ -316,7 +267,6 @@ h1 > a{
 }
 .el-icon--upload{
     font-size: 200px !important;
-    /* color: black !important; */
 }
 
 .import--tip{

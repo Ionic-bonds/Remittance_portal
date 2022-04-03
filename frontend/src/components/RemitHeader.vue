@@ -22,10 +22,6 @@ export default {
         Progress
     },
     props: ['step', "secStepProp"],
-    mounted(){
-        // console.log(this.step)
-    }
-
 }
 </script>
 

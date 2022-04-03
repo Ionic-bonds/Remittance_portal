@@ -2,18 +2,9 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexPersistence from 'vuex-persist'
 
-https://medium.com/@leecorylee/understanding-vuex-utilize-vuex-with-vuexpersist-sessionstorage-and-localstorage-959b48b91ab6
-
-// Vue.use(Vuex);
-// Vue.createApp(App).use(Vuex)
-// const app = Vue.createApp({
-//     Vuex
-// })
-
 var vuexStore = null;
 
 const cookieEnabled = navigator.cookieEnabled;
-// console.log("Cookies: " + cookieEnabled);
 
 if (cookieEnabled) {
     const vuexLocalStorage = new VuexPersistence({
@@ -56,7 +47,6 @@ if (cookieEnabled) {
         actions:{}
 
     })
-    // console.log(vuexLocalStorage)
 }
 
 export default vuexStore;

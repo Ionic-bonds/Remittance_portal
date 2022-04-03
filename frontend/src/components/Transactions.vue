@@ -1,9 +1,5 @@
 <template>
   <div class="transactions">
-    <!-- <span style="color: white">{{ tableData }}</span> <br><br>
-    <span style="color: white">{{ tableData[0].message }}</span> <br><br>
-    <span style="color: white">{{ tableData.length }}</span> -->
-    <!-- <span style="color: white">{{ getStatus(0) }}</span> -->
 
     <!-- Main design -->
       <div class="common-layout" align="center" style="padding: 1rem 2rem 0">
@@ -56,13 +52,6 @@
 
 <script>
 import ApiDataService from "../api/ApiDataService";
-// import { reactive } from "vue";
-
-// let tableData = reactive({
-//   arr: ["tableData"], //store the table data here
-// });
-// console.log(tableData);
-// console.log("Reactive tableData");
 
 export default {
   name: "Transactions",
@@ -77,17 +66,6 @@ export default {
     };
   },
   methods: {
-    history() {
-      // console.log("calling API - transactions");
-      // ApiDataService.getTransactionReq(this.$store.getters.user)
-      //   .then((response) => {
-      //     this.tableData = response.data;
-      //     console.log(this.tableData);
-      //   })
-      //   .catch((e) => {
-      //     console.log(e);
-      //   });
-    },
     checkDate(from, to, tocheck){
       var fDate, lDate, cDate;
       fDate = Date.parse(from);
@@ -114,14 +92,10 @@ export default {
     }
   },
   created() {
-    // console.log("Transactions mounted");
-    // this.history();
-    console.log("calling API - transactions");
     ApiDataService.getTransactionReq(this.$store.getters.user)
     .then((response) => {
       this.tableData = response.data.reverse();
       for (var each_data of this.tableData){
-        console.log(each_data.message);
 
         // get error list
         if (each_data["statusCode"] == 200){
@@ -144,12 +118,9 @@ export default {
           each_data["message"] = each_data["message"].substring(each_data["message"].indexOf(" ") + 1, each_data["message"].indexOf(":"));
         };
       }
-      console.log(this.tableData);
-      console.log(this.value);
-      console.log(this.defaultTime);
     })
     .catch((e) => {
-      console.log(e);
+      Feedback.open5(errMsg, "Something's Wrong!")
     });
   },
 };

@@ -23,8 +23,6 @@ export default {
 <style>
 
 body {
-  /* margin: 0px !important;
-  padding: 0px !important; */
   background-image: linear-gradient(rgba(30, 22, 81, 1), rgba(137, 196, 244));
   height: 100%;
   margin: 0;

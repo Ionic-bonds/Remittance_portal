@@ -6,8 +6,7 @@ duration : 3000ms (default)
  -->
 
 <script >
-// import { ElNotification } from 'element-plus'
-import { ElMessage, ElMessageBox, ElNotification, ElLoading } from 'element-plus'
+import { ElMessage, ElMessageBox, ElNotification } from 'element-plus'
 
 const Feedback = {
   open1: (msg, type) => {
@@ -38,10 +37,6 @@ const Feedback = {
       return true
     })
     .catch(() => {
-      // ElMessage({
-      //   type: 'info',
-      //   message: 'Delete canceled',
-      // })
       return false
     })
     return result

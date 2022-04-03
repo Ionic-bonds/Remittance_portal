@@ -51,38 +51,26 @@ export default {
             this.$refs.upload.handleStart(files[0])
         },
         beforeUpload: function(file) {
-            // Validation for type and size #TODO:
-
             var validationType = this.acceptable.includes(file.type)
 
             if (validationType) {
-                console.log("This is a json file!!!")
                 return true
-                // return false
             } else {
-                console.log("This is not a json file!")
                 Feedback.open1("Unacceptable file type!", "error")
                 return false
             }            
-            // return false
         },
         uploadSuccess: function(file){
-            // #TODO: after knowing endpoint
-            console.log("Upload success!")
             Feedback.open1("Upload Success!", "success")
         },
         uploadError: function(msg){
-            //  #TODO: 
             Feedback.open5(msg, "Something's Wrong!")
         },
         submitUpload: function(){
-            // #FIXME: change just to make sure everything flows
-            // || this.fileList[0].status == "success"
+
             if (this.fileList.length == 0 ) {
-                console.log("no file uploaded!")
                 Feedback.open1("No file detected!", "error")
              } else {
-                console.log("uploading files now...")
                 this.$refs.upload.submit()
             }            
         },
@@ -93,15 +81,10 @@ export default {
             read.onloadend = ()=>{
                 var data = JSON.parse(read.result)
                 this.manualMapping = data
-                // console.log(this.manualMapping)
                 event.onSuccess()
             }
 
         },
-    },
-    mounted(){
-        // console.log(this.$store.getters.login)
-        // console.log(this.manualMappingProp)
     },
     props: ["manualMappingProp"],
     computed: {
@@ -114,24 +97,16 @@ export default {
             }
         }
     },
-    watch: {
-        // fileList: function (val, oldVal) {
-        //     console.log("old: ", oldVal, ", New:", val)
-        // }
-    }
 }
 </script>
 
 
 <style scoped>
 .json--wrapper{
-    /* width: 100%; */
-    /* height: 100%; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* background-color: rgba(240, 248, 255, 0.885); */
 }
 .upload-demo{
     background-color: antiquewhite;
