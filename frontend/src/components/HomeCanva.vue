@@ -116,7 +116,7 @@ export default {
         "Yeo Yu Quan",
       ],
       urls: [
-        require("../assets/david.jpg"),
+        require("../assets/tianle.jpg"),
         require("../assets/david.jpg"),
         require("../assets/shaohong.jpg"),
         require("../assets/leonard.jpg"),
