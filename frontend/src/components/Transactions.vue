@@ -126,7 +126,9 @@ export default {
         // get error list
         this.post_status = each_data["message"].substring(each_data["message"].indexOf(":") + 2);
         each_data["errList"] = this.post_status.split("\n");
-        each_data["errList"].pop();
+        // removes empty string in the list, if any
+        // cannot use pop as it might remove arr w one err messsages
+        each_data["errList"].filter(n => n);
 
         // get status - Failed or not?
         each_data["message"] = each_data["message"].substring(each_data["message"].indexOf(" ") + 1, each_data["message"].indexOf(":"));
