@@ -3,8 +3,7 @@
     <div class = "map--wrapper">
 
         <el-table :data="masterErrorList" class = "map--table" max-height="700" style="width: 100%"> 
-            <el-table-column prop="error" label="Error List" align="center" sortable fixed  min-width="170"/>          
-
+            <el-table-column prop="error" label="Error List" align="center" sortable fixed  min-width="160"/>          
         </el-table>
     </div>
 

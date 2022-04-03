@@ -16,8 +16,8 @@
     
     <!-- Buttons -->
     <div class = "button--wrapper">
-        <button @click = "this.back" class = "button--back">{{'<'}} Back</button>
-        <button v-if="!this.secondaryStep" @click="this.continue" class = "button--continue">Continue {{'>'}}</button>
+        <el-button type="info" plain @click = "this.back" class = "button--back">{{'<'}} Back</el-button>
+        <el-button type="primary" plain v-if="!this.secondaryStep" @click="this.continue" class = "button--continue">Continue {{'>'}}</el-button>
     </div>
     </div>
 
@@ -266,15 +266,13 @@ h1{
 .error--color{
     background-color: hsla(336, 77%, 57%, 0.965);
 }
+
 .map--transaction--container{
     margin: 30px auto;
     border-radius: 20px;
     width: 80%;
     margin-bottom: 70px;
 }
-
-
-
 
 .map--api--container{
     /* display: flex; */
@@ -285,12 +283,15 @@ h1{
     margin: 20px 0px;
     /* height: 50px; */    
 }
+
 .api1--color{
     background-color: rgb(245, 164, 164);
 }
+
 .api2--color{
     background-color: rgb(164, 245, 195);
 }
+
 .api3--color{
     background-color: rgb(238, 240, 146);
 }
@@ -302,10 +303,17 @@ h1{
     gap:0px 10px;
 }
 
+/* Post Uploading */
 .button--back, .button--continue {
     font-family: 'Poppins', sans-serif;
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: 580;
 }
+
+.button--back{
+    color: rgb(77, 77, 77);
+}
+
 .button--back:hover, .button--continue:hover {
     cursor: pointer;
 }

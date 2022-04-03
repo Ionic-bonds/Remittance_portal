@@ -16,11 +16,11 @@
         >
             
             <template #trigger>
-                <el-button type="primary">select file</el-button>
+                <el-button type="primary">1. select file</el-button>
             </template>
 
             <el-button class="ml-3" type="success" @click="submitUpload">
-                upload for express mapping
+                2. upload for express mapping
             </el-button>
 
             <template #tip>

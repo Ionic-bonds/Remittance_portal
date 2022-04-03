@@ -100,11 +100,14 @@ export default {
       return false;
       }
   },
+  // to get / filter the tableData by date range (value : [])
   computed: {
     tData: function(){
+      // if value is empty, return all the data (aka no filtering done)
       if (this.value.length == 0){
         return this.tableData;
       }
+      // if value has elements, means user wants to filter by date
       return this.tableData.filter(each_data => {
         return this.checkDate(this.value[0], this.value[1], each_data.requestDate);
       });
@@ -116,9 +119,10 @@ export default {
     console.log("calling API - transactions");
     ApiDataService.getTransactionReq(this.$store.getters.user)
     .then((response) => {
-      this.tableData = response.data;
+      this.tableData = response.data.reverse();
       for (var each_data of this.tableData){
         console.log(each_data.message);
+
         // get error list
         this.post_status = each_data["message"].substring(each_data["message"].indexOf(":") + 2);
         each_data["errList"] = this.post_status.split("\n");
@@ -142,24 +146,27 @@ export default {
 <style scoped>
 .standard_text{
   text-align: center; 
-  font-size: 4rem; 
+  font-size: 3.5rem; 
   font-weight: bold;
   color: rgba(123, 245, 166, 0.932);
-  margin: 4rem 0;
+  margin: 3rem 0 3.5rem;
 }
 
+/* Date picker / filter */
 .demo-date-picker {
   display: flex;
   width: 100%;
   padding: 0;
   flex-wrap: wrap;
 }
+
 .demo-date-picker .block {
   padding: 30px 0;
   text-align: center;
   border-right: solid 1px var(--el-border-color);
   flex: 1;
 }
+
 .demo-date-picker .block:last-child {
   border-right: none;
 }

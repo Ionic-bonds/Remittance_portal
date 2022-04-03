@@ -42,12 +42,12 @@
 
             <template #tip>
                 <div class="el-upload__tip import--tip">
-                CSV/XLSX files with a size less than {{"<insert size here>"}}
+                CSV/XLSX files with a size less than {{"<TechG insert size here>"}}
                 </div>
             </template>
         </el-upload>
 
-        <button @click.prevent="uploadButton" class = "import--button">Start Importing</button>
+        <el-button type="info" plain @click.prevent="uploadButton" class = "import--button">Start Importing</el-button>
         <iframe id="my_iframe" style="display:none;"></iframe>
     </div>
 </template>
@@ -330,11 +330,12 @@ h1 > a{
     margin: 20px 0px 40px 0px;
     height: 30px;
     font-family: 'Poppins', sans-serif;
+    color: black;
 }
+
 .import--button:hover{
     cursor: pointer;
 }
-
 
 .import--template, .import--download{
     width: 250px;
