@@ -124,14 +124,25 @@ export default {
         console.log(each_data.message);
 
         // get error list
-        this.post_status = each_data["message"].substring(each_data["message"].indexOf(":") + 2);
-        each_data["errList"] = this.post_status.split("\n");
-        // removes empty string in the list, if any
-        // cannot use pop as it might remove arr w one err messsages
-        each_data["errList"].filter(n => n);
+        if (each_data["statusCode"] == 200){
+          this.post_status = each_data["message"].substring(each_data["message"].indexOf(":") + 2);
+          each_data["errList"] = this.post_status.split("\n");
+          // removes empty string in the list, if any
+          // cannot use pop as it might remove arr w one err messsages
+          // each_data["errList"].filter(n => n);
+          each_data["errList"] = each_data["errList"].filter((element) => {
+            return /\S/.test(element);
+          });
+        } else {
+          var err_list = new Array();
+          err_list.push(each_data["message"]);
+          each_data["errList"] = err_list;
+        }
 
         // get status - Failed or not?
-        each_data["message"] = each_data["message"].substring(each_data["message"].indexOf(" ") + 1, each_data["message"].indexOf(":"));
+        if (each_data["statusCode"] == 200){
+          each_data["message"] = each_data["message"].substring(each_data["message"].indexOf(" ") + 1, each_data["message"].indexOf(":"));
+        };
       }
       console.log(this.tableData);
       console.log(this.value);
