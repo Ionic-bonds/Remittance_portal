@@ -684,6 +684,7 @@ public class FieldMappingController {
         } catch (IOException e) {
             throw new RuntimeException("Invalid excel file: " + e.getMessage());
         }
+        if (commonApiList.size() == 0) errorList.add(String.format("Error: Excel file has no transactions"));
         if (errorList.size() == 0) {
             transactOutcomeList = uploadAllTransactions(commonApiList);
             for (TransactOutcome transactOutcome : transactOutcomeList) {
