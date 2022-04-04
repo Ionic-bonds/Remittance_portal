@@ -42,6 +42,7 @@ A visual representation of the workflow is as follows:
 1. Front End codes in this [folder](https://github.com/shaohong-g/Object-Orientated-Programming-G2Project/tree/main/frontend)
 2. Back End codes in this [folder](https://github.com/shaohong-g/Object-Orientated-Programming-G2Project/tree/main/src)
 3. SQL codes in this [script](https://github.com/shaohong-g/Object-Orientated-Programming-G2Project/blob/main/remittance.sql)
+4. Test Cases excels in this [folder](https://github.com/shaohong-g/Object-Orientated-Programming-G2Project/tree/main/testFiles)
 
 ---
 
@@ -50,41 +51,41 @@ A visual representation of the workflow is as follows:
 2. Load WAMP (for Windows) / MAMP (for Mac)
 3. Check your SQL port number is correct (Windows: port 3306, MAc: port 8889)
 4. Run the following commands in root directory (Object-Orientated-Programming-G2Project/)
-###### Remove the project dependencies from the local repository, and optionally re-resolve them.
-(for Windows)
+#### Remove the project dependencies from the local repository, and optionally re-resolve them.
+###### (for Windows)
 ```
 mvnw dependency:purge-local-repository
 ```
-(For Mac)
+###### (For Mac)
 ```
 mvn dependency:purge-local-repository
 ```
-###### Triggers the download of Apache Tomcat and initializes the startup of Tomcat
-(for Windows)
+#### Triggers the download of Apache Tomcat and initializes the startup of Tomcat
+###### (for Windows)
 ```
 mvnw spring-boot:run
 ```
-(for Mac)
+###### (for Mac)
 ```
 mvn spring-boot:run
 ```
 5. Run the following commands in frontend directory (Object-Orientated-Programming-G2Project/frontend/)
-###### Project setup
+#### Project setup
 ```
 npm install
 ```
 
-###### Compiles and hot-reloads for development
+#### Compiles and hot-reloads for development
 ```
 npm run serve
 ```
 
-###### Compiles and minifies for production
+#### Compiles and minifies for production
 ```
 npm run build
 ```
 
-###### Customize configuration
+#### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ---
