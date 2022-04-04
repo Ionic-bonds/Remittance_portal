@@ -69,6 +69,7 @@ mvnw spring-boot:run
 ```
 mvn spring-boot:run
 ```
+
 5. Run the following commands in frontend directory (Object-Orientated-Programming-G2Project/frontend/)
 #### Project setup
 ```
