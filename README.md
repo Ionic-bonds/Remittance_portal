@@ -30,11 +30,15 @@ A visual representation of the workflow is as follows:
 * CSS
 * JavaScript
 * Vue.js
+* Element+ (Element Plus)
 
 #### Back End
 * Java
 * Spring
 * Springboot
+
+#### Web Services (hosting)
+* Amazon Web Services (_Extra Proof-of-Concept_)
 
 ---
 
@@ -50,7 +54,7 @@ A visual representation of the workflow is as follows:
 1. Run remittance.sql script in SQL engine (MySQL or PHPAdmin) 
 2. Load WAMP (for Windows) / MAMP (for Mac)
 3. Check your SQL port number is correct (Windows: port 3306, MAc: port 8889)
-4. Run the following commands in root directory (Object-Orientated-Programming-G2Project/)
+4. Run the following commands in root directory (`Object-Orientated-Programming-G2Project/`)
 #### Remove the project dependencies from the local repository, and optionally re-resolve them.
 ###### (for Windows)
 ```
@@ -70,7 +74,7 @@ mvnw spring-boot:run
 mvn spring-boot:run
 ```
 
-5. Run the following commands in frontend directory (Object-Orientated-Programming-G2Project/frontend/)
+5. Run the following commands in frontend directory (`Object-Orientated-Programming-G2Project/frontend/`)
 #### Project setup
 ```
 npm install
