@@ -46,25 +46,46 @@ A visual representation of the workflow is as follows:
 ---
 
 ### Steps to Run Application
-* Run remittance.sql script in SQL engine (MySQL or PHPAdmin) 
+1. Run remittance.sql script in SQL engine (MySQL or PHPAdmin) 
+2. Load WAMP (for Windows) / MAMP (for Mac)
+3. Check your SQL port number is correct (Windows: port 3306, MAc: port 8889)
+4. Run the following commands in root directory (Object-Orientated-Programming-G2Project/)
+###### Remove the project dependencies from the local repository, and optionally re-resolve them.
+(for Windows)
+```
+mvnw dependency:purge-local-repository
+```
+(For Mac)
+```
+mvn dependency:purge-local-repository
+```
+###### Triggers the download of Apache Tomcat and initializes the startup of Tomcat
+(for Windows)
+```
+mvnw spring-boot:run
+```
+(for Mac)
+```
+mvn spring-boot:run
+```
+5. Run the following commands in frontend directory (Object-Orientated-Programming-G2Project/frontend/)
+###### Project setup
+```
+npm install
+```
 
-#### (For Windows)
-1. Load WAMP
-2. Ensure db access password is according to your OS System i.e, "" 
-3. Check your SQL port number is correct (port 3306)
-4. mvnw dependency:purge-local-repository
-        - Remove the project dependencies from the local repository, and optionally re-resolve them.
-5. mvnw spring-boot:run
-        - Triggers the download of Apache Tomcat and initializes the startup of Tomcat
-        
-#### (for Mac)
-1. Load MAMP
-2. Ensure db access password is according to your OS System i.e, "root"
-3. Check your SQL port number is correct (port 8889)
-4. mvn dependency:purge-local-repository
-        - Remove the project dependencies from the local repository, and optionally re-resolve them.
-5. mvn spring-boot:run
-        - Triggers the download of Apache Tomcat and initializes the startup of Tomcat
+###### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+###### Compiles and minifies for production
+```
+npm run build
+```
+
+###### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ---
 
